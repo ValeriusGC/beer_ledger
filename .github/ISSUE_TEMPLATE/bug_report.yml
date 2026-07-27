@@ -1,0 +1,48 @@
+name: Bug report
+description: Что-то сломалось или CI упал
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Опиши баг. Если есть — приложи вывод `flutter analyze` / `dart test`.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Что произошло
+      placeholder: "CI падает на job app…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидалось
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      placeholder: |
+        1. git checkout …
+        2. flutter analyze lib
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Окружение
+      placeholder: "Flutter 3.x, macOS / CI ubuntu-latest"
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи / скрин
+      render: shell

@@ -1,0 +1,43 @@
+name: Feature request
+description: Новая фича или улучшение
+title: "[feat]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        v1 scope — см. spec. Если за scope — пометь как backlog.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую задачу решаем
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предложение
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Область
+      options:
+        - core (beer_ledger_core)
+        - ui (Flutter app)
+        - infra (CI, tooling)
+        - docs
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope v1
+      options:
+        - label: В scope v1 (roadmap)
+        - label: Backlog / после v1
