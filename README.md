@@ -1,3 +1,5 @@
+![CI](https://github.com/ValeriusGC/beer_ledger/actions/workflows/ci.yml/badge.svg)
+
 # beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
