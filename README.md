@@ -1,4 +1,4 @@
-![CI](https://github.com/ValeriusGC/beer_ledger/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/ValeriusGC/beer_ledger/actions/workflows/ci.yml/badge.svg)](https://github.com/ValeriusGC/beer_ledger/actions/workflows/ci.yml)
 
 # beer_ledger (Пивомер)
 
