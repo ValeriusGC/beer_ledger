@@ -1,0 +1,100 @@
+# beer_ledger — Flutter app + monorepo (packages/*)
+# Платформы: android, ios, web. При добавлении desktop — см. секцию Desktop ниже.
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- IDE (личные настройки; launch.json/tasks часто коммитят — .vscode не игнорируем целиком) ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.atom/
+.history
+.svn/
+.swiftpm/
+
+# --- Dart / Flutter / Pub (monorepo: все packages/) ---
+**/.dart_tool/
+**/.pub-cache/
+**/.pub/
+**/build/
+**/doc/api/
+**/.packages
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/ios/Flutter/.last_build_id
+
+# --- Тесты и coverage ---
+**/coverage/
+**/.test_coverage.dart
+**/lcov.info
+
+# --- Символы и obfuscation (release artifacts) ---
+**/app.*.symbols
+**/app.*.map.json
+
+# --- Секреты и локальная конфигурация ---
+.env
+.env.*
+!.env.example
+**/*.keystore
+**/*.jks
+**/key.properties
+**/local.properties
+**/secrets.yaml
+**/GoogleService-Info.plist.local
+
+# --- FVM (если подключите) ---
+.fvm/
+
+# --- Mason / codegen scaffolding (если подключите) ---
+.mason/
+bricks/.mason/
+
+# Codegen (*.g.dart, *.freezed.dart) — коммитим вместе с исходниками (build_runner в CI).
+# Индексация Cursor — см. .cursorignore.
+
+# --- Android (дублируем критичное на root для monorepo) ---
+**/android/.gradle/
+**/android/captures/
+**/android/**/GeneratedPluginRegistrant.java
+**/android/**/.cxx/
+
+# --- iOS / macOS ---
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/**/DerivedData/
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+
+# --- Linux / Windows (раскомментировать при flutter create --platforms=...) ---
+# **/linux/flutter/ephemeral/
+# **/windows/flutter/ephemeral/
+
+# --- Fastlane (если появится) ---
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots/
+**/fastlane/test_output/
+
+# --- Прочее из flutter create ---
+migrate_working_dir/
+*.class
+*.log
+*.pyc
+
+# --- Android Studio build outputs (legacy paths) ---
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# --- Прочее личное разное ---
+/zx

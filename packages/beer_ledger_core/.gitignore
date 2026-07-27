@@ -1,0 +1,25 @@
+# Pure Dart package (monorepo member)
+# pubspec.lock не коммитим — библиотека, не приложение (dart.dev/guides/libraries/private-files)
+
+# --- Dart / Pub ---
+.dart_tool/
+.pub-cache/
+.pub/
+/build/
+/doc/api/
+.packages
+
+# --- Тесты ---
+/coverage/
+.test_coverage.dart
+lcov.info
+
+# --- IDE / OS ---
+.DS_Store
+.idea/
+*.iml
+
+# --- Прочее ---
+*.log
+migrate_working_dir/
+/pubspec.lock

@@ -1,0 +1,14 @@
+# Android — см. также корневой .gitignore (monorepo)
+
+/.gradle/
+/captures/
+/local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+
+# Keystore и подпись — никогда в git
+key.properties
+**/*.keystore
+**/*.jks
+
+# Gradle wrapper (gradlew, gradlew.bat, gradle/wrapper/*) — коммитим для воспроизводимых сборок
