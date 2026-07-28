@@ -18,4 +18,7 @@ sealed class Failure with _$Failure {
     required DateTime from,
     required DateTime to,
   }) = InvalidPeriod;
+
+  /// Неизвестный wire-id единицы измерения при записи тапа.
+  const factory Failure.unknownUnitId({required String id}) = UnknownUnitId;
 }

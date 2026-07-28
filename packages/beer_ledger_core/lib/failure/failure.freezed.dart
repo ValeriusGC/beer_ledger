@@ -55,12 +55,13 @@ extension FailurePatterns on Failure {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( IncompatibleUnits value)?  incompatibleUnits,TResult Function( InvalidPeriod value)?  invalidPeriod,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( IncompatibleUnits value)?  incompatibleUnits,TResult Function( InvalidPeriod value)?  invalidPeriod,TResult Function( UnknownUnitId value)?  unknownUnitId,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case IncompatibleUnits() when incompatibleUnits != null:
 return incompatibleUnits(_that);case InvalidPeriod() when invalidPeriod != null:
-return invalidPeriod(_that);case _:
+return invalidPeriod(_that);case UnknownUnitId() when unknownUnitId != null:
+return unknownUnitId(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return invalidPeriod(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( IncompatibleUnits value)  incompatibleUnits,required TResult Function( InvalidPeriod value)  invalidPeriod,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( IncompatibleUnits value)  incompatibleUnits,required TResult Function( InvalidPeriod value)  invalidPeriod,required TResult Function( UnknownUnitId value)  unknownUnitId,}){
 final _that = this;
 switch (_that) {
 case IncompatibleUnits():
 return incompatibleUnits(_that);case InvalidPeriod():
-return invalidPeriod(_that);}
+return invalidPeriod(_that);case UnknownUnitId():
+return unknownUnitId(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -97,12 +99,13 @@ return invalidPeriod(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( IncompatibleUnits value)?  incompatibleUnits,TResult? Function( InvalidPeriod value)?  invalidPeriod,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( IncompatibleUnits value)?  incompatibleUnits,TResult? Function( InvalidPeriod value)?  invalidPeriod,TResult? Function( UnknownUnitId value)?  unknownUnitId,}){
 final _that = this;
 switch (_that) {
 case IncompatibleUnits() when incompatibleUnits != null:
 return incompatibleUnits(_that);case InvalidPeriod() when invalidPeriod != null:
-return invalidPeriod(_that);case _:
+return invalidPeriod(_that);case UnknownUnitId() when unknownUnitId != null:
+return unknownUnitId(_that);case _:
   return null;
 
 }
@@ -119,11 +122,12 @@ return invalidPeriod(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String fromId,  String toId)?  incompatibleUnits,TResult Function( DateTime from,  DateTime to)?  invalidPeriod,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String fromId,  String toId)?  incompatibleUnits,TResult Function( DateTime from,  DateTime to)?  invalidPeriod,TResult Function( String id)?  unknownUnitId,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case IncompatibleUnits() when incompatibleUnits != null:
 return incompatibleUnits(_that.fromId,_that.toId);case InvalidPeriod() when invalidPeriod != null:
-return invalidPeriod(_that.from,_that.to);case _:
+return invalidPeriod(_that.from,_that.to);case UnknownUnitId() when unknownUnitId != null:
+return unknownUnitId(_that.id);case _:
   return orElse();
 
 }
@@ -141,11 +145,12 @@ return invalidPeriod(_that.from,_that.to);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String fromId,  String toId)  incompatibleUnits,required TResult Function( DateTime from,  DateTime to)  invalidPeriod,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String fromId,  String toId)  incompatibleUnits,required TResult Function( DateTime from,  DateTime to)  invalidPeriod,required TResult Function( String id)  unknownUnitId,}) {final _that = this;
 switch (_that) {
 case IncompatibleUnits():
 return incompatibleUnits(_that.fromId,_that.toId);case InvalidPeriod():
-return invalidPeriod(_that.from,_that.to);}
+return invalidPeriod(_that.from,_that.to);case UnknownUnitId():
+return unknownUnitId(_that.id);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -159,11 +164,12 @@ return invalidPeriod(_that.from,_that.to);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String fromId,  String toId)?  incompatibleUnits,TResult? Function( DateTime from,  DateTime to)?  invalidPeriod,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String fromId,  String toId)?  incompatibleUnits,TResult? Function( DateTime from,  DateTime to)?  invalidPeriod,TResult? Function( String id)?  unknownUnitId,}) {final _that = this;
 switch (_that) {
 case IncompatibleUnits() when incompatibleUnits != null:
 return incompatibleUnits(_that.fromId,_that.toId);case InvalidPeriod() when invalidPeriod != null:
-return invalidPeriod(_that.from,_that.to);case _:
+return invalidPeriod(_that.from,_that.to);case UnknownUnitId() when unknownUnitId != null:
+return unknownUnitId(_that.id);case _:
   return null;
 
 }
@@ -301,6 +307,72 @@ class _$InvalidPeriodCopyWithImpl<$Res>
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
 as DateTime,to: null == to ? _self.to : to // ignore: cast_nullable_to_non_nullable
 as DateTime,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UnknownUnitId implements Failure {
+  const UnknownUnitId({required this.id});
+  
+
+ final  String id;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UnknownUnitIdCopyWith<UnknownUnitId> get copyWith => _$UnknownUnitIdCopyWithImpl<UnknownUnitId>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnknownUnitId&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'Failure.unknownUnitId(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UnknownUnitIdCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory $UnknownUnitIdCopyWith(UnknownUnitId value, $Res Function(UnknownUnitId) _then) = _$UnknownUnitIdCopyWithImpl;
+@useResult
+$Res call({
+ String id
+});
+
+
+
+
+}
+/// @nodoc
+class _$UnknownUnitIdCopyWithImpl<$Res>
+    implements $UnknownUnitIdCopyWith<$Res> {
+  _$UnknownUnitIdCopyWithImpl(this._self, this._then);
+
+  final UnknownUnitId _self;
+  final $Res Function(UnknownUnitId) _then;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(UnknownUnitId(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
