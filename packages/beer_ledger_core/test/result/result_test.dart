@@ -55,10 +55,7 @@ void main() {
       final failure = Failure.incompatibleUnits(fromId: 'a', toId: 'b');
       final err = Left<Failure, int>(failure);
 
-      expect(
-        success.match((l) => 'err:$l', (r) => 'ok:$r'),
-        'ok:7',
-      );
+      expect(success.match((l) => 'err:$l', (r) => 'ok:$r'), 'ok:7');
       expect(
         err.match((l) => l.runtimeType, (r) => 'ok:$r'),
         IncompatibleUnits,

@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-26 15:51:23 +0500  
-**Версия:** 1
+**Последнее обновление:** 2026-07-28 16:06 +0500  
+**Версия:** 2
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -18,7 +18,7 @@ beer_ledger/
 ├── packages/
 │   └── beer_ledger_core/        # Pure Dart — NO Flutter import
 │       ├── lib/
-│       │   ├── measure/         # MeasureUnit, convRatio (from fast_2020)
+│       │   ├── measure/         # MeasureUnit interface + enum families (ADR 003)
 │       │   ├── domain/          # Clicker, Click, Calc
 │       │   └── aggregate/       # sum by period, signs
 │       └── test/
