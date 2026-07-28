@@ -3,6 +3,7 @@
 /// Migration from `fast_2020`: Clicker, Click, Calc, MeasureUnit, aggregation.
 library;
 
+export 'convert/convert.dart';
 export 'failure/failure.dart';
 export 'measure/measure.dart';
 export 'result/result.dart';
