@@ -4,5 +4,6 @@
 library;
 
 export 'failure/failure.dart';
+export 'measure/measure.dart';
 export 'result/result.dart';
 export 'src/beer_ledger_core_base.dart';
