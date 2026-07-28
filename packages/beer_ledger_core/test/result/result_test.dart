@@ -18,6 +18,11 @@ void main() {
       final failure = Failure.invalidPeriod(from: from, to: to);
       expect(failure, Failure.invalidPeriod(from: from, to: to));
     });
+
+    test('unknownUnitId holds id', () {
+      const failure = Failure.unknownUnitId(id: 'volume.unknown');
+      expect(failure, const Failure.unknownUnitId(id: 'volume.unknown'));
+    });
   });
 
   group('Result — Left is Failure, Right is success', () {
