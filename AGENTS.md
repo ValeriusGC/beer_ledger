@@ -1,21 +1,21 @@
 # AGENTS.md — beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-26 15:51:23 +0500  
-**Версия:** 1
+**Последнее обновление:** 2026-07-28 19:09 +0500  
+**Версия:** 2
 
 Инструкции для AI-агентов в Cursor. Flutter/Dart pet-project, monorepo.
 
 ## Стек
 
 - **Dart SDK:** ^3.12.2 (Flutter app + pure Dart core)
-- **Monorepo:** `packages/beer_ledger_core` — domain без `import flutter`
-- **State:** Riverpod 3 — *planned*
+- **Monorepo:** `packages/beer_ledger_core` — domain без `import flutter` (**iter 1.1 ✅**)
+- **State:** Riverpod 3 — *planned (iter 2)*
 - **Routing:** go_router — *planned*
-- **DB:** drift или isar — *ADR pending*
+- **DB:** drift или isar — *ADR pending (iter 2)*
 - **Charts:** fl_chart — *planned*
 - **Lint:** flutter_lints ^6.0.0
-- **Сейчас:** Material 3 shell (`lib/main.dart`), path dep на `beer_ledger_core`
+- **Сейчас:** Material 3 shell (`lib/main.dart`), path dep на `beer_ledger_core`; 110 core-тестов
 
 ## Архитектура
 

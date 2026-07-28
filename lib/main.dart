@@ -33,11 +33,13 @@ class HomePlaceholderPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Beer Ledger — v0 scaffold'),
+            const Text('Beer Ledger — iter 1.1 core ✅'),
             const SizedBox(height: 8),
             Text('core $beerLedgerCoreVersion'),
+            const SizedBox(height: 8),
+            Text(beerHalfLiter().title),
             const SizedBox(height: 24),
-            const Text('Следующий шаг: миграция calcs из fast_2020'),
+            const Text('Следующий шаг: iter 2 — persistence + Riverpod'),
           ],
         ),
       ),

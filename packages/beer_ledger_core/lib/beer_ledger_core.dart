@@ -1,6 +1,6 @@
 /// Pure Dart domain layer for [beer_ledger] app.
 ///
-/// Migration from `fast_2020`: Clicker, Click, Calc, MeasureUnit, aggregation.
+/// Measure, convert, domain models, aggregation, presets (iter 1.1).
 library;
 
 export 'aggregate/aggregate.dart';
