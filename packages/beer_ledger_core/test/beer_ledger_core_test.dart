@@ -3,6 +3,6 @@ import 'package:test/test.dart';
 
 void main() {
   test('core package is wired', () {
-    expect(beerLedgerCoreVersion, '0.0.1');
+    expect(beerLedgerCoreVersion, '0.1.0');
   });
 }
