@@ -8,5 +8,6 @@ export 'convert/convert.dart';
 export 'domain/domain.dart';
 export 'failure/failure.dart';
 export 'measure/measure.dart';
+export 'preset/preset.dart';
 export 'result/result.dart';
 export 'src/beer_ledger_core_base.dart';
