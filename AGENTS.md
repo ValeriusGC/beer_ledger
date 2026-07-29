@@ -1,8 +1,8 @@
 # AGENTS.md — beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-28 19:09 +0500  
-**Версия:** 2
+**Последнее обновление:** 2026-07-29 09:30 +0500  
+**Версия:** 3
 
 Инструкции для AI-агентов в Cursor. Flutter/Dart pet-project, monorepo.
 
@@ -58,9 +58,11 @@ Dart & Flutter MCP: `.cursor/mcp.json`
 { "command": "dart", "args": ["mcp-server"] }
 ```
 
-Требует Dart ≥ 3.9. Инструменты: analyze, pub.dev, runtime errors, widget tree, tests.
+Требует Dart ≥ 3.9. Инструменты: analyze, pub.dev search, pubspec deps, run tests, format, runtime errors, widget tree (при запущенном app).
 
-При сбоях roots: `"args": ["mcp-server", "--force-roots-fallback"]`
+При сбоях roots в Cursor: `"args": ["mcp-server", "--force-roots-fallback"]`
+
+Документация: [docs.flutter.dev/ai/mcp-server](https://docs.flutter.dev/ai/mcp-server)
 
 ## Skills
 
@@ -75,18 +77,27 @@ Dart & Flutter MCP: `.cursor/mcp.json`
 
 ### Официальные (`.agents/skills/`)
 
+Источник с 2026-07: **[flutter/agent-plugins](https://github.com/flutter/agent-plugins)** (dart + flutter skills в одном репо).
+
 ```bash
-npx skills add dart-lang/skills --skill '*' --agent universal --yes
-npx skills add flutter/skills --skill '*' --agent universal --yes
+npx skills add flutter/agent-plugins --skill '*' --agent universal --yes
 npx skills update
 ```
 
+После добавления зависимостей с bundled skills (iter 2+, напр. Riverpod, drift):
+
+```bash
+dart run skills@ get --agent universal
+```
+
+Альтернатива npx без Node: `dart run skills@ add <git-url>` — см. [pub.dev/packages/skills](https://pub.dev/packages/skills).
+
 Приоритетные:
 
-- `dart-run-static-analysis`, `dart-fix-runtime-errors`, `dart-add-unit-test`
+- `dart-run-static-analysis`, `dart-fix-runtime-errors`, `dart-add-unit-test`, `dart-use-primary-constructors`
 - `flutter-fix-layout-issues`, `flutter-setup-declarative-routing`, `flutter-add-widget-test`
 
-**Осторожно:** `flutter-apply-architecture-best-practices` — сверять с UI Projection проекта.
+**Осторожно:** `flutter-apply-architecture-best-practices` — сверять с UI Projection проекта; generic layered architecture может конфликтовать.
 
 ## Codegen
 
