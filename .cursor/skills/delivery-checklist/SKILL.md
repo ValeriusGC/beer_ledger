@@ -9,24 +9,33 @@ disable-model-invocation: true
 # Delivery Checklist
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-26 15:51:23 +0500  
-**Версия:** 1
+**Последнее обновление:** 2026-07-29 09:30 +0500  
+**Версия:** 2
 
 ## 1. Статический анализ
 
+**Core (pure Dart):**
+
 ```bash
-flutter analyze
+cd packages/beer_ledger_core && dart analyze --fatal-warnings
+```
+
+**App:**
+
+```bash
+flutter analyze --fatal-warnings lib
 ```
 
 - Исправить **error** и новые **warning** в затронутых файлах
-- `dart fix --apply` при механических фиксах (skill `dart-run-static-analysis`)
+- Skill `dart-run-static-analysis` или MCP `analyze_files` / shell `dart analyze`
+- `dart fix --apply` при механических фиксах
 - Логи: нет `error`, `exception`, `failed`, stack trace
 
 ## 2. Codegen (если @riverpod/@freezed)
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
-flutter analyze
+flutter analyze --fatal-warnings lib
 ```
 
 ## 3. DartDoc (публичный API)
@@ -54,16 +63,17 @@ flutter analyze
 ## 7. Тесты
 
 ```bash
+cd packages/beer_ledger_core && dart test
 flutter test <path>
 ```
 
 Skills: `dart-add-unit-test`, `flutter-add-widget-test`
 
-## 8. Runtime (UI + запущенное app)
+## 8. Runtime (только UI PR + запущенное app)
 
-- MCP: `get_runtime_errors`, `widget_inspector`
-- Skill: `flutter-fix-layout-issues`
+- MCP: `get_runtime_errors`, widget inspector; skill `flutter-fix-layout-issues`
+- Core-only PR без UI — этот пункт **пропустить**
 
 ## Итог
 
-В ответе: analyzer (результат), codegen, DartDoc, UI Projection, реестры.
+В ответе: analyzer (результат), codegen, DartDoc, UI Projection, реестры, тесты.
