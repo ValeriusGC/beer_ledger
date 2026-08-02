@@ -1,8 +1,8 @@
 # AGENTS.md — beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-29 09:30 +0500  
-**Версия:** 3
+**Последнее обновление:** 2026-08-02 18:18:51 +0500  
+**Версия:** 4
 
 Инструкции для AI-агентов в Cursor. Flutter/Dart pet-project, monorepo.
 
@@ -44,11 +44,21 @@
 
 ## Cursor Rules
 
-**Always-on (4):** `quality-bar`, `team-principles`, `dry-and-registries`, `honesty-time-no-fabrication`
+**Always-on (5):** `quality-bar`, `team-principles`, `dry-and-registries`, `honesty-time-no-fabrication`, `git-sovereignty`
 
 **По globs `**/*.dart` / `lib/**`:** `no-reinvent-wheel`, `dart-cg-file-naming`, `riverpod-first-reactivity`, `pre-delivery-analyzer-and-logs-check`, `dart-dartdoc-comments`
 
 **По globs `**/*.md`:** `doc-header-metadata` — шапка **Дата создания / Последнее обновление / Версия**
+
+## Git и Hooks
+
+**Commit, push, PR — только пользователь**, если явно не попросил agent («Сделай коммит», «Сделай пуш»).
+
+- Rule `git-sovereignty.mdc` — agent **не предлагает** commit/push; plan/todos не отменяют.
+- Hook `.cursor/hooks/gate-git.sh` — `git commit`, `git push`, `gh pr create` → **Ask** в UI Cursor (`failClosed`).
+- Read-only git (`status`, `diff`, `log`) — без ограничений.
+
+После развёртывания: `chmod +x .cursor/hooks/gate-git.sh` → **Reload Window** → Settings → Hooks.
 
 ## MCP
 

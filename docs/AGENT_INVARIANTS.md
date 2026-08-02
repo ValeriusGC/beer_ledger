@@ -1,8 +1,8 @@
 # Инварианты агента: честность, без выдумок, реальное время
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-26 15:51:23 +0500  
-**Версия:** 3
+**Последнее обновление:** 2026-08-02 18:18:51 +0500  
+**Версия:** 4
 
 **Назначение:** жёсткие правила для ИИ при работе с репозиторием. Дополняют Cursor rules `honesty-time-no-fabrication.mdc`, `doc-header-metadata.mdc`.
 
@@ -46,4 +46,12 @@
 
 - `.cursor/rules/honesty-time-no-fabrication.mdc` (`alwaysApply: true`)
 - `.cursor/rules/quality-bar.mdc` (`alwaysApply: true`)
+- `.cursor/rules/git-sovereignty.mdc` (`alwaysApply: true`)
 - `.cursor/rules/doc-header-metadata.mdc` (globs: `**/*.md`)
+
+## 6. Git (human-first)
+
+- **Commit, push, PR** — выполняет **пользователь**, если явно не попросил agent в чате.
+- Agent **не предлагает** «закоммитить?» / «запушить?»; plan и todos это не отменяют.
+- Hook `.cursor/hooks/gate-git.sh` — механический gate на `git commit`, `git push`, `gh pr create` (Ask в UI).
+- Stop: «Готово к commit. Жду твоей команды.»
