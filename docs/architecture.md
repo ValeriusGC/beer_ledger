@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-28 19:09 +0500  
-**Версия:** 3
+**Последнее обновление:** 2026-08-02 18:02:59 +0500  
+**Версия:** 4
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -14,7 +14,7 @@ beer_ledger/
 │   ├── main.dart
 │   ├── app/                     # router, theme (planned)
 │   ├── features/                # home, settings, history (planned)
-│   └── data/                    # repositories, drift/isar (planned)
+│   └── data/                    # repositories, drift (ADR 001)
 ├── packages/
 │   └── beer_ledger_core/        # Pure Dart — NO Flutter import
 │       ├── lib/
@@ -65,7 +65,7 @@ beer_ledger/
 | Domain | `beer_ledger_core` | ✅ iter 1.1 |
 | State | Riverpod 3 | planned (iter 2) |
 | Routing | go_router | planned |
-| DB | drift **или** isar | ADR pending (iter 2) |
+| DB | drift (SQLite) | ADR 001 ✅; impl iter 2 (#28) |
 | Charts | fl_chart | planned |
 | i18n | flutter gen-l10n | planned |
 
@@ -81,5 +81,6 @@ beer_ledger/
 
 | Документ | Тема |
 |----------|------|
+| [001-storage.md](decisions/001-storage.md) | drift + SQLite; схема `clicks`; repository contract |
 | [002-domain-style.md](decisions/002-domain-style.md) | Failure, Result, freezed, период `[from, to)` |
 | [003-closed-unit-set.md](decisions/003-closed-unit-set.md) | Замкнутый набор единиц; факт в базовой единице |
