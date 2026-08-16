@@ -15,19 +15,21 @@ Click clickFromRows({
   required ClickRow row,
   required List<ClickContributionRow> contributions,
 }) {
+  final mappedContributions = [
+    for (final row in contributions)
+      AxisContribution(
+        kind: ledgerAxisKindFromWire(row.kind),
+        signedBaseDelta: row.signedBaseDelta,
+        enteredInId: row.enteredInId,
+      ),
+  ]..sort((a, b) => a.kind.index.compareTo(b.kind.index));
+
   return Click(
     id: row.id,
     clickerId: row.clickerId,
     at: clickAtFromUtcMs(row.atUtcMs),
     factor: row.factor,
-    contributions: [
-      for (final row in contributions)
-        AxisContribution(
-          kind: ledgerAxisKindFromWire(row.kind),
-          signedBaseDelta: row.signedBaseDelta,
-          enteredInId: row.enteredInId,
-        ),
-    ],
+    contributions: mappedContributions,
   );
 }
 

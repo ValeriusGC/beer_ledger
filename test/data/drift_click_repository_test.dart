@@ -90,4 +90,69 @@ void main() {
       );
     });
   });
+
+  group('DriftClickRepository.watchClicksForDay', () {
+    test('пустой день → stream emits []', () async {
+      final repository = DriftClickRepository(db);
+
+      expect(
+        await repository.watchClicksForDay(DateTime(2026, 7, 28)).first,
+        isEmpty,
+      );
+    });
+
+    test('23:59 дня D виден в D; 00:01 дня D+1 — только в D+1', () async {
+      final repository = DriftClickRepository(db);
+      final dayD = DateTime(2026, 7, 28);
+
+      final lateTap = _recordClick(
+        id: 'click-late',
+        at: DateTime(2026, 7, 28, 23, 59),
+      );
+      final earlyTap = _recordClick(
+        id: 'click-early',
+        at: DateTime(2026, 7, 29, 0, 1),
+      );
+
+      await repository.addClick(lateTap);
+      await repository.addClick(earlyTap);
+
+      final clicksOnD = await repository.watchClicksForDay(dayD).first;
+      expect(
+        clicksOnD.map((click) => click.id),
+        ['click-late'],
+      );
+
+      final clicksOnDPlus1 = await repository
+          .watchClicksForDay(DateTime(2026, 7, 29))
+          .first;
+      expect(
+        clicksOnDPlus1.map((click) => click.id),
+        ['click-early'],
+      );
+    });
+
+    test('после addClick stream получает обновление', () async {
+      final repository = DriftClickRepository(db);
+      final day = DateTime(2026, 7, 28);
+      final click = _recordClick(
+        id: 'click-stream',
+        at: DateTime(2026, 7, 28, 15),
+      );
+
+      final expectation = expectLater(
+        repository.watchClicksForDay(day),
+        emitsInOrder([
+          isEmpty,
+          [
+            _withContributionsSortedByKind(click),
+          ],
+        ]),
+      );
+
+      await pumpEventQueue();
+      expect((await repository.addClick(click)).isRight(), isTrue);
+      await expectation;
+    });
+  });
 }

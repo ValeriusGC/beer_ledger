@@ -1,7 +1,9 @@
 import 'package:beer_ledger/data/local/app_database.dart';
+import 'package:beer_ledger/data/local/day_boundaries.dart';
 import 'package:beer_ledger/data/mappers/click_mapper.dart';
 import 'package:beer_ledger/data/repositories/click_repository.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
+import 'package:drift/drift.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// Drift-реализация [ClickRepository] (ADR 001).
@@ -33,8 +35,31 @@ final class DriftClickRepository implements ClickRepository {
 
   @override
   Stream<List<Click>> watchClicksForDay(DateTime dayLocal) {
-    // TODO(28e): drift watch() + localDayUtcRange.
-    throw UnimplementedError('watchClicksForDay — шаг 28e');
+    final (:startUtcMs, :endUtcMs) = localDayUtcRange(dayLocal);
+
+    final query = _db.select(_db.clicks)
+      ..where(
+        (row) =>
+            row.atUtcMs.isBiggerOrEqualValue(startUtcMs) &
+            row.atUtcMs.isSmallerThanValue(endUtcMs),
+      )
+      ..orderBy([
+        (row) => OrderingTerm.desc(row.atUtcMs),
+        (row) => OrderingTerm.desc(row.id),
+      ]);
+
+    return query.watch().asyncMap(_clicksFromRows);
+  }
+
+  Future<List<Click>> _clicksFromRows(List<ClickRow> rows) async {
+    final clicks = <Click>[];
+    for (final row in rows) {
+      final contributions = await (_db.select(
+        _db.clickContributions,
+      )..where((t) => t.clickId.equals(row.id))).get();
+      clicks.add(clickFromRows(row: row, contributions: contributions));
+    }
+    return clicks;
   }
 
   @override
