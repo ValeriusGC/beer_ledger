@@ -21,4 +21,13 @@ sealed class Failure with _$Failure {
 
   /// Неизвестный wire-id единицы измерения при записи тапа.
   const factory Failure.unknownUnitId({required String id}) = UnknownUnitId;
+
+  /// Ошибка persistence: операция repository/БД не выполнена (ADR 001 §6).
+  ///
+  /// [operation] — имя операции для лога и mapper UI (напр. `addClick`).
+  /// [cause] — исходное исключение SQLite/drift; в mapper не показывается пользователю.
+  const factory Failure.storage({
+    required String operation,
+    Object? cause,
+  }) = StorageFailure;
 }

@@ -23,6 +23,23 @@ void main() {
       const failure = Failure.unknownUnitId(id: 'volume.unknown');
       expect(failure, const Failure.unknownUnitId(id: 'volume.unknown'));
     });
+
+    test('storage holds operation and cause', () {
+      final cause = StateError('duplicate id');
+      final failure = Failure.storage(operation: 'addClick', cause: cause);
+      expect(
+        failure,
+        Failure.storage(operation: 'addClick', cause: cause),
+      );
+    });
+
+    test('storage allows null cause', () {
+      const failure = Failure.storage(operation: 'undoLastClick', cause: null);
+      expect(
+        failure,
+        const Failure.storage(operation: 'undoLastClick', cause: null),
+      );
+    });
   });
 
   group('Result — Left is Failure, Right is success', () {
