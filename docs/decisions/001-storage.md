@@ -1,8 +1,8 @@
 # ADR 001: хранение тапов (clicks) — drift + SQLite
 
 **Дата создания:** 2026-08-02 18:02:59 +0500  
-**Последнее обновление:** 2026-08-02 18:02:59 +0500  
-**Версия:** 1  
+**Последнее обновление:** 2026-08-20 20:48:00 +0500  
+**Версия:** 2  
 **Вид документа:** ADR
 
 **Статус:** Accepted  
@@ -197,7 +197,7 @@ Mapper UI: generic «Не удалось сохранить» + лог `cause` �
 
 **Follow-up**
 
-- PR #28: зависимости drift, `AppDatabase`, `DriftClickRepository`, `Failure.storage`;
+- PR #28 / [#35](https://github.com/ValeriusGC/beer_ledger/pull/35): drift, `AppDatabase`, `DriftClickRepository.addClick` / `watchClicksForDay`, `Failure.storage` — ✅;
 - PR #29: `undoLastClick`;
 - PR #30–#31: providers + `aggregateForPeriod`;
 - iter 2.5+: таблица settings clicker (отдельная миграция).
@@ -206,8 +206,8 @@ Mapper UI: generic «Не удалось сохранить» + лог `cause` �
 
 ## Проверка соблюдения
 
-- [ ] Persistence только в `lib/data/`, не в `beer_ledger_core`
-- [ ] `Click` при чтении совпадает с domain-моделью (contributions не пересчитываются)
-- [ ] `at` в БД — UTC ms; фильтр «день» — local boundaries
-- [ ] Repository API — `Result<T>`, ошибки БД → `Failure.storage`
+- [x] Persistence только в `lib/data/`, не в `beer_ledger_core`
+- [x] `Click` при чтении совпадает с domain-моделью (contributions не пересчитываются)
+- [x] `at` в БД — UTC ms; фильтр «день» — local boundaries
+- [ ] Repository API — `Result<T>`, ошибки БД → `Failure.storage` (`addClick` ✅; `undoLastClick` ещё throw — #29)
 - [ ] Миграции drift при изменении схемы — отдельный PR, не silent break

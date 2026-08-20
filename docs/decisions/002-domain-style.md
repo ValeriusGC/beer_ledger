@@ -1,8 +1,8 @@
 # ADR 002: стиль domain-слоя в beer_ledger_core
 
 **Дата создания:** 2026-07-28 13:56:32 +0500  
-**Последнее обновление:** 2026-07-28 16:06 +0500  
-**Версия:** 4  
+**Последнее обновление:** 2026-08-20 20:48:00 +0500  
+**Версия:** 5  
 **Вид документа:** ADR
 
 **Статус:** Accepted  
@@ -188,8 +188,8 @@ packages/beer_ledger_core/lib/
 
 **Follow-up**
 
-- ADR 001 (drift vs isar) — iter 2;
-- `Failure.storage` и др. — новые factory в том же sealed class;
+- ADR 001 принят (drift); `addClick` / `watchClicksForDay` влиты PR #35; `undoLastClick` — #29;
+- `Failure.storage` — в том же sealed `Failure` (коммит 28a в #35);
 - `TaskEither` — опционально в repo, не обязателен в 1.1.
 
 ---
