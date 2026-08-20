@@ -3,8 +3,8 @@
 # beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-28 19:09 +0500  
-**Версия:** 4
+**Последнее обновление:** 2026-08-20 20:48:00 +0500  
+**Версия:** 5
 
 Flutter-приложение для учёта привычки **trade-off tap**: один тап фиксирует объём, оценочные калории, деньги и удовольствие.
 
@@ -43,10 +43,11 @@ dart test
 
 ## Стек (целевой)
 
-- Flutter 3.x, Riverpod, go_router, drift/isar, fl_chart
+- Flutter 3.x, Riverpod (planned), go_router, drift, fl_chart
 - Offline-first, Android / iOS / Web
 
 ## Статус
 
 **iter 1.1 ✅** — домен в `beer_ledger_core` (measure, convert, `Click`/`Clicker`, `aggregateForPeriod`, preset `beerHalfLiter`).  
-**Следующий шаг:** iter 2 — persistence + Riverpod (ADR drift vs isar).
+**iter 2 (persistence):** ADR 001 drift принят; `addClick` и `watchClicksForDay` влиты ([PR #35](https://github.com/ValeriusGC/beer_ledger/pull/35), closes #28).  
+**Следующий шаг:** #29 `undoLastClick`. Затем Riverpod (#30–#31).
