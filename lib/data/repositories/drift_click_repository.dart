@@ -14,6 +14,7 @@ final class DriftClickRepository implements ClickRepository {
   final AppDatabase _db;
 
   static const _addClickOperation = 'addClick';
+  static const _undoLastClickOperation = 'undoLastClick';
 
   @override
   Future<Result<void>> addClick(Click click) async {
@@ -64,7 +65,26 @@ final class DriftClickRepository implements ClickRepository {
 
   @override
   Future<Result<void>> undoLastClick() async {
-    // TODO(#29): DELETE последнего тапа по (at DESC, id DESC).
-    throw UnimplementedError('undoLastClick — PR #29');
+    try {
+      await _db.transaction(() async {
+        final last =
+            await (_db.select(_db.clicks)
+                  ..orderBy([
+                    (row) => OrderingTerm.desc(row.atUtcMs),
+                    (row) => OrderingTerm.desc(row.id),
+                  ])
+                  ..limit(1))
+                .getSingleOrNull();
+        if (last == null) {
+          return;
+        }
+        await (_db.delete(_db.clicks)..where((t) => t.id.equals(last.id))).go();
+      });
+      return const Right(null);
+    } on Object catch (error) {
+      return Left(
+        Failure.storage(operation: _undoLastClickOperation, cause: error),
+      );
+    }
   }
 }
