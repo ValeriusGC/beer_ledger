@@ -25,8 +25,9 @@ Click _withContributionsSortedByKind(Click click) {
 }
 
 Future<Click?> _readClickFromDb(AppDatabase db, String id) async {
-  final row = await (db.select(db.clicks)..where((t) => t.id.equals(id)))
-      .getSingleOrNull();
+  final row = await (db.select(
+    db.clicks,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
   if (row == null) return null;
 
   final contributions = await (db.select(
@@ -79,15 +80,12 @@ void main() {
       final duplicate = await repository.addClick(click);
 
       expect(duplicate.isLeft(), isTrue);
-      duplicate.fold(
-        (failure) {
-          expect(failure, isA<StorageFailure>());
-          final storage = failure as StorageFailure;
-          expect(storage.operation, 'addClick');
-          expect(storage.cause, isNotNull);
-        },
-        (_) => fail('expected Left(Failure.storage)'),
-      );
+      duplicate.fold((failure) {
+        expect(failure, isA<StorageFailure>());
+        final storage = failure as StorageFailure;
+        expect(storage.operation, 'addClick');
+        expect(storage.cause, isNotNull);
+      }, (_) => fail('expected Left(Failure.storage)'));
     });
   });
 
@@ -118,18 +116,12 @@ void main() {
       await repository.addClick(earlyTap);
 
       final clicksOnD = await repository.watchClicksForDay(dayD).first;
-      expect(
-        clicksOnD.map((click) => click.id),
-        ['click-late'],
-      );
+      expect(clicksOnD.map((click) => click.id), ['click-late']);
 
       final clicksOnDPlus1 = await repository
           .watchClicksForDay(DateTime(2026, 7, 29))
           .first;
-      expect(
-        clicksOnDPlus1.map((click) => click.id),
-        ['click-early'],
-      );
+      expect(clicksOnDPlus1.map((click) => click.id), ['click-early']);
     });
 
     test('после addClick stream получает обновление', () async {
@@ -144,15 +136,122 @@ void main() {
         repository.watchClicksForDay(day),
         emitsInOrder([
           isEmpty,
-          [
-            _withContributionsSortedByKind(click),
-          ],
+          [_withContributionsSortedByKind(click)],
         ]),
       );
 
       await pumpEventQueue();
       expect((await repository.addClick(click)).isRight(), isTrue);
       await expectation;
+    });
+
+    test('после undoLastClick stream получает обновление', () async {
+      final repository = DriftClickRepository(db);
+      final day = DateTime(2026, 7, 28);
+      final first = _recordClick(
+        id: 'click-keep',
+        at: DateTime(2026, 7, 28, 10),
+      );
+      final last = _recordClick(
+        id: 'click-drop',
+        at: DateTime(2026, 7, 28, 15),
+      );
+
+      await repository.addClick(first);
+      await repository.addClick(last);
+
+      final expectation = expectLater(
+        repository.watchClicksForDay(day),
+        emitsInOrder([
+          [
+            _withContributionsSortedByKind(last),
+            _withContributionsSortedByKind(first),
+          ],
+          [_withContributionsSortedByKind(first)],
+        ]),
+      );
+
+      await pumpEventQueue();
+      expect((await repository.undoLastClick()).isRight(), isTrue);
+      await expectation;
+    });
+  });
+
+  group('DriftClickRepository.undoLastClick', () {
+    test('пустой журнал → Right(null), таблица пуста', () async {
+      final repository = DriftClickRepository(db);
+
+      final result = await repository.undoLastClick();
+
+      expect(result.isRight(), isTrue);
+      expect(await db.select(db.clicks).get(), isEmpty);
+    });
+
+    test('один тап: Click и contributions удалены', () async {
+      final click = _recordClick(
+        id: 'click-undo-one',
+        at: DateTime(2026, 7, 28, 12),
+      );
+      final repository = DriftClickRepository(db);
+      expect((await repository.addClick(click)).isRight(), isTrue);
+
+      expect((await repository.undoLastClick()).isRight(), isTrue);
+
+      expect(await _readClickFromDb(db, click.id), isNull);
+      expect(
+        await (db.select(
+          db.clickContributions,
+        )..where((t) => t.clickId.equals(click.id))).get(),
+        isEmpty,
+      );
+    });
+
+    test('из N тапов уходит самый поздний по at', () async {
+      final early = _recordClick(
+        id: 'click-early-undo',
+        at: DateTime(2026, 7, 28, 10),
+      );
+      final late = _recordClick(
+        id: 'click-late-undo',
+        at: DateTime(2026, 7, 28, 18),
+      );
+      final repository = DriftClickRepository(db);
+      await repository.addClick(early);
+      await repository.addClick(late);
+
+      expect((await repository.undoLastClick()).isRight(), isTrue);
+
+      expect(await _readClickFromDb(db, late.id), isNull);
+      expect(await _readClickFromDb(db, early.id), isNotNull);
+    });
+
+    test('одинаковое at → удаляется id DESC', () async {
+      final at = DateTime(2026, 7, 28, 12);
+      final lowerId = _recordClick(id: 'click-aaa', at: at);
+      final higherId = _recordClick(id: 'click-zzz', at: at);
+      final repository = DriftClickRepository(db);
+      await repository.addClick(lowerId);
+      await repository.addClick(higherId);
+
+      expect((await repository.undoLastClick()).isRight(), isTrue);
+
+      expect(await _readClickFromDb(db, higherId.id), isNull);
+      expect(await _readClickFromDb(db, lowerId.id), isNotNull);
+    });
+
+    test('ошибка БД → Failure.storage', () async {
+      final repository = DriftClickRepository(db);
+      await db.customStatement('DROP TABLE clicks');
+
+      final result = await repository.undoLastClick();
+
+      expect(result.isLeft(), isTrue);
+      result.fold((failure) {
+        expect(failure, isA<StorageFailure>());
+        final storage = failure as StorageFailure;
+        expect(storage.operation, 'undoLastClick');
+        expect(storage.cause, isNotNull);
+      }, (_) => fail('expected Left(Failure.storage)'));
     });
   });
 }
