@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-20 20:48:00 +0500  
-**Версия:** 5
+**Последнее обновление:** 2026-08-22 11:25:00 +0500  
+**Версия:** 7
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -37,7 +37,7 @@ beer_ledger/
 └──────┬──────┘
        │ ref.watch
 ┌──────▼──────┐
-│ Repository  │  persist Click (add/watch ✅; undo #29)
+│ Repository  │  persist Click (add/watch/undo ✅; Riverpod #30)
 └──────┬──────┘
        │
 ┌──────▼──────────────┐
@@ -65,7 +65,7 @@ beer_ledger/
 | Domain | `beer_ledger_core` | ✅ iter 1.1 |
 | State | Riverpod 3 | planned (iter 2, #30–#31) |
 | Routing | go_router | planned |
-| DB | drift (SQLite) | ADR 001 ✅; add/watch влиты PR #35 (closes #28); undo — #29 |
+| DB | drift (SQLite) | ADR 001 ✅; add/watch PR #35; undo PR #37 |
 | Charts | fl_chart | planned |
 | i18n | flutter gen-l10n | planned |
 
