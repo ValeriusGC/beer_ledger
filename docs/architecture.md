@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-24 15:39:58 +0500  
-**Версия:** 8
+**Последнее обновление:** 2026-08-24 16:50:59 +0500  
+**Версия:** 9
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -12,7 +12,7 @@ Public выжимка. Полная спека — `flutter-senior-prep/project_
 beer_ledger/
 ├── lib/                         # Flutter app
 │   ├── main.dart
-│   ├── app/                     # providers (#30); router, theme (planned)
+│   ├── app/                     # providers (#30–#31); router, theme (planned)
 │   ├── features/                # home, settings, history (planned)
 │   └── data/                    # repositories, drift (ADR 001)
 ├── packages/
@@ -33,7 +33,7 @@ beer_ledger/
 
 ```
 ┌─────────────┐
-│  UI (Flutter)│  Riverpod #30, Material 3 (planned)
+│  UI (Flutter)│  Riverpod #30–#31, Material 3 (planned)
 └──────┬──────┘
        │ ref.watch
 ┌──────▼──────┐
@@ -63,7 +63,7 @@ beer_ledger/
 | Слой | Выбор | Статус |
 |------|-------|--------|
 | Domain | `beer_ledger_core` | ✅ iter 1.1 |
-| State | Riverpod 3 | #30 clicksForToday ✅; баланс #31 |
+| State | Riverpod 3 | #30 clicksForToday ✅; #31 todayBalance ✅ |
 | Routing | go_router | planned |
 | DB | drift (SQLite) | ADR 001 ✅; add/watch PR #35; undo PR #37 |
 | Charts | fl_chart | planned |
