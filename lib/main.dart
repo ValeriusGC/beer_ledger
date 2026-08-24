@@ -32,8 +32,8 @@ class BeerLedgerApp extends StatelessWidget {
 
 /// Заглушка домашнего экрана, пока нет feature-слоя.
 ///
-/// Намеренно [StatelessWidget], не [ConsumerWidget]: на этом шаге экран
-/// ещё не читает провайдеры.
+/// Намеренно [StatelessWidget], не [ConsumerWidget]: экран ещё не читает
+/// провайдеры.
 class HomePlaceholderPage extends StatelessWidget {
   const HomePlaceholderPage({super.key});
 
