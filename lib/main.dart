@@ -1,11 +1,19 @@
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Запускает приложение внутри [ProviderScope].
+///
+/// Scope — единственное место, где живёт состояние провайдеров. Без него
+/// не к чему привязать [WidgetRef] в виджетах и [ProviderContainer] в тестах.
 void main() {
-  runApp(const BeerLedgerApp());
+  runApp(const ProviderScope(child: BeerLedgerApp()));
 }
 
-/// Shell v0 — placeholder until feature screens land.
+/// Корневой виджет: тема Material 3 и заглушка домашнего экрана.
+///
+/// Feature-экраны ещё не подключены. Провайдеры читаются из [ProviderScope]
+/// в [main]; этот виджет их не создаёт и в базу не ходит.
 class BeerLedgerApp extends StatelessWidget {
   const BeerLedgerApp({super.key});
 
@@ -22,6 +30,10 @@ class BeerLedgerApp extends StatelessWidget {
   }
 }
 
+/// Заглушка домашнего экрана, пока нет feature-слоя.
+///
+/// Намеренно [StatelessWidget], не [ConsumerWidget]: экран ещё не читает
+/// провайдеры.
 class HomePlaceholderPage extends StatelessWidget {
   const HomePlaceholderPage({super.key});
 
