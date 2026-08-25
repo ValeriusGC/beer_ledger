@@ -1,8 +1,8 @@
 # CI и static analysis
 
 **Дата создания:** 2026-07-27 14:56:23 +0500  
-**Последнее обновление:** 2026-08-25 15:43:54 +0500  
-**Версия:** 3  
+**Последнее обновление:** 2026-08-25 16:04:55 +0500  
+**Версия:** 4  
 **Вид документа:** справочник
 
 > Контракт качества для PR. Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).  
@@ -45,9 +45,19 @@ flutter pub get && flutter analyze --fatal-warnings lib
 ## GitHub Actions
 
 - **CI** ([`ci.yml`](../.github/workflows/ci.yml)): trigger — push и PR в `main`. Jobs `core` и `app` параллельно. Badge — в [README](../README.md).
-- **Dev APK** ([`dev-apk.yml`](../.github/workflows/dev-apk.yml)): только вручную — вкладка Actions → workflow **Dev APK** → Run workflow. Номер в имени файла — `github.run_number` этого workflow (растёт с каждым ручным запуском): `beer-ledger-dev-<N>.apk`. Скачать: run → Artifacts → `beer-ledger-dev-apk-<N>`.
+- **Dev APK** ([`dev-apk.yml`](../.github/workflows/dev-apk.yml)): только вручную (`workflow_dispatch`), **не** на push/PR.
 
-Подробности pipeline — в workflow yaml.
+  Запуск:
+
+  1. Actions → **Dev APK** → **Run workflow**
+  2. Поле **branch** — какую ветку собрать:
+     - `main` — релизная линия после merge
+     - `feat/…` — проверить PR-ветку **до** merge (код берётся с указанной ветки)
+  3. Run → Artifacts → `beer-ledger-dev-<ветка>-<N>.apk` (слэши в имени ветки → `-`)
+
+  Кнопка **Dev APK** видна только если `dev-apk.yml` уже в `main`. Сам workflow-файл всегда из `main`; собираемый код — с ветки из поля **branch**.
+
+Подробности — комментарий в начале [`dev-apk.yml`](../.github/workflows/dev-apk.yml) и [README § Сборка dev APK](../README.md).
 
 ## Связанные документы
 
