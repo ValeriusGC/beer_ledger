@@ -3,8 +3,8 @@
 # beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-22 11:25:00 +0500  
-**Версия:** 7
+**Последнее обновление:** 2026-08-25 13:22:12 +0500  
+**Версия:** 8
 
 Flutter-приложение для учёта привычки **trade-off tap**: один тап фиксирует объём, оценочные калории, деньги и удовольствие.
 
@@ -26,6 +26,16 @@ cd beer_ledger
 flutter pub get
 flutter run
 ```
+
+## Локализация (RU / EN)
+
+Строки интерфейса живут в `lib/l10n/app_en.arb` (шаблон) и `lib/l10n/app_ru.arb`. Новая фраза:
+
+1. Добавить ключ и `@description` в оба ARB.
+2. `flutter gen-l10n` (или `flutter pub get`).
+3. В виджете: `AppLocalizations.of(context).yourKey`.
+
+Сгенерированные `lib/l10n/app_localizations*.dart` коммитим вместе с ARB. Доменные строки из `beer_ledger_core` (например, `beerHalfLiter().title`) в ARB не переносятся.
 
 ## Тесты core
 
