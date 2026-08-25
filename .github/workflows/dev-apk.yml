@@ -1,0 +1,63 @@
+# Ручная сборка Android APK (flavor dev). Не запускается на push/PR — только кнопка Run workflow.
+#
+# Как запускать:
+#   1. GitHub → Actions → слева «Dev APK» → Run workflow
+#   2. Поле branch — имя ветки, чей код собрать (main или, например, feat/my-feature)
+#   3. После зелёного run → Artifacts → скачать APK
+#
+# Файл workflow должен быть в main, иначе кнопки не будет. Код для сборки — с любой ветки из поля branch.
+
+name: Dev APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: >-
+          Git-ветка для сборки (main или feat/…). Скачивается код с этой ветки.
+          Workflow-файл всегда из main.
+        required: true
+        default: main
+        type: string
+
+run-name: Dev APK · ${{ inputs.branch }} · run ${{ github.run_number }}
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Build dev APK
+        run: |
+          flutter pub get
+          flutter build apk --flavor dev
+
+      - name: Prepare artifact filename
+        id: names
+        run: |
+          slug="${{ inputs.branch }}"
+          slug="${slug//\//-}"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+          src="build/app/outputs/flutter-apk/app-dev-release.apk"
+          dest="build/app/outputs/flutter-apk/beer-ledger-dev-${slug}-${{ github.run_number }}.apk"
+          mv "$src" "$dest"
+          echo "apk=$dest" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: beer-ledger-dev-${{ steps.names.outputs.slug }}-${{ github.run_number }}
+          path: ${{ steps.names.outputs.apk }}

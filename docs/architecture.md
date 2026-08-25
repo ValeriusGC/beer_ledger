@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-24 16:50:59 +0500  
-**Версия:** 9
+**Последнее обновление:** 2026-08-25 13:22:12 +0500  
+**Версия:** 10
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -67,7 +67,7 @@ beer_ledger/
 | Routing | go_router | planned |
 | DB | drift (SQLite) | ADR 001 ✅; add/watch PR #35; undo PR #37 |
 | Charts | fl_chart | planned |
-| i18n | flutter gen-l10n | planned |
+| i18n | flutter gen-l10n | ✅ app RU+EN |
 
 ## Принципы
 

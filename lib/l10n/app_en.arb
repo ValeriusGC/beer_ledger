@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "appTitle": "Beer Ledger",
+  "@appTitle": {
+    "description": "Application name in the window title and home app bar"
+  },
+  "placeholderHeadline": "Placeholder home screen",
+  "@placeholderHeadline": {
+    "description": "Headline on the home placeholder before the real home screen exists"
+  },
+  "coreVersion": "core {version}",
+  "@coreVersion": {
+    "description": "beer_ledger_core package version shown on the placeholder screen",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "placeholderNextStep": "Home screen is next",
+  "@placeholderNextStep": {
+    "description": "Note that the main home screen is the next UI iteration"
+  },
+  "devBadge": "DEV",
+  "@devBadge": {
+    "description": "Short badge in the app bar for the dev flavor only"
+  }
+}
