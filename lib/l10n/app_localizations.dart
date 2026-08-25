@@ -121,6 +121,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home screen is next'**
   String get placeholderNextStep;
+
+  /// Short badge in the app bar for the dev flavor only
+  ///
+  /// In en, this message translates to:
+  /// **'DEV'**
+  String get devBadge;
 }
 
 class _AppLocalizationsDelegate

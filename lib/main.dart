@@ -1,6 +1,7 @@
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Запускает приложение внутри [ProviderScope].
@@ -11,6 +12,9 @@ void main() {
   runApp(const ProviderScope(child: BeerLedgerApp()));
 }
 
+/// `true`, когда сборка запущена с `--flavor dev`.
+bool get _isDevFlavor => appFlavor == 'dev';
+
 /// Корневой виджет: тема Material 3, локализации и заглушка домашнего экрана.
 ///
 /// Feature-экраны ещё не подключены. Провайдеры читаются из [ProviderScope]
@@ -18,6 +22,7 @@ void main() {
 ///
 /// [onGenerateTitle] нужен потому, что [BuildContext] в [build] ещё не видит
 /// [AppLocalizations]: delegates живут внутри [MaterialApp].
+/// DEBUG-баннер — только у flavor `dev`: у `prod` его нет даже в debug-run.
 class BeerLedgerApp extends StatelessWidget {
   const BeerLedgerApp({super.key});
 
@@ -27,6 +32,7 @@ class BeerLedgerApp extends StatelessWidget {
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: _isDevFlavor,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
@@ -48,7 +54,16 @@ class HomePlaceholderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.appTitle)),
+      appBar: AppBar(
+        title: Text(l10n.appTitle),
+        actions: [
+          if (_isDevFlavor)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Center(child: Text(l10n.devBadge)),
+            ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

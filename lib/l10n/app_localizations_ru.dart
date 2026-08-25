@@ -21,4 +21,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get placeholderNextStep => 'Главный экран ещё впереди';
+
+  @override
+  String get devBadge => 'DEV';
 }

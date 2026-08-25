@@ -21,5 +21,9 @@
   "placeholderNextStep": "Home screen is next",
   "@placeholderNextStep": {
     "description": "Note that the main home screen is the next UI iteration"
+  },
+  "devBadge": "DEV",
+  "@devBadge": {
+    "description": "Short badge in the app bar for the dev flavor only"
   }
 }

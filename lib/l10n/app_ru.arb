@@ -3,5 +3,6 @@
   "appTitle": "Пивомер",
   "placeholderHeadline": "Заглушка домашнего экрана",
   "coreVersion": "core {version}",
-  "placeholderNextStep": "Главный экран ещё впереди"
+  "placeholderNextStep": "Главный экран ещё впереди",
+  "devBadge": "DEV"
 }

@@ -3,8 +3,8 @@
 # beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-25 13:22:12 +0500  
-**Версия:** 8
+**Последнее обновление:** 2026-08-25 13:56:43 +0500  
+**Версия:** 9
 
 Flutter-приложение для учёта привычки **trade-off tap**: один тап фиксирует объём, оценочные калории, деньги и удовольствие.
 
@@ -24,8 +24,27 @@ beer_ledger/
 ```bash
 cd beer_ledger
 flutter pub get
-flutter run
+flutter run --flavor dev
+flutter run --flavor prod
 ```
+
+В `pubspec.yaml` задан `default-flavor: dev`, поэтому `flutter run` без флага тоже поднимает **dev** (Android и iOS одинаково).
+
+| Flavor | id | Имя на домашнем экране |
+|--------|----|------------------------|
+| `dev` | `com.beerledger.beer_ledger.dev` | Пивомер DEV |
+| `prod` | `com.beerledger.beer_ledger` | Пивомер |
+
+Сборки:
+
+```bash
+flutter build apk --flavor dev
+flutter build apk --flavor prod
+flutter build ios --flavor dev --no-codesign
+flutter build ios --flavor prod --no-codesign
+```
+
+Dev и prod ставятся на устройство одновременно: разные id. У dev на экране метка DEV; у prod её нет.
 
 ## Локализация (RU / EN)
 

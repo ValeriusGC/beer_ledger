@@ -21,4 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get placeholderNextStep => 'Home screen is next';
+
+  @override
+  String get devBadge => 'DEV';
 }
