@@ -12,16 +12,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'Пивомер';
 
   @override
-  String get placeholderHeadline => 'Заглушка домашнего экрана';
-
-  @override
-  String coreVersion(String version) {
-    return 'core $version';
-  }
-
-  @override
-  String get placeholderNextStep => 'Главный экран ещё впереди';
-
-  @override
   String get devBadge => 'DEV';
+
+  @override
+  String get todayBalanceVolumeLabel => 'Объём';
+
+  @override
+  String get todayBalanceEnergyLabel => 'Ккал';
+
+  @override
+  String get todayBalanceMoneyLabel => 'Деньги';
+
+  @override
+  String get todayBalanceJoyLabel => 'Радость';
+
+  @override
+  String get todayBalanceLoadError => 'Не удалось загрузить итог за сегодня';
 }

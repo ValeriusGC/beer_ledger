@@ -1,8 +1,10 @@
 {
   "@@locale": "ru",
   "appTitle": "Пивомер",
-  "placeholderHeadline": "Заглушка домашнего экрана",
-  "coreVersion": "core {version}",
-  "placeholderNextStep": "Главный экран ещё впереди",
-  "devBadge": "DEV"
+  "devBadge": "DEV",
+  "todayBalanceVolumeLabel": "Объём",
+  "todayBalanceEnergyLabel": "Ккал",
+  "todayBalanceMoneyLabel": "Деньги",
+  "todayBalanceJoyLabel": "Радость",
+  "todayBalanceLoadError": "Не удалось загрузить итог за сегодня"
 }

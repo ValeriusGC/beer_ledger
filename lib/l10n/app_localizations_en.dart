@@ -12,16 +12,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Beer Ledger';
 
   @override
-  String get placeholderHeadline => 'Placeholder home screen';
-
-  @override
-  String coreVersion(String version) {
-    return 'core $version';
-  }
-
-  @override
-  String get placeholderNextStep => 'Home screen is next';
-
-  @override
   String get devBadge => 'DEV';
+
+  @override
+  String get todayBalanceVolumeLabel => 'Volume';
+
+  @override
+  String get todayBalanceEnergyLabel => 'Calories';
+
+  @override
+  String get todayBalanceMoneyLabel => 'Money';
+
+  @override
+  String get todayBalanceJoyLabel => 'Joy';
+
+  @override
+  String get todayBalanceLoadError => 'Couldn\'t load today\'s totals';
 }
