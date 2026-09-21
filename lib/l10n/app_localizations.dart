@@ -104,29 +104,41 @@ abstract class AppLocalizations {
   /// **'Beer Ledger'**
   String get appTitle;
 
-  /// Headline on the home placeholder before the real home screen exists
-  ///
-  /// In en, this message translates to:
-  /// **'Placeholder home screen'**
-  String get placeholderHeadline;
-
-  /// beer_ledger_core package version shown on the placeholder screen
-  ///
-  /// In en, this message translates to:
-  /// **'core {version}'**
-  String coreVersion(String version);
-
-  /// Note that the main home screen is the next UI iteration
-  ///
-  /// In en, this message translates to:
-  /// **'Home screen is next'**
-  String get placeholderNextStep;
-
   /// Short badge in the app bar for the dev flavor only
   ///
   /// In en, this message translates to:
   /// **'DEV'**
   String get devBadge;
+
+  /// Axis label for today's volume on the home balance card
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get todayBalanceVolumeLabel;
+
+  /// Axis label for today's energy on the home balance card
+  ///
+  /// In en, this message translates to:
+  /// **'Calories'**
+  String get todayBalanceEnergyLabel;
+
+  /// Axis label for today's money on the home balance card
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get todayBalanceMoneyLabel;
+
+  /// Axis label for today's joy on the home balance card
+  ///
+  /// In en, this message translates to:
+  /// **'Joy'**
+  String get todayBalanceJoyLabel;
+
+  /// User-visible error when todayBalanceProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load today\'s totals'**
+  String get todayBalanceLoadError;
 }
 
 class _AppLocalizationsDelegate

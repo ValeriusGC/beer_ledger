@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-25 13:22:12 +0500  
-**Версия:** 10
+**Последнее обновление:** 2026-09-21 18:53:17 +0300  
+**Версия:** 11
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -12,8 +12,8 @@ Public выжимка. Полная спека — `flutter-senior-prep/project_
 beer_ledger/
 ├── lib/                         # Flutter app
 │   ├── main.dart
-│   ├── app/                     # providers (#30–#31); router, theme (planned)
-│   ├── features/                # home, settings, history (planned)
+│   ├── app/                     # providers (#30–#31), flavor; router, theme (planned)
+│   ├── features/home/           # HomePage (#44); settings, history (planned)
 │   └── data/                    # repositories, drift (ADR 001)
 ├── packages/
 │   └── beer_ledger_core/        # Pure Dart — NO Flutter import
@@ -33,7 +33,7 @@ beer_ledger/
 
 ```
 ┌─────────────┐
-│  UI (Flutter)│  Riverpod #30–#31, Material 3 (planned)
+│  UI (Flutter)│  HomePage (#44), Riverpod #30–#31, Material 3
 └──────┬──────┘
        │ ref.watch
 ┌──────▼──────┐
