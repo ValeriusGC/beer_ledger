@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:beer_ledger/app/providers/clicks_for_today.cg.dart';
+import 'package:beer_ledger/app/providers/current_clicker.cg.dart';
 import 'package:beer_ledger/app/providers/record_click.cg.dart';
 import 'package:beer_ledger/app/providers/today_balance.cg.dart';
 import 'package:beer_ledger/features/home/home_page.dart';
@@ -36,13 +37,17 @@ class _LoadingRecordClick extends RecordClick {
 Future<void> _pumpHome(
   WidgetTester tester, {
   required RecordClick recordClick,
-}) {
-  return tester.pumpWidget(
+  Stream<Clicker>? clicker,
+}) async {
+  await tester.pumpWidget(
     ProviderScope(
       overrides: [
         todayBalanceProvider.overrideWithValue(AsyncData(_emptyBalances())),
         recordClickProvider.overrideWith(() => recordClick),
         clicksForTodayProvider.overrideWithValue(const AsyncData(<Click>[])),
+        currentClickerProvider.overrideWith(
+          (ref) => clicker ?? Stream.value(beerHalfLiter()),
+        ),
       ],
       child: const MaterialApp(
         locale: Locale('en'),
@@ -52,6 +57,7 @@ Future<void> _pumpHome(
       ),
     ),
   );
+  await tester.pump();
 }
 
 void main() {
@@ -67,6 +73,40 @@ void main() {
 
   testWidgets('isLoading — кнопка disabled', (tester) async {
     await _pumpHome(tester, recordClick: _LoadingRecordClick());
+
+    expect(
+      tester.widget<FilledButton>(find.byType(FilledButton)).onPressed,
+      isNull,
+    );
+  });
+
+  testWidgets('кнопка показывает текущий объём', (tester) async {
+    final clicker = beerHalfLiter().copyWith(
+      axes: [
+        for (final axis in beerHalfLiter().axes)
+          if (axis.kind == LedgerAxisKind.volume)
+            axis.copyWith(enteredValue: 0.6)
+          else
+            axis,
+      ],
+    );
+
+    await _pumpHome(
+      tester,
+      recordClick: _ReadyRecordClick(),
+      clicker: Stream.value(clicker),
+    );
+
+    expect(find.text('Beer 0.6'), findsOneWidget);
+    expect(find.text('Beer 0.5'), findsNothing);
+  });
+
+  testWidgets('пока порция грузится кнопка выключена', (tester) async {
+    await _pumpHome(
+      tester,
+      recordClick: _ReadyRecordClick(),
+      clicker: Stream.fromFuture(Completer<Clicker>().future),
+    );
 
     expect(
       tester.widget<FilledButton>(find.byType(FilledButton)).onPressed,

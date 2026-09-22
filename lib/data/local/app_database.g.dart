@@ -654,12 +654,415 @@ class ClickContributionsCompanion
   }
 }
 
+class $ClickerSettingsTable extends ClickerSettings
+    with TableInfo<$ClickerSettingsTable, ClickerSettingsRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClickerSettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _clickerIdMeta = const VerificationMeta(
+    'clickerId',
+  );
+  @override
+  late final GeneratedColumn<String> clickerId = GeneratedColumn<String>(
+    'clicker_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _volumeEnteredMeta = const VerificationMeta(
+    'volumeEntered',
+  );
+  @override
+  late final GeneratedColumn<double> volumeEntered = GeneratedColumn<double>(
+    'volume_entered',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _energyEnteredMeta = const VerificationMeta(
+    'energyEntered',
+  );
+  @override
+  late final GeneratedColumn<double> energyEntered = GeneratedColumn<double>(
+    'energy_entered',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _moneyEnteredMeta = const VerificationMeta(
+    'moneyEntered',
+  );
+  @override
+  late final GeneratedColumn<double> moneyEntered = GeneratedColumn<double>(
+    'money_entered',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _joyEnteredMeta = const VerificationMeta(
+    'joyEntered',
+  );
+  @override
+  late final GeneratedColumn<double> joyEntered = GeneratedColumn<double>(
+    'joy_entered',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    clickerId,
+    volumeEntered,
+    energyEntered,
+    moneyEntered,
+    joyEntered,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'clicker_settings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClickerSettingsRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('clicker_id')) {
+      context.handle(
+        _clickerIdMeta,
+        clickerId.isAcceptableOrUnknown(data['clicker_id']!, _clickerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_clickerIdMeta);
+    }
+    if (data.containsKey('volume_entered')) {
+      context.handle(
+        _volumeEnteredMeta,
+        volumeEntered.isAcceptableOrUnknown(
+          data['volume_entered']!,
+          _volumeEnteredMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_volumeEnteredMeta);
+    }
+    if (data.containsKey('energy_entered')) {
+      context.handle(
+        _energyEnteredMeta,
+        energyEntered.isAcceptableOrUnknown(
+          data['energy_entered']!,
+          _energyEnteredMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_energyEnteredMeta);
+    }
+    if (data.containsKey('money_entered')) {
+      context.handle(
+        _moneyEnteredMeta,
+        moneyEntered.isAcceptableOrUnknown(
+          data['money_entered']!,
+          _moneyEnteredMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_moneyEnteredMeta);
+    }
+    if (data.containsKey('joy_entered')) {
+      context.handle(
+        _joyEnteredMeta,
+        joyEntered.isAcceptableOrUnknown(data['joy_entered']!, _joyEnteredMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_joyEnteredMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {clickerId};
+  @override
+  ClickerSettingsRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClickerSettingsRow(
+      clickerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}clicker_id'],
+      )!,
+      volumeEntered: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}volume_entered'],
+      )!,
+      energyEntered: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}energy_entered'],
+      )!,
+      moneyEntered: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}money_entered'],
+      )!,
+      joyEntered: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}joy_entered'],
+      )!,
+    );
+  }
+
+  @override
+  $ClickerSettingsTable createAlias(String alias) {
+    return $ClickerSettingsTable(attachedDatabase, alias);
+  }
+}
+
+class ClickerSettingsRow extends DataClass
+    implements Insertable<ClickerSettingsRow> {
+  /// Id пресета, v1 — `clicker-beer`.
+  final String clickerId;
+
+  /// Объём в литрах, как на оси пресета.
+  final double volumeEntered;
+
+  /// Ккал, как на оси пресета.
+  final double energyEntered;
+
+  /// Цена в рублях, величина без знака. Знак оси остаётся minus.
+  final double moneyEntered;
+
+  /// Радость в пунктах пресета.
+  final double joyEntered;
+  const ClickerSettingsRow({
+    required this.clickerId,
+    required this.volumeEntered,
+    required this.energyEntered,
+    required this.moneyEntered,
+    required this.joyEntered,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['clicker_id'] = Variable<String>(clickerId);
+    map['volume_entered'] = Variable<double>(volumeEntered);
+    map['energy_entered'] = Variable<double>(energyEntered);
+    map['money_entered'] = Variable<double>(moneyEntered);
+    map['joy_entered'] = Variable<double>(joyEntered);
+    return map;
+  }
+
+  ClickerSettingsCompanion toCompanion(bool nullToAbsent) {
+    return ClickerSettingsCompanion(
+      clickerId: Value(clickerId),
+      volumeEntered: Value(volumeEntered),
+      energyEntered: Value(energyEntered),
+      moneyEntered: Value(moneyEntered),
+      joyEntered: Value(joyEntered),
+    );
+  }
+
+  factory ClickerSettingsRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClickerSettingsRow(
+      clickerId: serializer.fromJson<String>(json['clickerId']),
+      volumeEntered: serializer.fromJson<double>(json['volumeEntered']),
+      energyEntered: serializer.fromJson<double>(json['energyEntered']),
+      moneyEntered: serializer.fromJson<double>(json['moneyEntered']),
+      joyEntered: serializer.fromJson<double>(json['joyEntered']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'clickerId': serializer.toJson<String>(clickerId),
+      'volumeEntered': serializer.toJson<double>(volumeEntered),
+      'energyEntered': serializer.toJson<double>(energyEntered),
+      'moneyEntered': serializer.toJson<double>(moneyEntered),
+      'joyEntered': serializer.toJson<double>(joyEntered),
+    };
+  }
+
+  ClickerSettingsRow copyWith({
+    String? clickerId,
+    double? volumeEntered,
+    double? energyEntered,
+    double? moneyEntered,
+    double? joyEntered,
+  }) => ClickerSettingsRow(
+    clickerId: clickerId ?? this.clickerId,
+    volumeEntered: volumeEntered ?? this.volumeEntered,
+    energyEntered: energyEntered ?? this.energyEntered,
+    moneyEntered: moneyEntered ?? this.moneyEntered,
+    joyEntered: joyEntered ?? this.joyEntered,
+  );
+  ClickerSettingsRow copyWithCompanion(ClickerSettingsCompanion data) {
+    return ClickerSettingsRow(
+      clickerId: data.clickerId.present ? data.clickerId.value : this.clickerId,
+      volumeEntered: data.volumeEntered.present
+          ? data.volumeEntered.value
+          : this.volumeEntered,
+      energyEntered: data.energyEntered.present
+          ? data.energyEntered.value
+          : this.energyEntered,
+      moneyEntered: data.moneyEntered.present
+          ? data.moneyEntered.value
+          : this.moneyEntered,
+      joyEntered: data.joyEntered.present
+          ? data.joyEntered.value
+          : this.joyEntered,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClickerSettingsRow(')
+          ..write('clickerId: $clickerId, ')
+          ..write('volumeEntered: $volumeEntered, ')
+          ..write('energyEntered: $energyEntered, ')
+          ..write('moneyEntered: $moneyEntered, ')
+          ..write('joyEntered: $joyEntered')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    clickerId,
+    volumeEntered,
+    energyEntered,
+    moneyEntered,
+    joyEntered,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClickerSettingsRow &&
+          other.clickerId == this.clickerId &&
+          other.volumeEntered == this.volumeEntered &&
+          other.energyEntered == this.energyEntered &&
+          other.moneyEntered == this.moneyEntered &&
+          other.joyEntered == this.joyEntered);
+}
+
+class ClickerSettingsCompanion extends UpdateCompanion<ClickerSettingsRow> {
+  final Value<String> clickerId;
+  final Value<double> volumeEntered;
+  final Value<double> energyEntered;
+  final Value<double> moneyEntered;
+  final Value<double> joyEntered;
+  final Value<int> rowid;
+  const ClickerSettingsCompanion({
+    this.clickerId = const Value.absent(),
+    this.volumeEntered = const Value.absent(),
+    this.energyEntered = const Value.absent(),
+    this.moneyEntered = const Value.absent(),
+    this.joyEntered = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClickerSettingsCompanion.insert({
+    required String clickerId,
+    required double volumeEntered,
+    required double energyEntered,
+    required double moneyEntered,
+    required double joyEntered,
+    this.rowid = const Value.absent(),
+  }) : clickerId = Value(clickerId),
+       volumeEntered = Value(volumeEntered),
+       energyEntered = Value(energyEntered),
+       moneyEntered = Value(moneyEntered),
+       joyEntered = Value(joyEntered);
+  static Insertable<ClickerSettingsRow> custom({
+    Expression<String>? clickerId,
+    Expression<double>? volumeEntered,
+    Expression<double>? energyEntered,
+    Expression<double>? moneyEntered,
+    Expression<double>? joyEntered,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (clickerId != null) 'clicker_id': clickerId,
+      if (volumeEntered != null) 'volume_entered': volumeEntered,
+      if (energyEntered != null) 'energy_entered': energyEntered,
+      if (moneyEntered != null) 'money_entered': moneyEntered,
+      if (joyEntered != null) 'joy_entered': joyEntered,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClickerSettingsCompanion copyWith({
+    Value<String>? clickerId,
+    Value<double>? volumeEntered,
+    Value<double>? energyEntered,
+    Value<double>? moneyEntered,
+    Value<double>? joyEntered,
+    Value<int>? rowid,
+  }) {
+    return ClickerSettingsCompanion(
+      clickerId: clickerId ?? this.clickerId,
+      volumeEntered: volumeEntered ?? this.volumeEntered,
+      energyEntered: energyEntered ?? this.energyEntered,
+      moneyEntered: moneyEntered ?? this.moneyEntered,
+      joyEntered: joyEntered ?? this.joyEntered,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (clickerId.present) {
+      map['clicker_id'] = Variable<String>(clickerId.value);
+    }
+    if (volumeEntered.present) {
+      map['volume_entered'] = Variable<double>(volumeEntered.value);
+    }
+    if (energyEntered.present) {
+      map['energy_entered'] = Variable<double>(energyEntered.value);
+    }
+    if (moneyEntered.present) {
+      map['money_entered'] = Variable<double>(moneyEntered.value);
+    }
+    if (joyEntered.present) {
+      map['joy_entered'] = Variable<double>(joyEntered.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClickerSettingsCompanion(')
+          ..write('clickerId: $clickerId, ')
+          ..write('volumeEntered: $volumeEntered, ')
+          ..write('energyEntered: $energyEntered, ')
+          ..write('moneyEntered: $moneyEntered, ')
+          ..write('joyEntered: $joyEntered, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ClicksTable clicks = $ClicksTable(this);
   late final $ClickContributionsTable clickContributions =
       $ClickContributionsTable(this);
+  late final $ClickerSettingsTable clickerSettings = $ClickerSettingsTable(
+    this,
+  );
   late final Index idxClicksAt = Index(
     'idx_clicks_at',
     'CREATE INDEX idx_clicks_at ON clicks (at_utc_ms DESC)',
@@ -671,6 +1074,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     clicks,
     clickContributions,
+    clickerSettings,
     idxClicksAt,
   ];
   @override
@@ -1291,6 +1695,224 @@ typedef $$ClickContributionsTableProcessedTableManager =
       ClickContributionRow,
       PrefetchHooks Function({bool clickId})
     >;
+typedef $$ClickerSettingsTableCreateCompanionBuilder =
+    ClickerSettingsCompanion Function({
+      required String clickerId,
+      required double volumeEntered,
+      required double energyEntered,
+      required double moneyEntered,
+      required double joyEntered,
+      Value<int> rowid,
+    });
+typedef $$ClickerSettingsTableUpdateCompanionBuilder =
+    ClickerSettingsCompanion Function({
+      Value<String> clickerId,
+      Value<double> volumeEntered,
+      Value<double> energyEntered,
+      Value<double> moneyEntered,
+      Value<double> joyEntered,
+      Value<int> rowid,
+    });
+
+class $$ClickerSettingsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClickerSettingsTable> {
+  $$ClickerSettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get clickerId => $composableBuilder(
+    column: $table.clickerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get volumeEntered => $composableBuilder(
+    column: $table.volumeEntered,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get energyEntered => $composableBuilder(
+    column: $table.energyEntered,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get moneyEntered => $composableBuilder(
+    column: $table.moneyEntered,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get joyEntered => $composableBuilder(
+    column: $table.joyEntered,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ClickerSettingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClickerSettingsTable> {
+  $$ClickerSettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get clickerId => $composableBuilder(
+    column: $table.clickerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get volumeEntered => $composableBuilder(
+    column: $table.volumeEntered,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get energyEntered => $composableBuilder(
+    column: $table.energyEntered,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get moneyEntered => $composableBuilder(
+    column: $table.moneyEntered,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get joyEntered => $composableBuilder(
+    column: $table.joyEntered,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ClickerSettingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClickerSettingsTable> {
+  $$ClickerSettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get clickerId =>
+      $composableBuilder(column: $table.clickerId, builder: (column) => column);
+
+  GeneratedColumn<double> get volumeEntered => $composableBuilder(
+    column: $table.volumeEntered,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get energyEntered => $composableBuilder(
+    column: $table.energyEntered,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get moneyEntered => $composableBuilder(
+    column: $table.moneyEntered,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get joyEntered => $composableBuilder(
+    column: $table.joyEntered,
+    builder: (column) => column,
+  );
+}
+
+class $$ClickerSettingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClickerSettingsTable,
+          ClickerSettingsRow,
+          $$ClickerSettingsTableFilterComposer,
+          $$ClickerSettingsTableOrderingComposer,
+          $$ClickerSettingsTableAnnotationComposer,
+          $$ClickerSettingsTableCreateCompanionBuilder,
+          $$ClickerSettingsTableUpdateCompanionBuilder,
+          (
+            ClickerSettingsRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ClickerSettingsTable,
+              ClickerSettingsRow
+            >,
+          ),
+          ClickerSettingsRow,
+          PrefetchHooks Function()
+        > {
+  $$ClickerSettingsTableTableManager(
+    _$AppDatabase db,
+    $ClickerSettingsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClickerSettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClickerSettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClickerSettingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> clickerId = const Value.absent(),
+                Value<double> volumeEntered = const Value.absent(),
+                Value<double> energyEntered = const Value.absent(),
+                Value<double> moneyEntered = const Value.absent(),
+                Value<double> joyEntered = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClickerSettingsCompanion(
+                clickerId: clickerId,
+                volumeEntered: volumeEntered,
+                energyEntered: energyEntered,
+                moneyEntered: moneyEntered,
+                joyEntered: joyEntered,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String clickerId,
+                required double volumeEntered,
+                required double energyEntered,
+                required double moneyEntered,
+                required double joyEntered,
+                Value<int> rowid = const Value.absent(),
+              }) => ClickerSettingsCompanion.insert(
+                clickerId: clickerId,
+                volumeEntered: volumeEntered,
+                energyEntered: energyEntered,
+                moneyEntered: moneyEntered,
+                joyEntered: joyEntered,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ClickerSettingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClickerSettingsTable,
+      ClickerSettingsRow,
+      $$ClickerSettingsTableFilterComposer,
+      $$ClickerSettingsTableOrderingComposer,
+      $$ClickerSettingsTableAnnotationComposer,
+      $$ClickerSettingsTableCreateCompanionBuilder,
+      $$ClickerSettingsTableUpdateCompanionBuilder,
+      (
+        ClickerSettingsRow,
+        BaseReferences<
+          _$AppDatabase,
+          $ClickerSettingsTable,
+          ClickerSettingsRow
+        >,
+      ),
+      ClickerSettingsRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1299,4 +1921,6 @@ class $AppDatabaseManager {
       $$ClicksTableTableManager(_db, _db.clicks);
   $$ClickContributionsTableTableManager get clickContributions =>
       $$ClickContributionsTableTableManager(_db, _db.clickContributions);
+  $$ClickerSettingsTableTableManager get clickerSettings =>
+      $$ClickerSettingsTableTableManager(_db, _db.clickerSettings);
 }

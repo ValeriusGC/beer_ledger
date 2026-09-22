@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:beer_ledger/app/providers/click_repository.cg.dart';
+import 'package:beer_ledger/app/providers/current_clicker.cg.dart';
 import 'package:beer_ledger/app/providers/now.cg.dart';
 import 'package:beer_ledger/data/repositories/click_repository.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
@@ -9,31 +10,48 @@ import 'package:uuid/uuid.dart';
 
 part 'record_click.cg.g.dart';
 
-/// Запись одного тапа пресета «Пиво 0.5» в журнал.
+/// Запись одного тапа текущей порции в журнал.
 ///
-/// Виджет [ClickRepository] не вызывает. Баланс за сегодня подхватывает тап
-/// сам, через уже существующий поток. Момент тапа — [now], те же часы,
-/// что и у границ дня.
+/// Виджет [ClickRepository] не вызывает. Порцию берёт из [currentClicker],
+/// не из зашитого пресета. Баланс за сегодня подхватывает тап сам, через
+/// уже существующий поток. Момент тапа — свежий [now]: провайдер кэшируется,
+/// пока его смотрит экран, поэтому запись его обновляет.
 @riverpod
 class RecordClick extends _$RecordClick {
   /// Полезных данных нет: кнопка смотрит только на загрузку и ошибку.
   @override
   FutureOr<void> build() {}
 
-  /// Пишет один [Click] пресета [beerHalfLiter] через [ClickRepository.addClick].
+  /// Пишет один [Click] текущей порции через [ClickRepository.addClick].
   ///
   /// Пока предыдущий вызов ещё [AsyncValue.isLoading], сразу выходит.
-  /// [Click.record] Left и ошибка хранилища становятся [AsyncError] с [Failure].
+  /// Пока [currentClicker] грузится, тоже выходит и ничего не пишет: кнопка
+  /// на home в этом состоянии выключена, чтобы тап не пропадал молча.
+  /// Ошибка потока настроек становится [AsyncError] с [Failure], не падением.
+  /// [Click.record] Left и ошибка хранилища — тот же [AsyncError].
   Future<void> record() async {
     if (state.isLoading) return;
 
+    final clickerState = ref.read(currentClickerProvider);
+    if (clickerState.isLoading) return;
+    if (clickerState.hasError) {
+      final error = clickerState.error;
+      state = AsyncError(
+        error is Failure
+            ? error
+            : Failure.storage(operation: 'watchClicker', cause: error),
+        clickerState.stackTrace ?? StackTrace.current,
+      );
+      return;
+    }
+
     state = const AsyncLoading();
 
-    final clicker = beerHalfLiter();
+    final clicker = clickerState.requireValue;
     final recorded = Click.record(
       id: const Uuid().v4(),
       clickerId: clicker.id,
-      at: ref.read(nowProvider),
+      at: ref.refresh(nowProvider),
       clicker: clicker,
     );
 

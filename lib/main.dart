@@ -1,5 +1,5 @@
 import 'package:beer_ledger/app/flavor.dart';
-import 'package:beer_ledger/features/home/home_page.dart';
+import 'package:beer_ledger/app/router.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +25,7 @@ class BeerLedgerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -34,7 +34,7 @@ class BeerLedgerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      routerConfig: beerLedgerRouter,
     );
   }
 }

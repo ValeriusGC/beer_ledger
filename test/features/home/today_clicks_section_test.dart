@@ -63,7 +63,7 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
-  testWidgets('один тап — время Hm и 0.5 L', (tester) async {
+  testWidgets('один тап — время с секундами и 0.5 L', (tester) async {
     final at = DateTime(2026, 9, 22, 14, 30);
     await _pump(
       tester,
@@ -83,7 +83,7 @@ void main() {
     );
 
     expect(find.byKey(const Key('today-click-click-1')), findsOneWidget);
-    expect(find.text('14:30'), findsOneWidget);
+    expect(find.text('14:30:00'), findsOneWidget);
     expect(find.text('0.5 L'), findsOneWidget);
   });
 

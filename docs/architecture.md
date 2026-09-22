@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-21 18:53:17 +0300  
-**Версия:** 11
+**Последнее обновление:** 2026-09-22 12:43:27 +0300  
+**Версия:** 12
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -12,8 +12,9 @@ Public выжимка. Полная спека — `flutter-senior-prep/project_
 beer_ledger/
 ├── lib/                         # Flutter app
 │   ├── main.dart
-│   ├── app/                     # providers (#30–#31), flavor; router, theme (planned)
-│   ├── features/home/           # HomePage (#44); settings, history (planned)
+│   ├── app/                     # providers, flavor, router
+│   ├── features/home/           # HomePage; history (planned)
+│   ├── features/settings/       # порция clicker, Drift
 │   └── data/                    # repositories, drift (ADR 001)
 ├── packages/
 │   └── beer_ledger_core/        # Pure Dart — NO Flutter import
@@ -64,8 +65,8 @@ beer_ledger/
 |------|-------|--------|
 | Domain | `beer_ledger_core` | ✅ iter 1.1 |
 | State | Riverpod 3 | #30 clicksForToday ✅; #31 todayBalance ✅ |
-| Routing | go_router | planned |
-| DB | drift (SQLite) | ADR 001 ✅; add/watch PR #35; undo PR #37 |
+| Routing | go_router | ✅ `/`, `/settings` |
+| DB | drift (SQLite) | ADR 001 ✅; тапы PR #35/#37; порция — `clicker_settings`, schema 2 |
 | Charts | fl_chart | planned |
 | i18n | flutter gen-l10n | ✅ app RU+EN |
 
