@@ -139,6 +139,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t load today\'s totals'**
   String get todayBalanceLoadError;
+
+  /// Label on the home button that records one beer tap
+  ///
+  /// In en, this message translates to:
+  /// **'Beer 0.5'**
+  String get recordBeerTap;
+
+  /// User-visible error when recordClickProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the tap'**
+  String get recordClickError;
 }
 
 class _AppLocalizationsDelegate

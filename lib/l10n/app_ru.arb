@@ -6,5 +6,7 @@
   "todayBalanceEnergyLabel": "Ккал",
   "todayBalanceMoneyLabel": "Деньги",
   "todayBalanceJoyLabel": "Радость",
-  "todayBalanceLoadError": "Не удалось загрузить итог за сегодня"
+  "todayBalanceLoadError": "Не удалось загрузить итог за сегодня",
+  "recordBeerTap": "Пиво 0.5",
+  "recordClickError": "Не удалось записать тап"
 }

@@ -28,4 +28,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todayBalanceLoadError => 'Не удалось загрузить итог за сегодня';
+
+  @override
+  String get recordBeerTap => 'Пиво 0.5';
+
+  @override
+  String get recordClickError => 'Не удалось записать тап';
 }
