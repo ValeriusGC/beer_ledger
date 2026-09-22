@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:beer_ledger/app/providers/clicks_for_today.cg.dart';
+import 'package:beer_ledger/app/providers/undo_last_click.cg.dart';
 import 'package:beer_ledger/features/home/today_clicks_section.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
@@ -19,10 +22,28 @@ Click _click({
   );
 }
 
-Future<void> _pump(WidgetTester tester, AsyncValue<List<Click>> clicks) {
+class _ReadyUndoLastClick extends UndoLastClick {
+  @override
+  FutureOr<void> build() {}
+}
+
+class _LoadingUndoLastClick extends UndoLastClick {
+  @override
+  FutureOr<void> build() => Completer<void>().future;
+}
+
+Future<void> _pump(
+  WidgetTester tester,
+  AsyncValue<List<Click>> clicks, {
+  UndoLastClick? undoLastClick,
+}) {
   return tester.pumpWidget(
     ProviderScope(
-      overrides: [clicksForTodayProvider.overrideWithValue(clicks)],
+      overrides: [
+        clicksForTodayProvider.overrideWithValue(clicks),
+        if (undoLastClick != null)
+          undoLastClickProvider.overrideWith(() => undoLastClick),
+      ],
       child: const MaterialApp(
         locale: Locale('en'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -84,5 +105,33 @@ void main() {
     expect(find.textContaining('StateError'), findsNothing);
     expect(find.textContaining('boom'), findsNothing);
     expect(find.text('No taps today'), findsNothing);
+  });
+
+  testWidgets('пустой сегодня — undo находится и enabled', (tester) async {
+    await _pump(
+      tester,
+      const AsyncData(<Click>[]),
+      undoLastClick: _ReadyUndoLastClick(),
+    );
+
+    final button = tester.widget<TextButton>(
+      find.widgetWithText(TextButton, 'Undo last tap'),
+    );
+    expect(button.onPressed, isNotNull);
+  });
+
+  testWidgets('undo isLoading — кнопка disabled', (tester) async {
+    await _pump(
+      tester,
+      const AsyncData(<Click>[]),
+      undoLastClick: _LoadingUndoLastClick(),
+    );
+
+    expect(
+      tester
+          .widget<TextButton>(find.widgetWithText(TextButton, 'Undo last tap'))
+          .onPressed,
+      isNull,
+    );
   });
 }

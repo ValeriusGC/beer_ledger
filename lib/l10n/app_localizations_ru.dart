@@ -43,4 +43,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todayClicksLoadError => 'Не удалось загрузить записи за сегодня';
+
+  @override
+  String get undoLastTap => 'Отменить последний тап';
+
+  @override
+  String get undoLastTapError => 'Не удалось отменить тап';
 }

@@ -43,4 +43,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayClicksLoadError => 'Couldn\'t load today\'s taps';
+
+  @override
+  String get undoLastTap => 'Undo last tap';
+
+  @override
+  String get undoLastTapError => 'Couldn\'t undo the tap';
 }

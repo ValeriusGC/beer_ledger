@@ -169,6 +169,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t load today\'s taps'**
   String get todayClicksLoadError;
+
+  /// Label on the home button that undoes the globally last tap
+  ///
+  /// In en, this message translates to:
+  /// **'Undo last tap'**
+  String get undoLastTap;
+
+  /// User-visible error when undoLastClickProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t undo the tap'**
+  String get undoLastTapError;
 }
 
 class _AppLocalizationsDelegate

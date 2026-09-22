@@ -1,16 +1,18 @@
 import 'package:beer_ledger/app/providers/clicks_for_today.cg.dart';
+import 'package:beer_ledger/app/providers/undo_last_click.cg.dart';
 import 'package:beer_ledger/features/home/today_clicks_format.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Журнал тапов за сегодня: рисует [clicksForTodayProvider], в Drift не ходит.
+/// Журнал тапов за сегодня и кнопка глобального undo.
 ///
-/// Порядок строк — как в провайдере, без повторной сортировки. Пустой день —
-/// empty-state, не ошибка. Виджет — sliver, его кладут в [CustomScrollView].
+/// Список рисует [clicksForTodayProvider], в Drift не ходит. Порядок строк —
+/// как в провайдере. Пустой день — empty-state, не ошибка. Undo зовёт
+/// [UndoLastClick], не репозиторий. Виджет — sliver для [CustomScrollView].
 class TodayClicksSection extends ConsumerWidget {
-  /// Создаёт секцию списка, которая сама подписывается на тапы за сегодня.
+  /// Создаёт секцию списка и кнопки undo.
   const TodayClicksSection({super.key});
 
   @override
@@ -18,6 +20,15 @@ class TodayClicksSection extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context);
     final clicks = ref.watch(clicksForTodayProvider);
+    final undoState = ref.watch(undoLastClickProvider);
+
+    ref.listen(undoLastClickProvider, (previous, next) {
+      if (next.hasError && previous?.hasError != true) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.undoLastTapError)));
+      }
+    });
 
     return SliverMainAxisGroup(
       slivers: [
@@ -27,6 +38,20 @@ class TodayClicksSection extends ConsumerWidget {
             child: Text(
               l10n.todayClicksTitle,
               style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: undoState.isLoading
+                    ? null
+                    : () => ref.read(undoLastClickProvider.notifier).undo(),
+                child: Text(l10n.undoLastTap),
+              ),
             ),
           ),
         ),

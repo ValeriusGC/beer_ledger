@@ -11,5 +11,7 @@
   "recordClickError": "Не удалось записать тап",
   "todayClicksTitle": "Сегодня",
   "todayClicksEmpty": "Пока нет записей за сегодня",
-  "todayClicksLoadError": "Не удалось загрузить записи за сегодня"
+  "todayClicksLoadError": "Не удалось загрузить записи за сегодня",
+  "undoLastTap": "Отменить последний тап",
+  "undoLastTapError": "Не удалось отменить тап"
 }

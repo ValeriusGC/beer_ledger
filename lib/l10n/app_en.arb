@@ -47,5 +47,13 @@
   "todayClicksLoadError": "Couldn't load today's taps",
   "@todayClicksLoadError": {
     "description": "User-visible error when clicksForTodayProvider fails on home"
+  },
+  "undoLastTap": "Undo last tap",
+  "@undoLastTap": {
+    "description": "Label on the home button that undoes the globally last tap"
+  },
+  "undoLastTapError": "Couldn't undo the tap",
+  "@undoLastTapError": {
+    "description": "User-visible error when undoLastClickProvider fails on home"
   }
 }
