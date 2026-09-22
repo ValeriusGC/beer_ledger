@@ -1,12 +1,13 @@
 import 'package:beer_ledger/app/flavor.dart';
+import 'package:beer_ledger/features/home/today_balance_card.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Главный экран приложения: баланс за сегодня и блоки итерации 3.
 ///
-/// Shell на [CustomScrollView]: сюда по задачам v1.3 добавляются карточка,
-/// кнопка записи, список и график. Провайдеры читают дочерние [ConsumerWidget],
-/// не этот виджет.
+/// Shell на [CustomScrollView]: карточка баланса уже на экране. По задачам
+/// v1.3 сюда добавляются кнопка записи, список и график. Провайдеры читают
+/// дочерние [ConsumerWidget], не этот виджет.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -24,11 +25,8 @@ class HomePage extends StatelessWidget {
             ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          // Карточка баланса — следующий шов (today_balance_card.dart).
-          const SliverToBoxAdapter(child: SizedBox.shrink()),
-        ],
+      body: const CustomScrollView(
+        slivers: [SliverToBoxAdapter(child: TodayBalanceCard())],
       ),
     );
   }
