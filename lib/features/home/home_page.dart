@@ -1,18 +1,18 @@
 import 'package:beer_ledger/app/flavor.dart';
 import 'package:beer_ledger/app/providers/record_click.cg.dart';
 import 'package:beer_ledger/features/home/today_balance_card.dart';
+import 'package:beer_ledger/features/home/today_clicks_section.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Главный экран приложения: баланс за сегодня и блоки итерации 3.
+/// Главный экран приложения: баланс, запись тапа и журнал за сегодня.
 ///
-/// Shell на [CustomScrollView]: карточка баланса уже на экране. По задачам
-/// v1.3 сюда добавляются кнопка записи, список и график. Провайдеры читают
-/// дочерние [ConsumerWidget], не этот виджет.
+/// Shell на [CustomScrollView]. Провайдеры читают дочерние [ConsumerWidget],
+/// кроме кнопки записи — она смотрит [recordClickProvider] здесь.
 class HomePage extends ConsumerWidget {
-  /// Создаёт главный экран с карточкой баланса и кнопкой записи тапа.
+  /// Создаёт главный экран с карточкой, кнопкой записи и журналом за сегодня.
   const HomePage({super.key});
 
   @override
@@ -56,6 +56,7 @@ class HomePage extends ConsumerWidget {
               ),
             ),
           ),
+          const TodayClicksSection(),
         ],
       ),
     );

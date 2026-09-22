@@ -151,6 +151,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t save the tap'**
   String get recordClickError;
+
+  /// Section title for today's tap list on home
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayClicksTitle;
+
+  /// Empty state when clicksForToday is an empty list, not an error
+  ///
+  /// In en, this message translates to:
+  /// **'No taps today'**
+  String get todayClicksEmpty;
+
+  /// User-visible error when clicksForTodayProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load today\'s taps'**
+  String get todayClicksLoadError;
+
+  /// Label on the home button that undoes the globally last tap
+  ///
+  /// In en, this message translates to:
+  /// **'Undo last tap'**
+  String get undoLastTap;
+
+  /// User-visible error when undoLastClickProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t undo the tap'**
+  String get undoLastTapError;
 }
 
 class _AppLocalizationsDelegate
