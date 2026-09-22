@@ -1,8 +1,8 @@
 # ADR 001: хранение тапов (clicks) — drift + SQLite
 
 **Дата создания:** 2026-08-02 18:02:59 +0500  
-**Последнее обновление:** 2026-08-22 11:25:00 +0500  
-**Версия:** 4  
+**Последнее обновление:** 2026-09-22 12:43:27 +0300  
+**Версия:** 5  
 **Вид документа:** ADR
 
 **Статус:** Accepted  
@@ -200,7 +200,7 @@ Mapper UI: generic «Не удалось сохранить» + лог `cause` �
 - PR #28 / [#35](https://github.com/ValeriusGC/beer_ledger/pull/35): drift, `AppDatabase`, `DriftClickRepository.addClick` / `watchClicksForDay`, `Failure.storage` — ✅;
 - PR #29 / [#37](https://github.com/ValeriusGC/beer_ledger/pull/37): `undoLastClick` — ✅;
 - PR #30–#31: providers + `aggregateForPeriod`;
-- iter 2.5+: таблица settings clicker (отдельная миграция).
+- iter 3: таблица settings clicker — секция ниже.
 
 ---
 
@@ -210,4 +210,20 @@ Mapper UI: generic «Не удалось сохранить» + лог `cause` �
 - [x] `Click` при чтении совпадает с domain-моделью (contributions не пересчитываются)
 - [x] `at` в БД — UTC ms; фильтр «день» — local boundaries
 - [x] Repository API — `Result<T>`, ошибки БД → `Failure.storage`
-- [ ] Миграции drift при изменении схемы — отдельный PR, не silent break
+- [x] Миграции drift при изменении схемы — schema 2, не silent break
+
+---
+
+## Clicker settings (iter 3)
+
+Одна строка на v1. `clicker_id` = `beerHalfLiter().id` (`clicker-beer`). Schema **2**: `onCreate` создаёт все текущие таблицы и seed; `onUpgrade` при `from < 2` создаёт только `clicker_settings` и тот же seed. `clicks` не переписываются.
+
+| Колонка | Тип | Описание |
+|---------|-----|----------|
+| `clicker_id` | `TEXT` PK | id пресета |
+| `volume_entered` | `REAL` NOT NULL | объём, L |
+| `energy_entered` | `REAL` NOT NULL | ккал |
+| `money_entered` | `REAL` NOT NULL | цена, ₽, величина без знака |
+| `joy_entered` | `REAL` NOT NULL | радость, pt |
+
+Seed: 0.5, 100, 150, 2. Знаки и единицы в строке не хранятся: при сборке `Clicker` они берутся с осей пресета, в строке только `enteredValue`. Новый тап читает текущую строку. Уже записанный вклад не пересчитывается (ADR 003).

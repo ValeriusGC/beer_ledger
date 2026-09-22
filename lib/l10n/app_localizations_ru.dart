@@ -30,7 +30,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get todayBalanceLoadError => 'Не удалось загрузить итог за сегодня';
 
   @override
-  String get recordBeerTap => 'Пиво 0.5';
+  String recordBeerTap(String volume) {
+    return 'Пиво $volume';
+  }
 
   @override
   String get recordClickError => 'Не удалось записать тап';
@@ -49,4 +51,43 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get undoLastTapError => 'Не удалось отменить тап';
+
+  @override
+  String get homeSettingsTooltip => 'Настройки';
+
+  @override
+  String get settingsTitle => 'Порция';
+
+  @override
+  String get settingsVolumeLabel => 'Объём (L)';
+
+  @override
+  String get settingsEnergyLabel => 'Ккал';
+
+  @override
+  String get settingsMoneyLabel => 'Цена';
+
+  @override
+  String get settingsJoyLabel => 'Радость';
+
+  @override
+  String get settingsEnergyHelper => 'ваши усреднённые значения, не USDA';
+
+  @override
+  String get settingsSave => 'Сохранить';
+
+  @override
+  String get settingsVolumeRangeError => 'Введите объём от 0,1 до 3 L';
+
+  @override
+  String get settingsEnergyRangeError => 'Введите ккал от 50 до 250';
+
+  @override
+  String get settingsMoneyRangeError => 'Введите цену от 0 до 10000';
+
+  @override
+  String get settingsJoyRangeError => 'Введите радость от 0 до 10';
+
+  @override
+  String get settingsSaveError => 'Не удалось сохранить настройки';
 }

@@ -30,7 +30,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todayBalanceLoadError => 'Couldn\'t load today\'s totals';
 
   @override
-  String get recordBeerTap => 'Beer 0.5';
+  String recordBeerTap(String volume) {
+    return 'Beer $volume';
+  }
 
   @override
   String get recordClickError => 'Couldn\'t save the tap';
@@ -49,4 +51,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get undoLastTapError => 'Couldn\'t undo the tap';
+
+  @override
+  String get homeSettingsTooltip => 'Settings';
+
+  @override
+  String get settingsTitle => 'Portion';
+
+  @override
+  String get settingsVolumeLabel => 'Volume (L)';
+
+  @override
+  String get settingsEnergyLabel => 'Calories (kcal)';
+
+  @override
+  String get settingsMoneyLabel => 'Price';
+
+  @override
+  String get settingsJoyLabel => 'Joy';
+
+  @override
+  String get settingsEnergyHelper => 'your averages, not USDA';
+
+  @override
+  String get settingsSave => 'Save';
+
+  @override
+  String get settingsVolumeRangeError => 'Enter a volume from 0.1 to 3 L';
+
+  @override
+  String get settingsEnergyRangeError => 'Enter calories from 50 to 250';
+
+  @override
+  String get settingsMoneyRangeError => 'Enter a price from 0 to 10000';
+
+  @override
+  String get settingsJoyRangeError => 'Enter joy from 0 to 10';
+
+  @override
+  String get settingsSaveError => 'Couldn\'t save settings';
 }

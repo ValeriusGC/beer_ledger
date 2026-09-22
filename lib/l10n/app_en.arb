@@ -28,9 +28,15 @@
   "@todayBalanceLoadError": {
     "description": "User-visible error when todayBalanceProvider fails on home"
   },
-  "recordBeerTap": "Beer 0.5",
+  "recordBeerTap": "Beer {volume}",
   "@recordBeerTap": {
-    "description": "Label on the home button that records one beer tap"
+    "description": "Label on the home button that records one beer tap. Volume is the current portion in liters.",
+    "placeholders": {
+      "volume": {
+        "type": "String",
+        "example": "0.5"
+      }
+    }
   },
   "recordClickError": "Couldn't save the tap",
   "@recordClickError": {
@@ -55,5 +61,57 @@
   "undoLastTapError": "Couldn't undo the tap",
   "@undoLastTapError": {
     "description": "User-visible error when undoLastClickProvider fails on home"
+  },
+  "homeSettingsTooltip": "Settings",
+  "@homeSettingsTooltip": {
+    "description": "Tooltip on the home app bar button that opens portion settings"
+  },
+  "settingsTitle": "Portion",
+  "@settingsTitle": {
+    "description": "Title of the portion settings screen"
+  },
+  "settingsVolumeLabel": "Volume (L)",
+  "@settingsVolumeLabel": {
+    "description": "Label of the volume field on portion settings"
+  },
+  "settingsEnergyLabel": "Calories (kcal)",
+  "@settingsEnergyLabel": {
+    "description": "Label of the calories field on portion settings"
+  },
+  "settingsMoneyLabel": "Price",
+  "@settingsMoneyLabel": {
+    "description": "Label of the price field on portion settings"
+  },
+  "settingsJoyLabel": "Joy",
+  "@settingsJoyLabel": {
+    "description": "Label of the joy field on portion settings"
+  },
+  "settingsEnergyHelper": "your averages, not USDA",
+  "@settingsEnergyHelper": {
+    "description": "Helper under the calories field: user estimate, not a USDA value"
+  },
+  "settingsSave": "Save",
+  "@settingsSave": {
+    "description": "Button that saves the current portion"
+  },
+  "settingsVolumeRangeError": "Enter a volume from 0.1 to 3 L",
+  "@settingsVolumeRangeError": {
+    "description": "Error when the volume field is empty, not a number, or outside 0.1 to 3"
+  },
+  "settingsEnergyRangeError": "Enter calories from 50 to 250",
+  "@settingsEnergyRangeError": {
+    "description": "Error when the calories field is empty, not a number, or outside 50 to 250"
+  },
+  "settingsMoneyRangeError": "Enter a price from 0 to 10000",
+  "@settingsMoneyRangeError": {
+    "description": "Error when the price field is empty, not a number, or outside 0 to 10000"
+  },
+  "settingsJoyRangeError": "Enter joy from 0 to 10",
+  "@settingsJoyRangeError": {
+    "description": "Error when the joy field is empty, not a number, or outside 0 to 10"
+  },
+  "settingsSaveError": "Couldn't save settings",
+  "@settingsSaveError": {
+    "description": "SnackBar when saving portion settings fails in the database"
   }
 }

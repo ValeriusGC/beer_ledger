@@ -140,11 +140,11 @@ abstract class AppLocalizations {
   /// **'Couldn\'t load today\'s totals'**
   String get todayBalanceLoadError;
 
-  /// Label on the home button that records one beer tap
+  /// Label on the home button that records one beer tap. Volume is the current portion in liters.
   ///
   /// In en, this message translates to:
-  /// **'Beer 0.5'**
-  String get recordBeerTap;
+  /// **'Beer {volume}'**
+  String recordBeerTap(String volume);
 
   /// User-visible error when recordClickProvider fails on home
   ///
@@ -181,6 +181,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t undo the tap'**
   String get undoLastTapError;
+
+  /// Tooltip on the home app bar button that opens portion settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get homeSettingsTooltip;
+
+  /// Title of the portion settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Portion'**
+  String get settingsTitle;
+
+  /// Label of the volume field on portion settings
+  ///
+  /// In en, this message translates to:
+  /// **'Volume (L)'**
+  String get settingsVolumeLabel;
+
+  /// Label of the calories field on portion settings
+  ///
+  /// In en, this message translates to:
+  /// **'Calories (kcal)'**
+  String get settingsEnergyLabel;
+
+  /// Label of the price field on portion settings
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get settingsMoneyLabel;
+
+  /// Label of the joy field on portion settings
+  ///
+  /// In en, this message translates to:
+  /// **'Joy'**
+  String get settingsJoyLabel;
+
+  /// Helper under the calories field: user estimate, not a USDA value
+  ///
+  /// In en, this message translates to:
+  /// **'your averages, not USDA'**
+  String get settingsEnergyHelper;
+
+  /// Button that saves the current portion
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get settingsSave;
+
+  /// Error when the volume field is empty, not a number, or outside 0.1 to 3
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a volume from 0.1 to 3 L'**
+  String get settingsVolumeRangeError;
+
+  /// Error when the calories field is empty, not a number, or outside 50 to 250
+  ///
+  /// In en, this message translates to:
+  /// **'Enter calories from 50 to 250'**
+  String get settingsEnergyRangeError;
+
+  /// Error when the price field is empty, not a number, or outside 0 to 10000
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price from 0 to 10000'**
+  String get settingsMoneyRangeError;
+
+  /// Error when the joy field is empty, not a number, or outside 0 to 10
+  ///
+  /// In en, this message translates to:
+  /// **'Enter joy from 0 to 10'**
+  String get settingsJoyRangeError;
+
+  /// SnackBar when saving portion settings fails in the database
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save settings'**
+  String get settingsSaveError;
 }
 
 class _AppLocalizationsDelegate
