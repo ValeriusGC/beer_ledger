@@ -28,4 +28,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayBalanceLoadError => 'Couldn\'t load today\'s totals';
+
+  @override
+  String get recordBeerTap => 'Beer 0.5';
+
+  @override
+  String get recordClickError => 'Couldn\'t save the tap';
 }
