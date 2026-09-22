@@ -34,4 +34,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get recordClickError => 'Не удалось записать тап';
+
+  @override
+  String get todayClicksTitle => 'Сегодня';
+
+  @override
+  String get todayClicksEmpty => 'Пока нет записей за сегодня';
+
+  @override
+  String get todayClicksLoadError => 'Не удалось загрузить записи за сегодня';
 }

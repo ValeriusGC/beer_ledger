@@ -34,4 +34,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recordClickError => 'Couldn\'t save the tap';
+
+  @override
+  String get todayClicksTitle => 'Today';
+
+  @override
+  String get todayClicksEmpty => 'No taps today';
+
+  @override
+  String get todayClicksLoadError => 'Couldn\'t load today\'s taps';
 }

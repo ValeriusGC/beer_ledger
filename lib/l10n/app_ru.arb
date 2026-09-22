@@ -8,5 +8,8 @@
   "todayBalanceJoyLabel": "Радость",
   "todayBalanceLoadError": "Не удалось загрузить итог за сегодня",
   "recordBeerTap": "Пиво 0.5",
-  "recordClickError": "Не удалось записать тап"
+  "recordClickError": "Не удалось записать тап",
+  "todayClicksTitle": "Сегодня",
+  "todayClicksEmpty": "Пока нет записей за сегодня",
+  "todayClicksLoadError": "Не удалось загрузить записи за сегодня"
 }

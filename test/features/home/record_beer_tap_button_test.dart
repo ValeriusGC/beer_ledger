@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beer_ledger/app/providers/clicks_for_today.cg.dart';
 import 'package:beer_ledger/app/providers/record_click.cg.dart';
 import 'package:beer_ledger/app/providers/today_balance.cg.dart';
 import 'package:beer_ledger/features/home/home_page.dart';
@@ -41,6 +42,7 @@ Future<void> _pumpHome(
       overrides: [
         todayBalanceProvider.overrideWithValue(AsyncData(_emptyBalances())),
         recordClickProvider.overrideWith(() => recordClick),
+        clicksForTodayProvider.overrideWithValue(const AsyncData(<Click>[])),
       ],
       child: const MaterialApp(
         locale: Locale('en'),
