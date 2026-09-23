@@ -1,35 +1,29 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-23 15:09:09 +0300  
-**Версия:** 15
+**Последнее обновление:** 2026-09-23 19:16:22 +0300  
+**Версия:** 16
 
-Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
+Public выжимка. Раскладка папок — закон в `docs/project-structure.md`. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
 ## Monorepo layout
 
 ```
 beer_ledger/
-├── lib/                         # Flutter app
+├── lib/
+│   ├── core/                    # DI, AppDatabase — не контекст
+│   ├── bounded_contexts/
+│   │   ├── portion/             # BC порция: domain/clicker + application + infra + presentation
+│   │   └── journal/             # BC журнал: domain/click + application + infra + presentation
+│   ├── app/                     # роутер, flavor
 │   ├── main.dart
-│   ├── app/                     # providers, flavor, router
-│   ├── features/home/           # HomePage; history (planned)
-│   ├── features/settings/       # порция clicker, Drift
-│   └── data/                    # repositories, drift (ADR 001)
-├── packages/
-│   └── beer_ledger_core/        # Pure Dart — NO Flutter import
-│       ├── lib/
-│       │   ├── failure/         # sealed Failure (ADR 002)
-│       │   ├── result/          # Result<T> = Either<Failure, T>
-│       │   ├── measure/         # MeasureUnit + 6 enum families (ADR 003)
-│       │   ├── convert/         # convert, toBase, fromBase, deltaInBase
-│       │   ├── portion/         # Clicker, LedgerAxis, AxisSign, LedgerAxisKind
-│       │   ├── journal/         # Click, AxisContribution, Click.record
-│       │   ├── aggregate/       # aggregateForPeriod, PeriodBalances
-│       │   └── preset/          # beerHalfLiter()
-│       └── test/
+│   └── l10n/
+├── packages/beer_ledger_core/   # техническое ядро, без Flutter
+│   └── lib/ arch, measure, convert, failure, result, LedgerAxisKind
 └── test/
 ```
+
+Целевое дерево с файлами — `docs/project-structure.md`. Пока код не перенесён, `lib/features/` и `lib/data/` ещё на диске; после шага раскладки их нет.
 
 ## Слои
 
@@ -43,10 +37,8 @@ beer_ledger/
 └──────┬──────┘
        │
 ┌──────▼──────────────┐
-│ beer_ledger_core    │  pure Dart, 110+ VM-тестов
-│ measure, convert,   │
-│ portion, journal,   │
-│ preset              │
+│ beer_ledger_core    │  словарь + arch; домен контекстов — в lib/bounded_contexts
+│ measure, convert    │
 └─────────────────────┘
 ```
 
@@ -64,7 +56,7 @@ beer_ledger/
 
 | Слой | Выбор | Статус |
 |------|-------|--------|
-| Domain | `beer_ledger_core` | ✅ iter 1.1 |
+| Domain | `lib/bounded_contexts/*/domain` + словарь `beer_ledger_core` | iter 3.5 |
 | State | Riverpod 3 | #30 clicksForToday ✅; #31 todayBalance ✅ |
 | Routing | go_router | ✅ `/`, `/settings` |
 | DB | drift (SQLite) | ADR 001 ✅; тапы PR #35/#37; порция — `clicker_settings`, schema 2 |
@@ -73,7 +65,7 @@ beer_ledger/
 
 ## Принципы
 
-- **DDD:** домен в `beer_ledger_core`, не в виджетах
+- **DDD:** два bounded context в `lib/bounded_contexts/`; словарь в `beer_ledger_core`
 - **UI Projection:** dumb widgets, Controller/Factory/Builder по мере роста
 - **Offline-first**
 - Multi-ledger: один tap → N aggregates (volume, kcal, money, joy)
@@ -88,4 +80,4 @@ beer_ledger/
 | [003-closed-unit-set.md](decisions/003-closed-unit-set.md) | Замкнутый набор единиц; факт в базовой единице |
 | [004-portion-and-journal.md](decisions/004-portion-and-journal.md) | Два контекста — порция и журнал; мост `Click.record` |
 
-Каталоги `portion/` и `journal/` в core есть; слоёв `lib/domain/`, `lib/application/`, `lib/presentation/home/` ещё нет.
+Раскладка — `docs/project-structure.md`. Общих слоёв на весь `lib/` нет.
