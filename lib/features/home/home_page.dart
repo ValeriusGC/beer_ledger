@@ -12,10 +12,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+/// Порог Material compact: уже окно — колонка, иначе карточка и график в ряд.
+const _homeWideWidth = 600.0;
+
 /// Главный экран приложения: баланс, запись тапа, журнал и объём за неделю.
 ///
 /// Shell на [CustomScrollView]. Провайдеры читают дочерние [ConsumerWidget],
 /// кроме кнопки записи — она смотрит [recordClickProvider] здесь.
+/// Ширина — [MediaQuery.sizeOf]: уже [_homeWideWidth] график под журналом,
+/// иначе он стоит рядом с карточкой.
 class HomePage extends ConsumerWidget {
   /// Создаёт главный экран с карточкой, кнопкой записи, журналом и графиком.
   const HomePage({super.key});
@@ -41,6 +46,8 @@ class HomePage extends ConsumerWidget {
       }
     });
 
+    final wide = MediaQuery.sizeOf(context).width >= _homeWideWidth;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
@@ -59,7 +66,19 @@ class HomePage extends ConsumerWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(child: TodayBalanceCard()),
+          if (wide)
+            const SliverToBoxAdapter(
+              child: Row(
+                key: Key('home-balance-chart-row'),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: TodayBalanceCard()),
+                  Expanded(child: WeekVolumeChart()),
+                ],
+              ),
+            )
+          else
+            const SliverToBoxAdapter(child: TodayBalanceCard()),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -81,7 +100,7 @@ class HomePage extends ConsumerWidget {
             ),
           ),
           const TodayClicksSection(),
-          const SliverToBoxAdapter(child: WeekVolumeChart()),
+          if (!wide) const SliverToBoxAdapter(child: WeekVolumeChart()),
         ],
       ),
     );
