@@ -37,7 +37,28 @@ final class DriftClickRepository implements ClickRepository {
   @override
   Stream<List<Click>> watchClicksForDay(DateTime dayLocal) {
     final (:startUtcMs, :endUtcMs) = localDayUtcRange(dayLocal);
+    return _watchUtcRange(startUtcMs, endUtcMs);
+  }
 
+  @override
+  Stream<List<Click>> watchClicksInRange({
+    required DateTime fromLocal,
+    required DateTime toLocal,
+  }) {
+    final fromDay = DateTime(fromLocal.year, fromLocal.month, fromLocal.day);
+    final toDay = DateTime(toLocal.year, toLocal.month, toLocal.day);
+    if (!fromDay.isBefore(toDay)) {
+      return Stream.value(const []);
+    }
+
+    final (:startUtcMs, :endUtcMs) = localDaysUtcRange(
+      fromLocal: fromLocal,
+      toLocal: toLocal,
+    );
+    return _watchUtcRange(startUtcMs, endUtcMs);
+  }
+
+  Stream<List<Click>> _watchUtcRange(int startUtcMs, int endUtcMs) {
     final query = _db.select(_db.clicks)
       ..where(
         (row) =>

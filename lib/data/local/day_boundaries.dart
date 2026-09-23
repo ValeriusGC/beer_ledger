@@ -12,3 +12,21 @@ import 'package:beer_ledger/data/mappers/click_mapper.dart';
     endUtcMs: clickAtUtcMs(startOfNextDay),
   );
 }
+
+/// Полуинтервал нескольких локальных дней в UTC ms: `[startOf(from), startOf(to))`.
+///
+/// Время суток у [fromLocal] и [toLocal] игнорируется. Перевод в UTC — тот же,
+/// что у [localDayUtcRange]: конец диапазона — начало дня [toLocal], не конец
+/// предыдущего, посчитанный отдельно.
+///
+/// Если календарный день [fromLocal] не раньше [toLocal], [startUtcMs] не меньше
+/// [endUtcMs]. Пустой поток в этом случае отдаёт репозиторий, не эта функция.
+({int startUtcMs, int endUtcMs}) localDaysUtcRange({
+  required DateTime fromLocal,
+  required DateTime toLocal,
+}) {
+  return (
+    startUtcMs: localDayUtcRange(fromLocal).startUtcMs,
+    endUtcMs: localDayUtcRange(toLocal).startUtcMs,
+  );
+}

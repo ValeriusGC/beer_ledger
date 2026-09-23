@@ -91,7 +91,10 @@ void main() {
       final range = localDayUtcRange(dayD);
 
       final tap2359Ms = clickAtUtcMs(DateTime(2026, 7, 28, 23, 59));
-      expect(tap2359Ms >= range.startUtcMs && tap2359Ms < range.endUtcMs, isTrue);
+      expect(
+        tap2359Ms >= range.startUtcMs && tap2359Ms < range.endUtcMs,
+        isTrue,
+      );
 
       final tap0001Ms = clickAtUtcMs(DateTime(2026, 7, 29, 0, 1));
       expect(
@@ -106,6 +109,18 @@ void main() {
 
       expect(rangeD.endUtcMs, rangeDPlus1.startUtcMs);
       expect(rangeD.startUtcMs < rangeD.endUtcMs, isTrue);
+    });
+  });
+
+  group('localDaysUtcRange', () {
+    test('конец — начало toLocal, не отдельный перевод', () {
+      final from = DateTime(2026, 9, 15, 18);
+      final to = DateTime(2026, 9, 22, 3);
+      final range = localDaysUtcRange(fromLocal: from, toLocal: to);
+
+      expect(range.startUtcMs, localDayUtcRange(from).startUtcMs);
+      expect(range.endUtcMs, localDayUtcRange(to).startUtcMs);
+      expect(range.startUtcMs < range.endUtcMs, isTrue);
     });
   });
 }
