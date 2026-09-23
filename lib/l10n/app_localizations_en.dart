@@ -90,4 +90,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSaveError => 'Couldn\'t save settings';
+
+  @override
+  String get weekChartTitle => 'Volume, last 7 days';
+
+  @override
+  String get weekChartLoadError => 'Couldn\'t load the week chart';
 }

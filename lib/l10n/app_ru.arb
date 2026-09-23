@@ -26,5 +26,7 @@
   "settingsEnergyRangeError": "Введите ккал от 50 до 250",
   "settingsMoneyRangeError": "Введите цену от 0 до 10000",
   "settingsJoyRangeError": "Введите радость от 0 до 10",
-  "settingsSaveError": "Не удалось сохранить настройки"
+  "settingsSaveError": "Не удалось сохранить настройки",
+  "weekChartTitle": "Объём за 7 дней",
+  "weekChartLoadError": "Не удалось загрузить график за неделю"
 }
