@@ -1,8 +1,8 @@
 # Реестр: провайдеры и сервисы
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-22 12:43:27 +0300  
-**Версия:** 7
+**Последнее обновление:** 2026-09-22 16:06:21 +0300  
+**Версия:** 8
 
 Перед новым переиспользуемым провайдером или сервисом — проверить таблицу и grep по `lib/`.
 
@@ -17,3 +17,4 @@
 | `clickerSettingsRepository` | `lib/app/providers/clicker_settings_repository.cg.dart` | Keep-alive репозиторий порции над `appDatabase`. | Чтение и save четырёх чисел. Не класть эти методы в `clickRepository` |
 | `currentClicker` | `lib/app/providers/current_clicker.cg.dart` | Поток текущего `Clicker` пресета из строки настроек. | Экран порции и `recordClick`. В записи не подставлять `beerHalfLiter()` |
 | `undoLastClick` | `lib/app/providers/undo_last_click.cg.dart` | Глобальная отмена последнего тапа (ADR 001). | Кнопка undo на home. Не вызывать `undoLastClick` из виджета и не сужать до «только сегодня» |
+| `volumeForLast7Days` | `lib/app/providers/volume_for_last_7_days.cg.dart` | Семь точек объёма в литрах, окно `[сегодня−6, завтра)`. | График на home. Не подписываться на `watchClicksForDay` семь раз и не суммировать мл в виджете |

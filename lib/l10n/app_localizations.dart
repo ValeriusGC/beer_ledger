@@ -259,6 +259,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t save settings'**
   String get settingsSaveError;
+
+  /// Title of the home chart of volume over the last 7 local days
+  ///
+  /// In en, this message translates to:
+  /// **'Volume, last 7 days'**
+  String get weekChartTitle;
+
+  /// User-visible error when volumeForLast7DaysProvider fails on home
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the week chart'**
+  String get weekChartLoadError;
 }
 
 class _AppLocalizationsDelegate

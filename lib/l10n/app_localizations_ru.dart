@@ -90,4 +90,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsSaveError => 'Не удалось сохранить настройки';
+
+  @override
+  String get weekChartTitle => 'Объём за 7 дней';
+
+  @override
+  String get weekChartLoadError => 'Не удалось загрузить график за неделю';
 }

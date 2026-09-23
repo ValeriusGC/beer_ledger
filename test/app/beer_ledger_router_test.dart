@@ -5,6 +5,7 @@ import 'package:beer_ledger/app/providers/current_clicker.cg.dart';
 import 'package:beer_ledger/app/providers/record_click.cg.dart';
 import 'package:beer_ledger/app/providers/today_balance.cg.dart';
 import 'package:beer_ledger/app/providers/undo_last_click.cg.dart';
+import 'package:beer_ledger/app/providers/volume_for_last_7_days.cg.dart';
 import 'package:beer_ledger/app/router.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
@@ -48,6 +49,12 @@ void main() {
           undoLastClickProvider.overrideWith(() => _ReadyUndo()),
           currentClickerProvider.overrideWith(
             (ref) => Stream.value(beerHalfLiter()),
+          ),
+          volumeForLast7DaysProvider.overrideWithValue(
+            AsyncData([
+              for (var index = 0; index < 7; index++)
+                DayVolume(day: DateTime(2026, 9, 15 + index), liters: 0),
+            ]),
           ),
         ],
         child: MaterialApp.router(

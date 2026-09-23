@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-22 12:43:27 +0300  
-**Версия:** 12
+**Последнее обновление:** 2026-09-22 16:06:21 +0300  
+**Версия:** 13
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -67,7 +67,7 @@ beer_ledger/
 | State | Riverpod 3 | #30 clicksForToday ✅; #31 todayBalance ✅ |
 | Routing | go_router | ✅ `/`, `/settings` |
 | DB | drift (SQLite) | ADR 001 ✅; тапы PR #35/#37; порция — `clicker_settings`, schema 2 |
-| Charts | fl_chart | planned |
+| Charts | fl_chart | ✅ BarChart, объём за 7 дней на home |
 | i18n | flutter gen-l10n | ✅ app RU+EN |
 
 ## Принципы

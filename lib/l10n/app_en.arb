@@ -113,5 +113,13 @@
   "settingsSaveError": "Couldn't save settings",
   "@settingsSaveError": {
     "description": "SnackBar when saving portion settings fails in the database"
+  },
+  "weekChartTitle": "Volume, last 7 days",
+  "@weekChartTitle": {
+    "description": "Title of the home chart of volume over the last 7 local days"
+  },
+  "weekChartLoadError": "Couldn't load the week chart",
+  "@weekChartLoadError": {
+    "description": "User-visible error when volumeForLast7DaysProvider fails on home"
   }
 }

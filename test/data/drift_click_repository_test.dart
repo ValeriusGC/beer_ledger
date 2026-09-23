@@ -177,6 +177,56 @@ void main() {
     });
   });
 
+  group('DriftClickRepository.watchClicksInRange', () {
+    test('сегодня-6 и сегодня входят; сегодня-7 и завтра — нет', () async {
+      final repository = DriftClickRepository(db);
+      await repository.addClick(
+        _recordClick(id: 'out', at: DateTime(2026, 9, 14, 12)),
+      );
+      await repository.addClick(
+        _recordClick(id: 'oldest', at: DateTime(2026, 9, 15, 0, 1)),
+      );
+      await repository.addClick(
+        _recordClick(id: 'today', at: DateTime(2026, 9, 21, 23, 59)),
+      );
+      await repository.addClick(
+        _recordClick(id: 'tomorrow', at: DateTime(2026, 9, 22, 0, 1)),
+      );
+
+      final clicks = await repository
+          .watchClicksInRange(
+            fromLocal: DateTime(2026, 9, 15, 8),
+            toLocal: DateTime(2026, 9, 22, 8),
+          )
+          .first;
+
+      expect(clicks.map((click) => click.id), ['today', 'oldest']);
+    });
+
+    test('from не раньше to → пустой поток', () async {
+      final repository = DriftClickRepository(db);
+      await repository.addClick(
+        _recordClick(id: 'kept', at: DateTime(2026, 9, 21, 12)),
+      );
+
+      final sameDay = await repository
+          .watchClicksInRange(
+            fromLocal: DateTime(2026, 9, 21, 1),
+            toLocal: DateTime(2026, 9, 21, 23),
+          )
+          .first;
+      final reversed = await repository
+          .watchClicksInRange(
+            fromLocal: DateTime(2026, 9, 22),
+            toLocal: DateTime(2026, 9, 15),
+          )
+          .first;
+
+      expect(sameDay, isEmpty);
+      expect(reversed, isEmpty);
+    });
+  });
+
   group('DriftClickRepository.undoLastClick', () {
     test('пустой журнал → Right(null), таблица пуста', () async {
       final repository = DriftClickRepository(db);
