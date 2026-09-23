@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../domain/click.dart';
-import '../domain/ledger_axis_kind.dart';
+import '../journal/click.dart';
+import '../portion/ledger_axis_kind.dart';
 import '../failure/failure.dart';
 import '../result/result.dart';
 import 'period_balances.dart';

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'ledger_axis_kind.dart';
+import '../portion/ledger_axis_kind.dart';
 
 part 'axis_contribution.freezed.dart';
 

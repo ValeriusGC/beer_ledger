@@ -5,8 +5,8 @@ import '../convert/convert.dart';
 import '../failure/failure.dart';
 import '../measure/measure_registry.dart';
 import '../result/result.dart';
+import '../portion/clicker.dart';
 import 'axis_contribution.dart';
-import 'clicker.dart';
 
 part 'click.freezed.dart';
 

@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-23 13:31:44 +0300  
-**Версия:** 14
+**Последнее обновление:** 2026-09-23 15:09:09 +0300  
+**Версия:** 15
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -23,7 +23,8 @@ beer_ledger/
 │       │   ├── result/          # Result<T> = Either<Failure, T>
 │       │   ├── measure/         # MeasureUnit + 6 enum families (ADR 003)
 │       │   ├── convert/         # convert, toBase, fromBase, deltaInBase
-│       │   ├── domain/          # Click, Clicker, LedgerAxis, AxisContribution
+│       │   ├── portion/         # Clicker, LedgerAxis, AxisSign, LedgerAxisKind
+│       │   ├── journal/         # Click, AxisContribution, Click.record
 │       │   ├── aggregate/       # aggregateForPeriod, PeriodBalances
 │       │   └── preset/          # beerHalfLiter()
 │       └── test/
@@ -44,7 +45,7 @@ beer_ledger/
 ┌──────▼──────────────┐
 │ beer_ledger_core    │  pure Dart, 110+ VM-тестов
 │ measure, convert,   │
-│ domain, aggregate,  │
+│ portion, journal,   │
 │ preset              │
 └─────────────────────┘
 ```
@@ -87,4 +88,4 @@ beer_ledger/
 | [003-closed-unit-set.md](decisions/003-closed-unit-set.md) | Замкнутый набор единиц; факт в базовой единице |
 | [004-portion-and-journal.md](decisions/004-portion-and-journal.md) | Два контекста — порция и журнал; мост `Click.record` |
 
-Каталоги `portion/`, `journal/` в core и слои `lib/domain/`, `lib/application/`, `lib/presentation/` из ADR 004 — цель следующих шагов; в дереве их ещё нет. Блок Monorepo layout выше отражает текущее состояние.
+Каталоги `portion/` и `journal/` в core есть; слоёв `lib/domain/`, `lib/application/`, `lib/presentation/home/` ещё нет.

@@ -1,7 +1,7 @@
-import '../domain/axis_sign.dart';
-import '../domain/clicker.dart';
-import '../domain/ledger_axis.dart';
-import '../domain/ledger_axis_kind.dart';
+import '../portion/axis_sign.dart';
+import '../portion/clicker.dart';
+import '../portion/ledger_axis.dart';
+import '../portion/ledger_axis_kind.dart';
 import '../measure/count_unit.dart';
 import '../measure/energy_unit.dart';
 import '../measure/money_unit.dart';

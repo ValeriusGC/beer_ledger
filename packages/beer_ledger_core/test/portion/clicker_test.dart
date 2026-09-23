@@ -1,7 +1,7 @@
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:test/test.dart';
 
-import 'domain_fixtures.dart';
+import '../fixtures/domain_fixtures.dart';
 
 void main() {
   group('AxisSign', () {

@@ -1,8 +1,8 @@
 # beer_ledger_core
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-07-28 19:09 +0500  
-**Версия:** 2
+**Последнее обновление:** 2026-09-23 15:09:09 +0300  
+**Версия:** 3
 
 Pure Dart domain layer для [Пивомер](https://github.com/ValeriusGC/beer_ledger): multi-ledger учёт одного тапа по нескольким осям (объём, калории, деньги, удовольствие).
 
@@ -12,7 +12,8 @@ Pure Dart domain layer для [Пивомер](https://github.com/ValeriusGC/bee
 
 - **measure** — шесть семейств единиц (`VolumeUnit`, `EnergyUnit`, …), ADR 003
 - **convert** — `convert`, `toBase`, `fromBase`, `deltaInBase` → `Result`
-- **domain** — `@freezed` `Click`, `Clicker`, `LedgerAxis`; `Click.record` замораживает вклад
+- **portion** — `@freezed` `Clicker`, `LedgerAxis`; живой clicker «что будет при нажатии»
+- **journal** — `@freezed` `Click`, `AxisContribution`; `Click.record` замораживает вклад
 - **aggregate** — `aggregateForPeriod` за полуинтервал `[from, to)`
 - **preset** — `beerHalfLiter()` — clicker v1 «Пиво 0.5 L»
 

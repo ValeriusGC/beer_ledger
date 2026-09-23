@@ -1,14 +1,14 @@
 # ADR 001: хранение тапов (clicks) — drift + SQLite
 
 **Дата создания:** 2026-08-02 18:02:59 +0500  
-**Последнее обновление:** 2026-09-22 12:43:27 +0300  
-**Версия:** 5  
+**Последнее обновление:** 2026-09-23 15:09:09 +0300  
+**Версия:** 6  
 **Вид документа:** ADR
 
 **Статус:** Accepted  
 **Итерация:** 2 (persistence)
 
-> Локальное хранение [Click](../../packages/beer_ledger_core/lib/domain/click.dart) в Flutter app через **drift** (SQLite). Domain остаётся в `beer_ledger_core`; repository и мапперы — в `lib/data/`.
+> Локальное хранение [Click](../../packages/beer_ledger_core/lib/journal/click.dart) в Flutter app через **drift** (SQLite). Domain остаётся в `beer_ledger_core`; repository и мапперы — в `lib/data/`.
 
 Связанные документы: [ADR 002](./002-domain-style.md) · [ADR 003](./003-closed-unit-set.md) · [architecture.md](../architecture.md)
 
@@ -103,7 +103,7 @@
 | Колонка | Тип | Описание |
 |---------|-----|----------|
 | `click_id` | `TEXT` FK → `clicks.id` ON DELETE CASCADE | |
-| `kind` | `TEXT` NOT NULL | wire: `volume`, `energy`, `money`, `joy` ([LedgerAxisKind](../../packages/beer_ledger_core/lib/domain/ledger_axis_kind.dart)) |
+| `kind` | `TEXT` NOT NULL | wire: `volume`, `energy`, `money`, `joy` ([LedgerAxisKind](../../packages/beer_ledger_core/lib/portion/ledger_axis_kind.dart)) |
 | `signed_base_delta` | `REAL` NOT NULL | факт в базовой единице × знак (ADR 003) |
 | `entered_in_id` | `TEXT` NOT NULL | wire-id единицы ввода для UI |
 

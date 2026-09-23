@@ -5,7 +5,8 @@ library;
 
 export 'aggregate/aggregate.dart';
 export 'convert/convert.dart';
-export 'domain/domain.dart';
+export 'journal/journal.dart';
+export 'portion/portion.dart';
 export 'failure/failure.dart';
 export 'measure/measure.dart';
 export 'preset/preset.dart';
