@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-22 16:06:21 +0300  
-**Версия:** 13
+**Последнее обновление:** 2026-09-23 13:31:44 +0300  
+**Версия:** 14
 
 Public выжимка. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -85,3 +85,6 @@ beer_ledger/
 | [001-storage.md](decisions/001-storage.md) | drift + SQLite; схема `clicks`; repository contract |
 | [002-domain-style.md](decisions/002-domain-style.md) | Failure, Result, freezed, период `[from, to)` |
 | [003-closed-unit-set.md](decisions/003-closed-unit-set.md) | Замкнутый набор единиц; факт в базовой единице |
+| [004-portion-and-journal.md](decisions/004-portion-and-journal.md) | Два контекста — порция и журнал; мост `Click.record` |
+
+Каталоги `portion/`, `journal/` в core и слои `lib/domain/`, `lib/application/`, `lib/presentation/` из ADR 004 — цель следующих шагов; в дереве их ещё нет. Блок Monorepo layout выше отражает текущее состояние.
