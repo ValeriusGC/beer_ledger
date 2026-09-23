@@ -1,8 +1,8 @@
 # CI и static analysis
 
 **Дата создания:** 2026-07-27 14:56:23 +0500  
-**Последнее обновление:** 2026-08-25 16:04:55 +0500  
-**Версия:** 4  
+**Последнее обновление:** 2026-09-23 20:36:08 +0300  
+**Версия:** 5  
 **Вид документа:** справочник
 
 > Контракт качества для PR. Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).  
@@ -19,7 +19,7 @@
 | Пакет | Команды | Что анализируется / собирается |
 |-------|---------|--------------------------------|
 | **core** | `dart pub get`, `dart analyze --fatal-warnings`, `dart test` | `packages/beer_ledger_core` целиком, включая `test/` |
-| **app** | `flutter pub get`, `flutter analyze --fatal-warnings lib` | только `lib/` приложения |
+| **app** | `flutter pub get`, `flutter analyze --fatal-warnings lib`, `flutter test` | `lib/` и тесты приложения |
 | **apk** | `flutter pub get`, `flutter build apk --flavor dev` | Android APK flavor `dev`; файл не в git |
 
 **Почему не `flutter analyze` с корня:** analyzer подхватывает `packages/beer_ledger_core/test/`, но `package:test` — dev_dependency core, не app → ложные errors. Core проверяется отдельным job.
@@ -44,7 +44,7 @@ flutter pub get && flutter analyze --fatal-warnings lib
 
 ## GitHub Actions
 
-- **CI** ([`ci.yml`](../.github/workflows/ci.yml)): trigger — push и PR в `main`. Jobs `core` и `app` параллельно. Badge — в [README](../README.md).
+- **CI** ([`ci.yml`](../.github/workflows/ci.yml)): trigger — push и PR в `main`. Jobs `core` и `app` параллельно. Job `app` гоняет `flutter test`. Badge — в [README](../README.md).
 - **Dev APK** ([`dev-apk.yml`](../.github/workflows/dev-apk.yml)): только вручную (`workflow_dispatch`), **не** на push/PR.
 
   Запуск:

@@ -1,15 +1,15 @@
 # AGENTS.md — beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-08-22 11:25:00 +0500  
-**Версия:** 7
+**Последнее обновление:** 2026-09-23 19:16:22 +0300  
+**Версия:** 8
 
 Инструкции для AI-агентов в Cursor. Flutter/Dart pet-project, monorepo.
 
 ## Стек
 
 - **Dart SDK:** ^3.12.2 (Flutter app + pure Dart core)
-- **Monorepo:** `packages/beer_ledger_core` — domain без `import flutter` (**iter 1.1 ✅**)
+- **Monorepo:** `packages/beer_ledger_core` — словарь единиц и маркеры DDD, без `import flutter`
 - **State:** Riverpod 3 — *planned (iter 2, #30–#31)*
 - **Routing:** go_router — *planned*
 - **DB:** drift (SQLite) — ADR 001 ✅; add/watch PR #35; undo PR #37
@@ -23,6 +23,7 @@
 
 | Документ | Назначение |
 |---|---|
+| `docs/project-structure.md` | Закон папок: bounded_contexts, агрегат, ядро. Не перекладывать иначе |
 | `docs/architecture.md` | Monorepo, слои, миграция из fast_2020, целевой стек |
 
 При сложных UI-задачах подключать `@docs/architecture.md`.

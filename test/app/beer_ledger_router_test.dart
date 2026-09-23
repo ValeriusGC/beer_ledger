@@ -1,13 +1,9 @@
 import 'dart:async';
 
-import 'package:beer_ledger/app/providers/clicks_for_today.cg.dart';
-import 'package:beer_ledger/app/providers/current_clicker.cg.dart';
-import 'package:beer_ledger/app/providers/record_click.cg.dart';
-import 'package:beer_ledger/app/providers/today_balance.cg.dart';
-import 'package:beer_ledger/app/providers/undo_last_click.cg.dart';
-import 'package:beer_ledger/app/providers/volume_for_last_7_days.cg.dart';
 import 'package:beer_ledger/app/router.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
+import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
+import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,5 +1,5 @@
-import 'package:beer_ledger/features/home/home_page.dart';
-import 'package:beer_ledger/features/settings/settings_page.dart';
+import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
+import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
 import 'package:go_router/go_router.dart';
 
 /// Маршруты приложения: `/` — главный экран, `/settings` — порция.

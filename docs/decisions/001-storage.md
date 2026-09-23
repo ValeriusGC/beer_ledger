@@ -1,14 +1,14 @@
 # ADR 001: хранение тапов (clicks) — drift + SQLite
 
 **Дата создания:** 2026-08-02 18:02:59 +0500  
-**Последнее обновление:** 2026-09-22 12:43:27 +0300  
-**Версия:** 5  
+**Последнее обновление:** 2026-09-23 20:57:00 +0300  
+**Версия:** 7  
 **Вид документа:** ADR
 
 **Статус:** Accepted  
 **Итерация:** 2 (persistence)
 
-> Локальное хранение [Click](../../packages/beer_ledger_core/lib/domain/click.dart) в Flutter app через **drift** (SQLite). Domain остаётся в `beer_ledger_core`; repository и мапперы — в `lib/data/`.
+> Локальное хранение [Click](../../lib/bounded_contexts/journal/domain/click/click.dart) в Flutter app через **drift** (SQLite). Агрегат — в журнале; repository и мапперы — в `journal/infrastructure/`; схема — в `lib/core/persistence/`.
 
 Связанные документы: [ADR 002](./002-domain-style.md) · [ADR 003](./003-closed-unit-set.md) · [architecture.md](../architecture.md)
 
@@ -20,9 +20,9 @@
 
 2. **iter 2** — offline-first persistence: тап сохраняется, после cold start данные и баланс на месте. Минимальный контракт repository (#28–#29): `addClick`, `watchClicksForDay`, `undoLastClick`.
 
-3. **Граница слоёв** — SQLite и drift живут **только в app** (`lib/data/`). Core не импортирует Flutter и не знает о БД; repository мапит строки → `Click`.
+3. **Граница слоёв** — SQLite и drift живут **только в app** (`lib/core/persistence/`, инфраструктура контекстов). Core не импортирует Flutter и не знает о БД; repository мапит строки → `Click`.
 
-4. **Агрегация** — `aggregateForPeriod` принимает `List<Click>` из core; интервал **`[from, to)`** в **local** `DateTime` (ADR 002 §7). Repository обязан отдавать тапы, согласованные с этим правилом.
+4. **Агрегация** — `aggregateForPeriod` принимает `List<Click>` журнала; интервал **`[from, to)`** в **local** `DateTime` (ADR 002 §7). Repository обязан отдавать тапы, согласованные с этим правилом.
 
 ---
 
@@ -83,7 +83,7 @@
 
 Пакеты (app, iter 2 PR #28): `drift`, `drift_flutter`, `sqlite3_flutter_libs` (или актуальный набор по docs drift на момент PR).
 
-Файлы: `lib/data/local/app_database.dart`, `lib/data/repositories/click_repository.dart`, мапперы рядом.
+Файлы: `lib/core/persistence/app_database.dart`, `lib/bounded_contexts/journal/domain/click/click_repository.dart`, мапперы в `journal/infrastructure/`.
 
 ### 2. Схема
 
@@ -103,7 +103,7 @@
 | Колонка | Тип | Описание |
 |---------|-----|----------|
 | `click_id` | `TEXT` FK → `clicks.id` ON DELETE CASCADE | |
-| `kind` | `TEXT` NOT NULL | wire: `volume`, `energy`, `money`, `joy` ([LedgerAxisKind](../../packages/beer_ledger_core/lib/domain/ledger_axis_kind.dart)) |
+| `kind` | `TEXT` NOT NULL | wire: `volume`, `energy`, `money`, `joy` ([LedgerAxisKind](../../packages/beer_ledger_core/lib/ledger_axis_kind.dart)) |
 | `signed_base_delta` | `REAL` NOT NULL | факт в базовой единице × знак (ADR 003) |
 | `entered_in_id` | `TEXT` NOT NULL | wire-id единицы ввода для UI |
 
@@ -206,7 +206,7 @@ Mapper UI: generic «Не удалось сохранить» + лог `cause` �
 
 ## Проверка соблюдения
 
-- [x] Persistence только в `lib/data/`, не в `beer_ledger_core`
+- [x] Persistence только в app, не в `beer_ledger_core`
 - [x] `Click` при чтении совпадает с domain-моделью (contributions не пересчитываются)
 - [x] `at` в БД — UTC ms; фильтр «день» — local boundaries
 - [x] Repository API — `Result<T>`, ошибки БД → `Failure.storage`
