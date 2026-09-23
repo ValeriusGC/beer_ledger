@@ -61,7 +61,7 @@ void main() {
       '(click_id, kind, signed_base_delta, entered_in_id) '
       "VALUES ('click-old', 'energy', 100000, 'energy.kcal')",
     );
-    raw.dispose();
+    raw.close();
 
     final upgraded = AppDatabase(NativeDatabase(file));
     addTearDown(() async {
