@@ -17,6 +17,9 @@ analyzer:
     - android/**
     - ios/**
     - web/**
+    - macos/**
+    - linux/**
+    - windows/**
   errors:
     # @riverpod / @freezed — цель аннотации не всегда совпадает с Dart-элементом.
     invalid_annotation_target: ignore
