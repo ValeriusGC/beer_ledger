@@ -1,14 +1,13 @@
-/// Pure Dart domain layer for [beer_ledger] app.
+/// Техническое ядро Пивомера: словарь единиц, ошибки, маркеры DDD.
 ///
-/// Measure, convert, domain models, aggregation, presets (iter 1.1).
+/// Не bounded context. Агрегаты порции и журнала — в приложении,
+/// `lib/bounded_contexts/`. См. `docs/project-structure.md`.
 library;
 
-export 'aggregate/aggregate.dart';
+export 'arch/arch.dart';
 export 'convert/convert.dart';
-export 'journal/journal.dart';
-export 'portion/portion.dart';
 export 'failure/failure.dart';
+export 'ledger_axis_kind.dart';
 export 'measure/measure.dart';
-export 'preset/preset.dart';
 export 'result/result.dart';
 export 'src/beer_ledger_core_base.dart';
