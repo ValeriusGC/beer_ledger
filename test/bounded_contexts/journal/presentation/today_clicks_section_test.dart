@@ -14,7 +14,7 @@ Click _click({
   List<AxisContribution> contributions = const [],
 }) {
   return Click(
-    id: ClickId(id),
+    id: ClickId.known(id),
     clickerId: beerHalfLiter().id,
     at: at,
     contributions: contributions,

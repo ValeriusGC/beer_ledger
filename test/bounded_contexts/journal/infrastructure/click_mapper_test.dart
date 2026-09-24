@@ -14,7 +14,7 @@ Click _recordClick({
   double factor = 1,
 }) {
   return Click.record(
-    id: ClickId(id),
+    id: ClickId.known(id),
     clickerId: beerHalfLiter().id,
     at: at,
     axes: axisRecordInputsFrom(beerHalfLiter()),

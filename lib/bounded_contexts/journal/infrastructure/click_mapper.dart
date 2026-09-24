@@ -31,8 +31,8 @@ Click clickFromRows({
   ]..sort((a, b) => a.kind.index.compareTo(b.kind.index));
 
   return Click(
-    id: ClickId(row.id),
-    clickerId: ClickerId(row.clickerId),
+    id: ClickId.known(row.id),
+    clickerId: ClickerId.known(row.clickerId),
     at: clickAtFromUtcMs(row.atUtcMs),
     factor: row.factor,
     contributions: mappedContributions,

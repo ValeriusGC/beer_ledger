@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 Click _recordClick({required String id, required DateTime at}) {
   return Click.record(
-    id: ClickId(id),
+    id: ClickId.known(id),
     clickerId: beerHalfLiter().id,
     at: at,
     axes: axisRecordInputsFrom(beerHalfLiter()),
