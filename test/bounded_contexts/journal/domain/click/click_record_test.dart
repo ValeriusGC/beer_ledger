@@ -11,8 +11,8 @@ void main() {
   group('Click.record', () {
     test('четыре оси spec, factor=1 — volume 500 мл в базе', () {
       final result = Click.record(
-        id: const ClickId('click-1'),
-        clickerId: const ClickerId('clicker-beer'),
+        id: const ClickId.known('click-1'),
+        clickerId: const ClickerId.known('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
         axes: axisRecordInputsFrom(beerHalfLiterClicker()),
       );
@@ -38,8 +38,8 @@ void main() {
 
     test('factor=2 удваивает вклад volume', () {
       final result = Click.record(
-        id: const ClickId('click-2'),
-        clickerId: const ClickerId('clicker-beer'),
+        id: const ClickId.known('click-2'),
+        clickerId: const ClickerId.known('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
         axes: axisRecordInputsFrom(beerHalfLiterClicker()),
         factor: 2,
@@ -54,8 +54,8 @@ void main() {
 
     test('неизвестный enteredInId → Failure.unknownUnitId', () {
       final result = Click.record(
-        id: const ClickId('click-bad'),
-        clickerId: const ClickerId('clicker-beer'),
+        id: const ClickId.known('click-bad'),
+        clickerId: const ClickerId.known('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
         axes: const [
           AxisRecordInput(
@@ -75,7 +75,7 @@ void main() {
       () {
         final clicker = beerHalfLiterClicker();
         final recorded = Click.record(
-          id: const ClickId('click-frozen'),
+          id: const ClickId.known('click-frozen'),
           clickerId: clicker.id,
           at: DateTime(2026, 7, 28, 12),
           axes: axisRecordInputsFrom(clicker),
@@ -98,8 +98,8 @@ void main() {
 
     test('ADR 003: enteredInId на снимке — для отображения через fromBase', () {
       final click = Click.record(
-        id: const ClickId('click-ui'),
-        clickerId: const ClickerId('clicker-beer'),
+        id: const ClickId.known('click-ui'),
+        clickerId: const ClickerId.known('clicker-beer'),
         at: DateTime(2026, 7, 28, 12),
         axes: axisRecordInputsFrom(beerHalfLiterClicker()),
       ).getOrElse((_) => throw StateError('expected Right'));

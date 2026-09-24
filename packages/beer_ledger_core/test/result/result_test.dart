@@ -24,13 +24,15 @@ void main() {
       expect(failure, const Failure.unknownUnitId(id: 'volume.unknown'));
     });
 
+    test('emptyId equals itself', () {
+      const failure = Failure.emptyId();
+      expect(failure, const Failure.emptyId());
+    });
+
     test('storage holds operation and cause', () {
       final cause = StateError('duplicate id');
       final failure = Failure.storage(operation: 'addClick', cause: cause);
-      expect(
-        failure,
-        Failure.storage(operation: 'addClick', cause: cause),
-      );
+      expect(failure, Failure.storage(operation: 'addClick', cause: cause));
     });
 
     test('storage allows null cause', () {

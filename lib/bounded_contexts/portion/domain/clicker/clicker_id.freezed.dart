@@ -86,11 +86,11 @@ extension ClickerIdPatterns on ClickerId {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ClickerId value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ClickerId value)?  known,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ClickerId() when $default != null:
-return $default(_that);case _:
+case _ClickerId() when known != null:
+return known(_that);case _:
   return orElse();
 
 }
@@ -108,11 +108,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ClickerId value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ClickerId value)  known,}){
 final _that = this;
 switch (_that) {
 case _ClickerId():
-return $default(_that);case _:
+return known(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -129,11 +129,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ClickerId value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ClickerId value)?  known,}){
 final _that = this;
 switch (_that) {
-case _ClickerId() when $default != null:
-return $default(_that);case _:
+case _ClickerId() when known != null:
+return known(_that);case _:
   return null;
 
 }
@@ -150,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String value)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String value)?  known,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ClickerId() when $default != null:
-return $default(_that.value);case _:
+case _ClickerId() when known != null:
+return known(_that.value);case _:
   return orElse();
 
 }
@@ -171,10 +171,10 @@ return $default(_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String value)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String value)  known,}) {final _that = this;
 switch (_that) {
 case _ClickerId():
-return $default(_that.value);case _:
+return known(_that.value);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +191,10 @@ return $default(_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String value)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String value)?  known,}) {final _that = this;
 switch (_that) {
-case _ClickerId() when $default != null:
-return $default(_that.value);case _:
+case _ClickerId() when known != null:
+return known(_that.value);case _:
   return null;
 
 }
@@ -205,8 +205,8 @@ return $default(_that.value);case _:
 /// @nodoc
 
 
-class _ClickerId implements ClickerId {
-  const _ClickerId(this.value);
+class _ClickerId extends ClickerId {
+  const _ClickerId(this.value): super._();
   
 
 @override final  String value;
@@ -230,7 +230,7 @@ int get hashCode => Object.hash(runtimeType,value);
 
 @override
 String toString() {
-  return 'ClickerId(value: $value)';
+  return 'ClickerId.known(value: $value)';
 }
 
 

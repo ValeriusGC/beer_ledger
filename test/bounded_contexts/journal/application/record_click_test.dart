@@ -117,7 +117,8 @@ void main() {
           .firstWhere(
             (contribution) => contribution.kind == LedgerAxisKind.energy,
           )
-          .delta.signedBase;
+          .delta
+          .signedBase;
       expect(oldEnergy, 100000);
 
       final current = container.read(currentClickerProvider).requireValue;
@@ -142,7 +143,8 @@ void main() {
             .firstWhere(
               (contribution) => contribution.kind == LedgerAxisKind.energy,
             )
-            .delta.signedBase,
+            .delta
+            .signedBase,
         oldEnergy,
       );
       final balance = await container
@@ -168,13 +170,17 @@ void main() {
             .firstWhere(
               (contribution) => contribution.kind == LedgerAxisKind.energy,
             )
-            .delta.signedBase,
+            .delta
+            .signedBase,
         180 * 1000,
       );
       final summed = await container
           .listen(todayBalanceProvider.future, (_, _) {})
           .read();
-      expect(summed.totalFor(LedgerAxisKind.energy).signedBase, 100000 + 180000);
+      expect(
+        summed.totalFor(LedgerAxisKind.energy).signedBase,
+        100000 + 180000,
+      );
     });
 
     test('два тапа получают разное время, новый сверху', () async {

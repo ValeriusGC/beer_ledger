@@ -52,7 +52,7 @@ class RecordClick extends _$RecordClick {
 
     final clicker = clickerState.requireValue;
     final recorded = Click.record(
-      id: ClickId(const Uuid().v4()),
+      id: ClickId.known(const Uuid().v4()),
       clickerId: clicker.id,
       at: ref.refresh(nowProvider),
       axes: axisRecordInputsFrom(clicker),

@@ -61,5 +61,6 @@ extension MoneyDeltaAdd on MoneyDelta {
 /// Складывает два вклада joy в базовых баллах.
 extension JoyDeltaAdd on JoyDelta {
   /// Сумма двух снимков joy; вариант не меняется.
-  JoyDelta operator +(JoyDelta other) => JoyDelta(signedBase + other.signedBase);
+  JoyDelta operator +(JoyDelta other) =>
+      JoyDelta(signedBase + other.signedBase);
 }
