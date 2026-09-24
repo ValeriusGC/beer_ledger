@@ -51,7 +51,7 @@ final class RecordClickProvider
   RecordClick create() => RecordClick();
 }
 
-String _$recordClickHash() => r'b26164fac0a920297a42122c0bef2ce5b8b4371a';
+String _$recordClickHash() => r'6d2fa5ec915d57d3782728f6366d63a6e078c885';
 
 /// Запись одного тапа текущей порции в журнал.
 ///

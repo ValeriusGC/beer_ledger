@@ -1,4 +1,3 @@
-import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker.dart';
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker_id.dart';
 import 'package:beer_ledger_core/arch/aggregate_root.dart';
 import 'package:beer_ledger_core/convert/convert.dart';
@@ -9,6 +8,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'axis_contribution.dart';
+import 'axis_record_input.dart';
 import 'click_id.dart';
 import 'signed_base_delta.dart';
 
@@ -17,7 +17,7 @@ part 'click.freezed.dart';
 /// Одно нажатие кнопки-пакета: момент времени и замороженный вклад по осям.
 ///
 /// [contributions] фиксируются в [record] и **не** пересчитываются при изменении
-/// конфигурации [Clicker] — см. ADR 003.
+/// конфигурации порции — см. ADR 003.
 @freezed
 abstract class Click with _$Click implements AggregateRoot {
   const factory Click({
@@ -30,21 +30,21 @@ abstract class Click with _$Click implements AggregateRoot {
 
   const Click._();
 
-  /// Создаёт тап со снимком вкладов всех осей [clicker].
+  /// Создаёт тап со снимком вкладов по осям журнала [axes].
   ///
-  /// На каждой оси: резолв [LedgerAxis.enteredInId] → [resolveUnit]; при
+  /// На каждой оси: резолв [AxisRecordInput.enteredInId] → [resolveUnit]; при
   /// неизвестном id — [Failure.unknownUnitId]. Иначе
-  /// `delta = sign.multiplier * deltaInBase(...)` в варианте оси.
+  /// `delta = signMultiplier * deltaInBase(...)` в варианте оси.
   static Result<Click> record({
     required ClickId id,
     required ClickerId clickerId,
     required DateTime at,
-    required Clicker clicker,
+    required List<AxisRecordInput> axes,
     double factor = 1,
   }) {
     final contributions = <AxisContribution>[];
 
-    for (final axis in clicker.axes) {
+    for (final axis in axes) {
       final unit = resolveUnit(axis.enteredInId);
       if (unit == null) {
         return Left(Failure.unknownUnitId(id: axis.enteredInId));
@@ -54,7 +54,7 @@ abstract class Click with _$Click implements AggregateRoot {
         AxisContribution(
           delta: SignedBaseDelta.fromKind(
             axis.kind,
-            axis.sign.multiplier *
+            axis.signMultiplier *
                 deltaInBase(
                   enteredValue: axis.enteredValue,
                   enteredIn: unit,

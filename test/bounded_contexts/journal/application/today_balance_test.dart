@@ -2,8 +2,9 @@ import 'package:beer_ledger/core/di/app_database.cg.dart';
 import 'package:beer_ledger/core/di/click_repository.cg.dart';
 import 'package:beer_ledger/core/di/now.cg.dart';
 import 'package:beer_ledger/core/persistence/app_database.dart';
-import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
+import 'package:beer_ledger/bounded_contexts/journal/application/axis_record_inputs.dart';
 import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
+import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +14,7 @@ Click _recordClick({required String id, required DateTime at}) {
     id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
-    clicker: beerHalfLiter(),
+    axes: axisRecordInputsFrom(beerHalfLiter()),
   ).getOrElse((_) => throw StateError('expected Right'));
 }
 

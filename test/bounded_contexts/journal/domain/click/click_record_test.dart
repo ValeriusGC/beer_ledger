@@ -1,3 +1,4 @@
+import 'package:beer_ledger/bounded_contexts/journal/application/axis_record_inputs.dart';
 import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
 import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
@@ -13,7 +14,7 @@ void main() {
         id: const ClickId('click-1'),
         clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
-        clicker: beerHalfLiterClicker(),
+        axes: axisRecordInputsFrom(beerHalfLiterClicker()),
       );
 
       expect(result.isRight(), isTrue);
@@ -40,7 +41,7 @@ void main() {
         id: const ClickId('click-2'),
         clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
-        clicker: beerHalfLiterClicker(),
+        axes: axisRecordInputsFrom(beerHalfLiterClicker()),
         factor: 2,
       );
 
@@ -52,22 +53,18 @@ void main() {
     });
 
     test('неизвестный enteredInId → Failure.unknownUnitId', () {
-      final clicker = beerHalfLiterClicker().copyWith(
-        axes: [
-          LedgerAxis(
+      final result = Click.record(
+        id: const ClickId('click-bad'),
+        clickerId: const ClickerId('clicker-beer'),
+        at: DateTime(2026, 7, 28, 18),
+        axes: const [
+          AxisRecordInput(
             kind: LedgerAxisKind.volume,
             enteredValue: 1,
             enteredInId: 'volume.unknown',
-            sign: AxisSign.plus,
+            signMultiplier: 1,
           ),
         ],
-      );
-
-      final result = Click.record(
-        id: const ClickId('click-bad'),
-        clickerId: clicker.id,
-        at: DateTime(2026, 7, 28, 18),
-        clicker: clicker,
       );
 
       expect(result, const Left(Failure.unknownUnitId(id: 'volume.unknown')));
@@ -81,7 +78,7 @@ void main() {
           id: const ClickId('click-frozen'),
           clickerId: clicker.id,
           at: DateTime(2026, 7, 28, 12),
-          clicker: clicker,
+          axes: axisRecordInputsFrom(clicker),
         ).getOrElse((_) => throw StateError('expected Right'));
 
         final updatedClicker = clicker.copyWith(
@@ -104,7 +101,7 @@ void main() {
         id: const ClickId('click-ui'),
         clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 12),
-        clicker: beerHalfLiterClicker(),
+        axes: axisRecordInputsFrom(beerHalfLiterClicker()),
       ).getOrElse((_) => throw StateError('expected Right'));
 
       final volume = contribution(click, LedgerAxisKind.volume)!;

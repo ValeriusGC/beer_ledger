@@ -1,3 +1,4 @@
+import 'package:beer_ledger/bounded_contexts/journal/application/axis_record_inputs.dart';
 import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:fpdart/fpdart.dart';
@@ -23,7 +24,7 @@ Click _recordClick({
     id: ClickId(id),
     clickerId: beerHalfLiterClicker().id,
     at: at,
-    clicker: beerHalfLiterClicker(),
+    axes: axisRecordInputsFrom(beerHalfLiterClicker()),
     factor: factor,
   ).getOrElse((_) => throw StateError('expected Right'));
 }

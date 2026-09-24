@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beer_ledger/bounded_contexts/journal/application/axis_record_inputs.dart';
 import 'package:beer_ledger/bounded_contexts/journal/domain/click/click.dart';
 import 'package:beer_ledger/bounded_contexts/journal/domain/click/click_id.dart';
 import 'package:beer_ledger/bounded_contexts/journal/domain/click/click_repository.dart';
@@ -54,7 +55,7 @@ class RecordClick extends _$RecordClick {
       id: ClickId(const Uuid().v4()),
       clickerId: clicker.id,
       at: ref.refresh(nowProvider),
-      clicker: clicker,
+      axes: axisRecordInputsFrom(clicker),
     );
 
     final click = recorded.fold<Click?>((failure) {

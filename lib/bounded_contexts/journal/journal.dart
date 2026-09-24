@@ -11,6 +11,7 @@ export 'application/undo_last_click.cg.dart';
 export 'application/volume_for_last_7_days.cg.dart';
 export 'domain/click/aggregate_for_period.dart';
 export 'domain/click/axis_contribution.dart';
+export 'domain/click/axis_record_input.dart';
 export 'domain/click/click.dart';
 export 'domain/click/click_id.dart';
 export 'domain/click/signed_base_delta.dart';
