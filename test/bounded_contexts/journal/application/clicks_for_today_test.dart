@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 Click _recordClick({required String id, required DateTime at}) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     clicker: beerHalfLiter(),
@@ -17,7 +17,7 @@ Click _recordClick({required String id, required DateTime at}) {
 }
 
 List<String> _ids(List<Click> clicks) =>
-    clicks.map((click) => click.id).toList();
+    clicks.map((click) => click.id.value).toList();
 
 /// In-memory БД и замороженные часы.
 ///

@@ -20,7 +20,7 @@ Click _recordClick({
   double factor = 1,
 }) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiterClicker().id,
     at: at,
     clicker: beerHalfLiterClicker(),
@@ -56,10 +56,10 @@ void main() {
 
       final balances = _aggregate(clicks: clicks, from: dayFrom, to: dayTo);
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 1500.0);
-      expect(balances.totalFor(LedgerAxisKind.energy), 300000.0);
-      expect(balances.totalFor(LedgerAxisKind.money), -45000.0);
-      expect(balances.totalFor(LedgerAxisKind.joy), 6.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 1500.0);
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 300000.0);
+      expect(balances.totalFor(LedgerAxisKind.money).signedBase, -45000.0);
+      expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 6.0);
     });
 
     test('1 тап — одна порция', () {
@@ -69,19 +69,19 @@ void main() {
         to: dayTo,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 500.0);
-      expect(balances.totalFor(LedgerAxisKind.energy), 100000.0);
-      expect(balances.totalFor(LedgerAxisKind.money), -15000.0);
-      expect(balances.totalFor(LedgerAxisKind.joy), 2.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0);
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 100000.0);
+      expect(balances.totalFor(LedgerAxisKind.money).signedBase, -15000.0);
+      expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 2.0);
     });
 
     test('0 тапов — нули по всем kind', () {
       final balances = _aggregate(clicks: [], from: dayFrom, to: dayTo);
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 0.0);
-      expect(balances.totalFor(LedgerAxisKind.energy), 0.0);
-      expect(balances.totalFor(LedgerAxisKind.money), 0.0);
-      expect(balances.totalFor(LedgerAxisKind.joy), 0.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 0.0);
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 0.0);
+      expect(balances.totalFor(LedgerAxisKind.money).signedBase, 0.0);
+      expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 0.0);
     });
 
     test('тапы вне периода — нули', () {
@@ -92,7 +92,7 @@ void main() {
 
       final balances = _aggregate(clicks: clicks, from: dayFrom, to: dayTo);
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 0.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 0.0);
     });
 
     test('from >= to → Failure.invalidPeriod', () {
@@ -116,7 +116,7 @@ void main() {
         to: dayTo,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 500.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0);
     });
 
     test('граница: at == to исключён', () {
@@ -126,7 +126,7 @@ void main() {
         to: dayTo,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 0.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 0.0);
     });
 
     test('factor=2 на тапе — volume 1000 мл', () {
@@ -138,7 +138,7 @@ void main() {
         to: dayTo,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 1000.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 1000.0);
     });
 
     test('kind вне kinds всё равно попадает в totalsInBase', () {
@@ -151,8 +151,8 @@ void main() {
         kinds: [LedgerAxisKind.volume],
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 500.0);
-      expect(balances.totalFor(LedgerAxisKind.energy), 100000.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0);
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 100000.0);
       expect(balances.totalsInBase.containsKey(LedgerAxisKind.money), isTrue);
     });
   });

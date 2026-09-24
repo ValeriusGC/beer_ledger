@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PeriodBalances {
 
- Map<LedgerAxisKind, double> get totalsInBase;
+ Map<LedgerAxisKind, SignedBaseDelta> get totalsInBase;
 /// Create a copy of PeriodBalances
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $PeriodBalancesCopyWith<$Res>  {
   factory $PeriodBalancesCopyWith(PeriodBalances value, $Res Function(PeriodBalances) _then) = _$PeriodBalancesCopyWithImpl;
 @useResult
 $Res call({
- Map<LedgerAxisKind, double> totalsInBase
+ Map<LedgerAxisKind, SignedBaseDelta> totalsInBase
 });
 
 
@@ -65,7 +65,7 @@ class _$PeriodBalancesCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? totalsInBase = null,}) {
   return _then(_self.copyWith(
 totalsInBase: null == totalsInBase ? _self.totalsInBase : totalsInBase // ignore: cast_nullable_to_non_nullable
-as Map<LedgerAxisKind, double>,
+as Map<LedgerAxisKind, SignedBaseDelta>,
   ));
 }
 
@@ -150,7 +150,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Map<LedgerAxisKind, double> totalsInBase)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Map<LedgerAxisKind, SignedBaseDelta> totalsInBase)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PeriodBalances() when $default != null:
 return $default(_that.totalsInBase);case _:
@@ -171,7 +171,7 @@ return $default(_that.totalsInBase);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Map<LedgerAxisKind, double> totalsInBase)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Map<LedgerAxisKind, SignedBaseDelta> totalsInBase)  $default,) {final _that = this;
 switch (_that) {
 case _PeriodBalances():
 return $default(_that.totalsInBase);case _:
@@ -191,7 +191,7 @@ return $default(_that.totalsInBase);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Map<LedgerAxisKind, double> totalsInBase)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Map<LedgerAxisKind, SignedBaseDelta> totalsInBase)?  $default,) {final _that = this;
 switch (_that) {
 case _PeriodBalances() when $default != null:
 return $default(_that.totalsInBase);case _:
@@ -206,11 +206,11 @@ return $default(_that.totalsInBase);case _:
 
 
 class _PeriodBalances extends PeriodBalances {
-  const _PeriodBalances({required final  Map<LedgerAxisKind, double> totalsInBase}): _totalsInBase = totalsInBase,super._();
+  const _PeriodBalances({required final  Map<LedgerAxisKind, SignedBaseDelta> totalsInBase}): _totalsInBase = totalsInBase,super._();
   
 
- final  Map<LedgerAxisKind, double> _totalsInBase;
-@override Map<LedgerAxisKind, double> get totalsInBase {
+ final  Map<LedgerAxisKind, SignedBaseDelta> _totalsInBase;
+@override Map<LedgerAxisKind, SignedBaseDelta> get totalsInBase {
   if (_totalsInBase is EqualUnmodifiableMapView) return _totalsInBase;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_totalsInBase);
@@ -247,7 +247,7 @@ abstract mixin class _$PeriodBalancesCopyWith<$Res> implements $PeriodBalancesCo
   factory _$PeriodBalancesCopyWith(_PeriodBalances value, $Res Function(_PeriodBalances) _then) = __$PeriodBalancesCopyWithImpl;
 @override @useResult
 $Res call({
- Map<LedgerAxisKind, double> totalsInBase
+ Map<LedgerAxisKind, SignedBaseDelta> totalsInBase
 });
 
 
@@ -267,7 +267,7 @@ class __$PeriodBalancesCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? totalsInBase = null,}) {
   return _then(_PeriodBalances(
 totalsInBase: null == totalsInBase ? _self._totalsInBase : totalsInBase // ignore: cast_nullable_to_non_nullable
-as Map<LedgerAxisKind, double>,
+as Map<LedgerAxisKind, SignedBaseDelta>,
   ));
 }
 

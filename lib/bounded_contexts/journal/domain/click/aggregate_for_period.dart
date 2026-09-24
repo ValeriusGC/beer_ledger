@@ -6,9 +6,9 @@ import 'package:beer_ledger_core/result/result.dart';
 
 import 'click.dart';
 import 'period_balances.dart';
+import 'signed_base_delta.dart';
 
-/// Суммирует [AxisContribution.signedBaseDelta] всех [clicks] в полуинтервале
-/// `[from, to)`.
+/// Суммирует [AxisContribution.delta] всех [clicks] в полуинтервале `[from, to)`.
 ///
 /// [kinds] — оси dashboard'а: для каждого kind в списке в результате будет
 /// ключ (даже если вкладов не было). Обычно:
@@ -33,7 +33,9 @@ Result<PeriodBalances> aggregateForPeriod({
     return Left(Failure.invalidPeriod(from: from, to: to));
   }
 
-  final totals = {for (final kind in kinds) kind: 0.0};
+  final totals = {
+    for (final kind in kinds) kind: SignedBaseDelta.fromKind(kind, 0),
+  };
 
   for (final click in clicks) {
     if (_isBefore(click.at, from) || !_isBefore(click.at, to)) {
@@ -42,11 +44,27 @@ Result<PeriodBalances> aggregateForPeriod({
 
     for (final contribution in click.contributions) {
       final kind = contribution.kind;
-      totals[kind] = (totals[kind] ?? 0) + contribution.signedBaseDelta;
+      final current = totals[kind] ?? SignedBaseDelta.fromKind(kind, 0);
+      totals[kind] = _addSignedBaseDelta(current, contribution.delta);
     }
   }
 
   return Right(PeriodBalances(totalsInBase: totals));
+}
+
+/// Складывает два вклада одного варианта; смешанная пара — баг вызывающего.
+SignedBaseDelta _addSignedBaseDelta(SignedBaseDelta a, SignedBaseDelta b) {
+  return switch ((a, b)) {
+    (VolumeDelta(:final signedBase), VolumeDelta(signedBase: final other)) =>
+      VolumeDelta(signedBase + other),
+    (EnergyDelta(:final signedBase), EnergyDelta(signedBase: final other)) =>
+      EnergyDelta(signedBase + other),
+    (MoneyDelta(:final signedBase), MoneyDelta(signedBase: final other)) =>
+      MoneyDelta(signedBase + other),
+    (JoyDelta(:final signedBase), JoyDelta(signedBase: final other)) =>
+      JoyDelta(signedBase + other),
+    _ => throw StateError('mixed SignedBaseDelta variants: $a + $b'),
+  };
 }
 
 /// `a < b` по календарному сравнению (local [DateTime], iter 1.1).

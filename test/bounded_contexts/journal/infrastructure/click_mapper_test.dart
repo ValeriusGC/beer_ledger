@@ -13,7 +13,7 @@ Click _recordClick({
   double factor = 1,
 }) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     clicker: beerHalfLiter(),
@@ -39,8 +39,8 @@ void main() {
       );
 
       final clickRow = ClickRow(
-        id: click.id,
-        clickerId: click.clickerId,
+        id: click.id.value,
+        clickerId: click.clickerId.value,
         atUtcMs: clickAtUtcMs(click.at),
         factor: click.factor,
       );
@@ -69,8 +69,8 @@ void main() {
       );
 
       final companion = clickToCompanion(click);
-      expect(companion.id.value, click.id);
-      expect(companion.clickerId.value, click.clickerId);
+      expect(companion.id.value, click.id.value);
+      expect(companion.clickerId.value, click.clickerId.value);
       expect(companion.atUtcMs.value, clickAtUtcMs(click.at));
       expect(companion.factor.value, click.factor);
 
@@ -79,9 +79,9 @@ void main() {
       for (var i = 0; i < click.contributions.length; i++) {
         final source = click.contributions[i];
         final mapped = contributionCompanions[i];
-        expect(mapped.clickId.value, click.id);
+        expect(mapped.clickId.value, click.id.value);
         expect(mapped.kind.value, ledgerAxisKindToWire(source.kind));
-        expect(mapped.signedBaseDelta.value, source.signedBaseDelta);
+        expect(mapped.signedBaseDelta.value, source.delta.signedBase);
         expect(mapped.enteredInId.value, source.enteredInId);
       }
     });

@@ -21,7 +21,7 @@ void main() {
     expect(db.schemaVersion, 2);
     final row = await db.select(db.clickerSettings).getSingle();
     final preset = beerHalfLiter();
-    expect(row.clickerId, preset.id);
+    expect(row.clickerId, preset.id.value);
     expect(row.volumeEntered, 0.5);
     expect(row.energyEntered, 100);
     expect(row.moneyEntered, 150);
@@ -89,7 +89,7 @@ void main() {
     final settings = await upgraded
         .select(upgraded.clickerSettings)
         .getSingle();
-    expect(settings.clickerId, beerHalfLiter().id);
+    expect(settings.clickerId, beerHalfLiter().id.value);
     expect(settings.volumeEntered, 0.5);
     expect(settings.energyEntered, 100);
     expect(settings.moneyEntered, 150);

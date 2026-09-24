@@ -1,8 +1,8 @@
 # Структура каталогов
 
 **Дата создания:** 2026-09-23 19:16:22 +0300  
-**Последнее обновление:** 2026-09-23 19:16:22 +0300  
-**Версия:** 1  
+**Последнее обновление:** 2026-09-24 11:27:12 +0300  
+**Версия:** 2  
 **Вид документа:** справочник
 
 > Закон раскладки Пивомера. Другое дерево не предлагать и не «улучшать».  
@@ -28,6 +28,7 @@ lib/
 │   │   ├── domain/
 │   │   │   └── clicker/                  # Aggregate
 │   │   │       ├── clicker.dart          # Aggregate Root
+│   │   │       ├── clicker_id.dart       # Value Object
 │   │   │       ├── ledger_axis.dart      # Entity
 │   │   │       ├── axis_sign.dart        # Value Object (enum)
 │   │   │       ├── beer_half_liter.dart  # пресет корня
@@ -39,6 +40,8 @@ lib/
 │       ├── domain/
 │       │   └── click/                    # Aggregate
 │       │       ├── click.dart            # Aggregate Root, Click.record
+│       │       ├── click_id.dart         # Value Object
+│       │       ├── signed_base_delta.dart# Value Object (sealed union)
 │       │       ├── axis_contribution.dart# Value Object
 │       │       ├── aggregate_for_period.dart
 │       │       ├── period_balances.dart
@@ -102,4 +105,4 @@ presentation → application → domain ← infrastructure
 
 ## Следующие шаги кода (не это дерево)
 
-Value object'ы `ClickId`, `ClickerId` и суммы осей появляются **внутри уже существующих папок агрегатов**, не в новых корзинах. Главная на UI Projection остаётся в `journal/presentation/`.
+Главная на UI Projection остаётся в `journal/presentation/`.

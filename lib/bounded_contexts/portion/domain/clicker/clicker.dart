@@ -1,6 +1,7 @@
 import 'package:beer_ledger_core/arch/aggregate_root.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'clicker_id.dart';
 import 'ledger_axis.dart';
 
 part 'clicker.freezed.dart';
@@ -13,7 +14,7 @@ part 'clicker.freezed.dart';
 @freezed
 abstract class Clicker with _$Clicker implements AggregateRoot {
   const factory Clicker({
-    required String id,
+    required ClickerId id,
     required String title,
     required List<LedgerAxis> axes,
   }) = _Clicker;

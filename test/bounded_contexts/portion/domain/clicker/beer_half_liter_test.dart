@@ -7,7 +7,7 @@ void main() {
     test('4 оси spec v1 с дефолтными значениями', () {
       final clicker = beerHalfLiter();
 
-      expect(clicker.id, 'clicker-beer');
+      expect(clicker.id, const ClickerId('clicker-beer'));
       expect(clicker.title, 'Пиво 0.5 L');
       expect(clicker.axes, hasLength(4));
 
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('кастомный id', () {
-      expect(beerHalfLiter(id: 'custom').id, 'custom');
+      expect(beerHalfLiter(id: const ClickerId('custom')).id, const ClickerId('custom'));
     });
   });
 }

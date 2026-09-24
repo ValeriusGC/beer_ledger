@@ -32,10 +32,10 @@ void main() {
             AsyncData(
               PeriodBalances(
                 totalsInBase: {
-                  LedgerAxisKind.volume: 0,
-                  LedgerAxisKind.energy: 0,
-                  LedgerAxisKind.money: 0,
-                  LedgerAxisKind.joy: 0,
+                  LedgerAxisKind.volume: SignedBaseDelta.volume(0),
+                  LedgerAxisKind.energy: SignedBaseDelta.energy(0),
+                  LedgerAxisKind.money: SignedBaseDelta.money(0),
+                  LedgerAxisKind.joy: SignedBaseDelta.joy(0),
                 },
               ),
             ),

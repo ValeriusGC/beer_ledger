@@ -1,8 +1,8 @@
 # Архитектура: beer_ledger (Пивомер)
 
 **Дата создания:** 2026-07-25 17:13:00 +0500  
-**Последнее обновление:** 2026-09-23 20:36:08 +0300  
-**Версия:** 17
+**Последнее обновление:** 2026-09-24 11:27:12 +0300  
+**Версия:** 18
 
 Public выжимка. Раскладка папок — закон в `docs/project-structure.md`. Полная спека — `flutter-senior-prep/project_pivomer/`.
 
@@ -65,7 +65,7 @@ beer_ledger/
 
 ## Принципы
 
-- **DDD:** два bounded context в `lib/bounded_contexts/`; словарь в `beer_ledger_core`
+- **DDD:** два bounded context в `lib/bounded_contexts/`; словарь в `beer_ledger_core`; id и суммы осей — value object'ы в папке агрегата
 - **UI Projection:** dumb widgets, Controller/Factory/Builder по мере роста
 - **Offline-first**
 - Multi-ledger: один tap → N aggregates (volume, kcal, money, joy)

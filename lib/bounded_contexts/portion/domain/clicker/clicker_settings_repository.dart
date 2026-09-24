@@ -1,6 +1,7 @@
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 
 import 'clicker.dart';
+import 'clicker_id.dart';
 
 /// Текущая порция clicker в SQLite (ADR 001 follow-up).
 ///
@@ -9,7 +10,7 @@ abstract interface class ClickerSettingsRepository {
   /// Поток [Clicker] с id [id].
   ///
   /// Нет строки — один seed пресета и дальше значение, не вечный пустой поток.
-  Stream<Clicker> watchClicker(String id);
+  Stream<Clicker> watchClicker(ClickerId id);
 
   /// Пишет четыре введённых числа [clicker]. Единицы и знаки в строку не кладёт.
   ///

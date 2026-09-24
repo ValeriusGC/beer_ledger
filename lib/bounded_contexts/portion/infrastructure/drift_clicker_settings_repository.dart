@@ -1,6 +1,7 @@
 import 'package:beer_ledger/core/persistence/app_database.dart';
 import 'package:beer_ledger/bounded_contexts/portion/infrastructure/clicker_settings_mapper.dart';
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker.dart';
+import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker_id.dart';
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker_settings_repository.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:drift/drift.dart';
@@ -17,9 +18,9 @@ final class DriftClickerSettingsRepository
   static const _saveOperation = 'saveClicker';
 
   @override
-  Stream<Clicker> watchClicker(String id) async* {
+  Stream<Clicker> watchClicker(ClickerId id) async* {
     final query = _db.select(_db.clickerSettings)
-      ..where((row) => row.clickerId.equals(id));
+      ..where((row) => row.clickerId.equals(id.value));
     var seeded = false;
 
     await for (final rows in query.watch()) {
@@ -42,7 +43,7 @@ final class DriftClickerSettingsRepository
           .into(_db.clickerSettings)
           .insert(
             ClickerSettingsCompanion.insert(
-              clickerId: clicker.id,
+              clickerId: clicker.id.value,
               volumeEntered: _entered(clicker, LedgerAxisKind.volume),
               energyEntered: _entered(clicker, LedgerAxisKind.energy),
               moneyEntered: _entered(clicker, LedgerAxisKind.money),

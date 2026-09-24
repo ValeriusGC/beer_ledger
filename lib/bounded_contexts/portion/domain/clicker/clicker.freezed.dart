@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Clicker {
 
- String get id; String get title; List<LedgerAxis> get axes;
+ ClickerId get id; String get title; List<LedgerAxis> get axes;
 /// Create a copy of Clicker
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $ClickerCopyWith<$Res>  {
   factory $ClickerCopyWith(Clicker value, $Res Function(Clicker) _then) = _$ClickerCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, List<LedgerAxis> axes
+ ClickerId id, String title, List<LedgerAxis> axes
 });
 
 
-
+$ClickerIdCopyWith<$Res> get id;
 
 }
 /// @nodoc
@@ -65,12 +65,21 @@ class _$ClickerCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? axes = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as ClickerId,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,axes: null == axes ? _self.axes : axes // ignore: cast_nullable_to_non_nullable
 as List<LedgerAxis>,
   ));
 }
-
+/// Create a copy of Clicker
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickerIdCopyWith<$Res> get id {
+  
+  return $ClickerIdCopyWith<$Res>(_self.id, (value) {
+    return _then(_self.copyWith(id: value));
+  });
+}
 }
 
 
@@ -152,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  List<LedgerAxis> axes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ClickerId id,  String title,  List<LedgerAxis> axes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Clicker() when $default != null:
 return $default(_that.id,_that.title,_that.axes);case _:
@@ -173,7 +182,7 @@ return $default(_that.id,_that.title,_that.axes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  List<LedgerAxis> axes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ClickerId id,  String title,  List<LedgerAxis> axes)  $default,) {final _that = this;
 switch (_that) {
 case _Clicker():
 return $default(_that.id,_that.title,_that.axes);case _:
@@ -193,7 +202,7 @@ return $default(_that.id,_that.title,_that.axes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  List<LedgerAxis> axes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ClickerId id,  String title,  List<LedgerAxis> axes)?  $default,) {final _that = this;
 switch (_that) {
 case _Clicker() when $default != null:
 return $default(_that.id,_that.title,_that.axes);case _:
@@ -211,7 +220,7 @@ class _Clicker implements Clicker {
   const _Clicker({required this.id, required this.title, required final  List<LedgerAxis> axes}): _axes = axes;
   
 
-@override final  String id;
+@override final  ClickerId id;
 @override final  String title;
  final  List<LedgerAxis> _axes;
 @override List<LedgerAxis> get axes {
@@ -251,11 +260,11 @@ abstract mixin class _$ClickerCopyWith<$Res> implements $ClickerCopyWith<$Res> {
   factory _$ClickerCopyWith(_Clicker value, $Res Function(_Clicker) _then) = __$ClickerCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, List<LedgerAxis> axes
+ ClickerId id, String title, List<LedgerAxis> axes
 });
 
 
-
+@override $ClickerIdCopyWith<$Res> get id;
 
 }
 /// @nodoc
@@ -271,13 +280,22 @@ class __$ClickerCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? axes = null,}) {
   return _then(_Clicker(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as ClickerId,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,axes: null == axes ? _self._axes : axes // ignore: cast_nullable_to_non_nullable
 as List<LedgerAxis>,
   ));
 }
 
-
+/// Create a copy of Clicker
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickerIdCopyWith<$Res> get id {
+  
+  return $ClickerIdCopyWith<$Res>(_self.id, (value) {
+    return _then(_self.copyWith(id: value));
+  });
+}
 }
 
 // dart format on

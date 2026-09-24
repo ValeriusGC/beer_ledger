@@ -17,7 +17,7 @@ class _StubSettings implements ClickerSettingsRepository {
   }
 
   @override
-  Stream<Clicker> watchClicker(String id) => Stream.value(beerHalfLiter());
+  Stream<Clicker> watchClicker(ClickerId id) => Stream.value(beerHalfLiter());
 }
 
 void main() {

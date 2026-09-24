@@ -37,7 +37,7 @@ String? formatTodayClickVolume(Click click, {required String languageCode}) {
   }
   if (volume == null) return null;
 
-  final liters = fromBase(volume.signedBaseDelta, VolumeUnit.liter);
+  final liters = fromBase(volume.delta.signedBase, VolumeUnit.liter);
   return '${_litersAmount(languageCode).format(liters)} ${VolumeUnit.liter.symbol}';
 }
 
