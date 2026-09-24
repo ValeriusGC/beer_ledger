@@ -6,13 +6,15 @@ import 'package:beer_ledger_core/measure/volume_unit.dart';
 
 import 'axis_sign.dart';
 import 'clicker.dart';
+import 'clicker_id.dart';
 import 'ledger_axis.dart';
 
 /// Preset v1 «Пиво 0.5 L» — четыре оси по spec v1.
 ///
 /// Один тап: +0.5 L, +100 kcal, −150 ₽, +2 joy (в единицах ввода осей).
 /// Агрегация и отображение — через [Click.record] и [aggregateForPeriod].
-Clicker beerHalfLiter({String id = 'clicker-beer'}) => Clicker(
+Clicker beerHalfLiter({ClickerId id = const ClickerId('clicker-beer')}) =>
+    Clicker(
   id: id,
   title: 'Пиво 0.5 L',
   axes: [

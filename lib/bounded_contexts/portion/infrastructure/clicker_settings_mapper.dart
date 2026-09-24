@@ -1,5 +1,6 @@
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/beer_half_liter.dart';
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker.dart';
+import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker_id.dart';
 import 'package:beer_ledger/core/persistence/app_database.dart';
 import 'package:beer_ledger_core/beer_ledger_core.dart';
 
@@ -10,7 +11,7 @@ import 'package:beer_ledger_core/beer_ledger_core.dart';
 Clicker clickerFromSettingsRow(ClickerSettingsRow row) {
   final preset = beerHalfLiter();
   return preset.copyWith(
-    id: row.clickerId,
+    id: ClickerId(row.clickerId),
     axes: [
       for (final axis in preset.axes)
         axis.copyWith(enteredValue: _entered(row, axis.kind)),

@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 Click _recordClick({required String id, required DateTime at}) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     clicker: beerHalfLiter(),
@@ -19,10 +19,10 @@ Click _recordClick({required String id, required DateTime at}) {
 
 /// Порции пресета «Пиво 0.5»: 500 мл, 100000 cal, −15000 коп, 2 joy.
 void _expectPortions(PeriodBalances balances, int count) {
-  expect(balances.totalFor(LedgerAxisKind.volume), 500.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.energy), 100000.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.money), -15000.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.joy), 2.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 100000.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.money).signedBase, -15000.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 2.0 * count);
 }
 
 /// In-memory БД и замороженные часы.

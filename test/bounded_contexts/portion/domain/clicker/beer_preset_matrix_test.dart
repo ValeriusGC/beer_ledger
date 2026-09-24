@@ -17,7 +17,7 @@ Click _recordTap({
   required DateTime at,
 }) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: clicker.id,
     at: at,
     clicker: clicker,
@@ -51,24 +51,24 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 0.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 0.0);
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         0.0,
       );
       expect(
         fromBase(
-          balances.totalFor(LedgerAxisKind.energy),
+          balances.totalFor(LedgerAxisKind.energy).signedBase,
           EnergyUnit.kilocalorie,
         ),
         0.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.money), MoneyUnit.rouble),
+        fromBase(balances.totalFor(LedgerAxisKind.money).signedBase, MoneyUnit.rouble),
         0.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.joy), CountUnit.point),
+        fromBase(balances.totalFor(LedgerAxisKind.joy).signedBase, CountUnit.point),
         0.0,
       );
     });
@@ -84,24 +84,24 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 500.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0);
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         0.5,
       );
       expect(
         fromBase(
-          balances.totalFor(LedgerAxisKind.energy),
+          balances.totalFor(LedgerAxisKind.energy).signedBase,
           EnergyUnit.kilocalorie,
         ),
         100.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.money), MoneyUnit.rouble),
+        fromBase(balances.totalFor(LedgerAxisKind.money).signedBase, MoneyUnit.rouble),
         -150.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.joy), CountUnit.point),
+        fromBase(balances.totalFor(LedgerAxisKind.joy).signedBase, CountUnit.point),
         2.0,
       );
     });
@@ -119,28 +119,28 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 1500.0);
-      expect(balances.totalFor(LedgerAxisKind.energy), 300000.0);
-      expect(balances.totalFor(LedgerAxisKind.money), -45000.0);
-      expect(balances.totalFor(LedgerAxisKind.joy), 6.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 1500.0);
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 300000.0);
+      expect(balances.totalFor(LedgerAxisKind.money).signedBase, -45000.0);
+      expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 6.0);
 
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         1.5,
       );
       expect(
         fromBase(
-          balances.totalFor(LedgerAxisKind.energy),
+          balances.totalFor(LedgerAxisKind.energy).signedBase,
           EnergyUnit.kilocalorie,
         ),
         300.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.money), MoneyUnit.rouble),
+        fromBase(balances.totalFor(LedgerAxisKind.money).signedBase, MoneyUnit.rouble),
         -450.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.joy), CountUnit.point),
+        fromBase(balances.totalFor(LedgerAxisKind.joy).signedBase, CountUnit.point),
         6.0,
       );
     });
@@ -156,10 +156,10 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), greaterThan(0));
-      expect(balances.totalFor(LedgerAxisKind.energy), greaterThan(0));
-      expect(balances.totalFor(LedgerAxisKind.joy), greaterThan(0));
-      expect(balances.totalFor(LedgerAxisKind.money), lessThan(0));
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, greaterThan(0));
+      expect(balances.totalFor(LedgerAxisKind.energy).signedBase, greaterThan(0));
+      expect(balances.totalFor(LedgerAxisKind.joy).signedBase, greaterThan(0));
+      expect(balances.totalFor(LedgerAxisKind.money).signedBase, lessThan(0));
     });
 
     test('undo последнего — totals как у 2 тапов', () {
@@ -178,24 +178,24 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 1000.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 1000.0);
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         1.0,
       );
       expect(
         fromBase(
-          balances.totalFor(LedgerAxisKind.energy),
+          balances.totalFor(LedgerAxisKind.energy).signedBase,
           EnergyUnit.kilocalorie,
         ),
         200.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.money), MoneyUnit.rouble),
+        fromBase(balances.totalFor(LedgerAxisKind.money).signedBase, MoneyUnit.rouble),
         -300.0,
       );
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.joy), CountUnit.point),
+        fromBase(balances.totalFor(LedgerAxisKind.joy).signedBase, CountUnit.point),
         4.0,
       );
     });
@@ -220,9 +220,9 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 500.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0);
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         0.5,
       );
     });
@@ -245,9 +245,9 @@ void main() {
         to: to,
       );
 
-      expect(balances.totalFor(LedgerAxisKind.volume), 2500.0);
+      expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 2500.0);
       expect(
-        fromBase(balances.totalFor(LedgerAxisKind.volume), VolumeUnit.liter),
+        fromBase(balances.totalFor(LedgerAxisKind.volume).signedBase, VolumeUnit.liter),
         2.5,
       );
     });

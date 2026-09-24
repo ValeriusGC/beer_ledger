@@ -13,10 +13,10 @@ PeriodBalances _balances({
 }) {
   return PeriodBalances(
     totalsInBase: {
-      LedgerAxisKind.volume: volume,
-      LedgerAxisKind.energy: energy,
-      LedgerAxisKind.money: money,
-      LedgerAxisKind.joy: joy,
+      LedgerAxisKind.volume: SignedBaseDelta.volume(volume),
+      LedgerAxisKind.energy: SignedBaseDelta.energy(energy),
+      LedgerAxisKind.money: SignedBaseDelta.money(money),
+      LedgerAxisKind.joy: SignedBaseDelta.joy(joy),
     },
   );
 }

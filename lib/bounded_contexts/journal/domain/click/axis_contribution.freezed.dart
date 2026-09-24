@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AxisContribution {
 
- LedgerAxisKind get kind; double get signedBaseDelta; String get enteredInId;
+ SignedBaseDelta get delta; String get enteredInId;
 /// Create a copy of AxisContribution
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AxisContributionCopyWith<AxisContribution> get copyWith => _$AxisContributionCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AxisContribution&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.signedBaseDelta, signedBaseDelta) || other.signedBaseDelta == signedBaseDelta)&&(identical(other.enteredInId, enteredInId) || other.enteredInId == enteredInId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AxisContribution&&(identical(other.delta, delta) || other.delta == delta)&&(identical(other.enteredInId, enteredInId) || other.enteredInId == enteredInId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,kind,signedBaseDelta,enteredInId);
+int get hashCode => Object.hash(runtimeType,delta,enteredInId);
 
 @override
 String toString() {
-  return 'AxisContribution(kind: $kind, signedBaseDelta: $signedBaseDelta, enteredInId: $enteredInId)';
+  return 'AxisContribution(delta: $delta, enteredInId: $enteredInId)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $AxisContributionCopyWith<$Res>  {
   factory $AxisContributionCopyWith(AxisContribution value, $Res Function(AxisContribution) _then) = _$AxisContributionCopyWithImpl;
 @useResult
 $Res call({
- LedgerAxisKind kind, double signedBaseDelta, String enteredInId
+ SignedBaseDelta delta, String enteredInId
 });
 
 
-
+$SignedBaseDeltaCopyWith<$Res> get delta;
 
 }
 /// @nodoc
@@ -62,15 +62,23 @@ class _$AxisContributionCopyWithImpl<$Res>
 
 /// Create a copy of AxisContribution
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? signedBaseDelta = null,Object? enteredInId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? delta = null,Object? enteredInId = null,}) {
   return _then(_self.copyWith(
-kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
-as LedgerAxisKind,signedBaseDelta: null == signedBaseDelta ? _self.signedBaseDelta : signedBaseDelta // ignore: cast_nullable_to_non_nullable
-as double,enteredInId: null == enteredInId ? _self.enteredInId : enteredInId // ignore: cast_nullable_to_non_nullable
+delta: null == delta ? _self.delta : delta // ignore: cast_nullable_to_non_nullable
+as SignedBaseDelta,enteredInId: null == enteredInId ? _self.enteredInId : enteredInId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
-
+/// Create a copy of AxisContribution
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SignedBaseDeltaCopyWith<$Res> get delta {
+  
+  return $SignedBaseDeltaCopyWith<$Res>(_self.delta, (value) {
+    return _then(_self.copyWith(delta: value));
+  });
+}
 }
 
 
@@ -152,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LedgerAxisKind kind,  double signedBaseDelta,  String enteredInId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SignedBaseDelta delta,  String enteredInId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AxisContribution() when $default != null:
-return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
+return $default(_that.delta,_that.enteredInId);case _:
   return orElse();
 
 }
@@ -173,10 +181,10 @@ return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LedgerAxisKind kind,  double signedBaseDelta,  String enteredInId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SignedBaseDelta delta,  String enteredInId)  $default,) {final _that = this;
 switch (_that) {
 case _AxisContribution():
-return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
+return $default(_that.delta,_that.enteredInId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +201,10 @@ return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LedgerAxisKind kind,  double signedBaseDelta,  String enteredInId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SignedBaseDelta delta,  String enteredInId)?  $default,) {final _that = this;
 switch (_that) {
 case _AxisContribution() when $default != null:
-return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
+return $default(_that.delta,_that.enteredInId);case _:
   return null;
 
 }
@@ -207,12 +215,11 @@ return $default(_that.kind,_that.signedBaseDelta,_that.enteredInId);case _:
 /// @nodoc
 
 
-class _AxisContribution implements AxisContribution {
-  const _AxisContribution({required this.kind, required this.signedBaseDelta, required this.enteredInId});
+class _AxisContribution extends AxisContribution {
+  const _AxisContribution({required this.delta, required this.enteredInId}): super._();
   
 
-@override final  LedgerAxisKind kind;
-@override final  double signedBaseDelta;
+@override final  SignedBaseDelta delta;
 @override final  String enteredInId;
 
 /// Create a copy of AxisContribution
@@ -225,16 +232,16 @@ _$AxisContributionCopyWith<_AxisContribution> get copyWith => __$AxisContributio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AxisContribution&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.signedBaseDelta, signedBaseDelta) || other.signedBaseDelta == signedBaseDelta)&&(identical(other.enteredInId, enteredInId) || other.enteredInId == enteredInId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AxisContribution&&(identical(other.delta, delta) || other.delta == delta)&&(identical(other.enteredInId, enteredInId) || other.enteredInId == enteredInId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,kind,signedBaseDelta,enteredInId);
+int get hashCode => Object.hash(runtimeType,delta,enteredInId);
 
 @override
 String toString() {
-  return 'AxisContribution(kind: $kind, signedBaseDelta: $signedBaseDelta, enteredInId: $enteredInId)';
+  return 'AxisContribution(delta: $delta, enteredInId: $enteredInId)';
 }
 
 
@@ -245,11 +252,11 @@ abstract mixin class _$AxisContributionCopyWith<$Res> implements $AxisContributi
   factory _$AxisContributionCopyWith(_AxisContribution value, $Res Function(_AxisContribution) _then) = __$AxisContributionCopyWithImpl;
 @override @useResult
 $Res call({
- LedgerAxisKind kind, double signedBaseDelta, String enteredInId
+ SignedBaseDelta delta, String enteredInId
 });
 
 
-
+@override $SignedBaseDeltaCopyWith<$Res> get delta;
 
 }
 /// @nodoc
@@ -262,16 +269,24 @@ class __$AxisContributionCopyWithImpl<$Res>
 
 /// Create a copy of AxisContribution
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? signedBaseDelta = null,Object? enteredInId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? delta = null,Object? enteredInId = null,}) {
   return _then(_AxisContribution(
-kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
-as LedgerAxisKind,signedBaseDelta: null == signedBaseDelta ? _self.signedBaseDelta : signedBaseDelta // ignore: cast_nullable_to_non_nullable
-as double,enteredInId: null == enteredInId ? _self.enteredInId : enteredInId // ignore: cast_nullable_to_non_nullable
+delta: null == delta ? _self.delta : delta // ignore: cast_nullable_to_non_nullable
+as SignedBaseDelta,enteredInId: null == enteredInId ? _self.enteredInId : enteredInId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
 
-
+/// Create a copy of AxisContribution
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SignedBaseDeltaCopyWith<$Res> get delta {
+  
+  return $SignedBaseDeltaCopyWith<$Res>(_self.delta, (value) {
+    return _then(_self.copyWith(delta: value));
+  });
+}
 }
 
 // dart format on

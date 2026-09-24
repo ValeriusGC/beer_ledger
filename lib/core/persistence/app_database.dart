@@ -121,7 +121,7 @@ class AppDatabase extends _$AppDatabase {
     final preset = beerHalfLiter();
     return into(clickerSettings).insert(
       ClickerSettingsCompanion.insert(
-        clickerId: preset.id,
+        clickerId: preset.id.value,
         volumeEntered: _presetEntered(preset, LedgerAxisKind.volume),
         energyEntered: _presetEntered(preset, LedgerAxisKind.energy),
         moneyEntered: _presetEntered(preset, LedgerAxisKind.money),

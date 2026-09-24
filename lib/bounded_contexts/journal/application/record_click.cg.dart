@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:beer_ledger/bounded_contexts/journal/domain/click/click.dart';
+import 'package:beer_ledger/bounded_contexts/journal/domain/click/click_id.dart';
 import 'package:beer_ledger/bounded_contexts/journal/domain/click/click_repository.dart';
 import 'package:beer_ledger/bounded_contexts/portion/application/current_clicker.cg.dart';
 import 'package:beer_ledger/core/di/click_repository.cg.dart';
@@ -50,7 +51,7 @@ class RecordClick extends _$RecordClick {
 
     final clicker = clickerState.requireValue;
     final recorded = Click.record(
-      id: const Uuid().v4(),
+      id: ClickId(const Uuid().v4()),
       clickerId: clicker.id,
       at: ref.refresh(nowProvider),
       clicker: clicker,

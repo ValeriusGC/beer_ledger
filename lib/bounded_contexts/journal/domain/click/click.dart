@@ -1,4 +1,5 @@
 import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker.dart';
+import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/clicker_id.dart';
 import 'package:beer_ledger_core/arch/aggregate_root.dart';
 import 'package:beer_ledger_core/convert/convert.dart';
 import 'package:beer_ledger_core/failure/failure.dart';
@@ -8,6 +9,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'axis_contribution.dart';
+import 'click_id.dart';
+import 'signed_base_delta.dart';
 
 part 'click.freezed.dart';
 
@@ -18,8 +21,8 @@ part 'click.freezed.dart';
 @freezed
 abstract class Click with _$Click implements AggregateRoot {
   const factory Click({
-    required String id,
-    required String clickerId,
+    required ClickId id,
+    required ClickerId clickerId,
     required DateTime at,
     @Default(1.0) double factor,
     required List<AxisContribution> contributions,
@@ -31,10 +34,10 @@ abstract class Click with _$Click implements AggregateRoot {
   ///
   /// На каждой оси: резолв [LedgerAxis.enteredInId] → [resolveUnit]; при
   /// неизвестном id — [Failure.unknownUnitId]. Иначе
-  /// `signedBaseDelta = sign.multiplier * deltaInBase(...)`.
+  /// `delta = sign.multiplier * deltaInBase(...)` в варианте оси.
   static Result<Click> record({
-    required String id,
-    required String clickerId,
+    required ClickId id,
+    required ClickerId clickerId,
     required DateTime at,
     required Clicker clicker,
     double factor = 1,
@@ -49,14 +52,15 @@ abstract class Click with _$Click implements AggregateRoot {
 
       contributions.add(
         AxisContribution(
-          kind: axis.kind,
-          signedBaseDelta:
-              axis.sign.multiplier *
-              deltaInBase(
-                enteredValue: axis.enteredValue,
-                enteredIn: unit,
-                factor: factor,
-              ),
+          delta: SignedBaseDelta.fromKind(
+            axis.kind,
+            axis.sign.multiplier *
+                deltaInBase(
+                  enteredValue: axis.enteredValue,
+                  enteredIn: unit,
+                  factor: factor,
+                ),
+          ),
           enteredInId: axis.enteredInId,
         ),
       );

@@ -10,8 +10,8 @@ void main() {
   group('Click.record', () {
     test('четыре оси spec, factor=1 — volume 500 мл в базе', () {
       final result = Click.record(
-        id: 'click-1',
-        clickerId: 'clicker-beer',
+        id: const ClickId('click-1'),
+        clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
         clicker: beerHalfLiterClicker(),
       );
@@ -21,24 +21,24 @@ void main() {
 
       expect(click.contributions, hasLength(4));
       expect(
-        contribution(click, LedgerAxisKind.volume)!.signedBaseDelta,
+        contribution(click, LedgerAxisKind.volume)!.delta.signedBase,
         500.0,
       );
       expect(
-        contribution(click, LedgerAxisKind.energy)!.signedBaseDelta,
+        contribution(click, LedgerAxisKind.energy)!.delta.signedBase,
         100000.0,
       );
       expect(
-        contribution(click, LedgerAxisKind.money)!.signedBaseDelta,
+        contribution(click, LedgerAxisKind.money)!.delta.signedBase,
         -15000.0,
       );
-      expect(contribution(click, LedgerAxisKind.joy)!.signedBaseDelta, 2.0);
+      expect(contribution(click, LedgerAxisKind.joy)!.delta.signedBase, 2.0);
     });
 
     test('factor=2 удваивает вклад volume', () {
       final result = Click.record(
-        id: 'click-2',
-        clickerId: 'clicker-beer',
+        id: const ClickId('click-2'),
+        clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 18),
         clicker: beerHalfLiterClicker(),
         factor: 2,
@@ -46,7 +46,7 @@ void main() {
 
       final click = result.getOrElse((_) => throw StateError('expected Right'));
       expect(
-        contribution(click, LedgerAxisKind.volume)!.signedBaseDelta,
+        contribution(click, LedgerAxisKind.volume)!.delta.signedBase,
         1000.0,
       );
     });
@@ -64,7 +64,7 @@ void main() {
       );
 
       final result = Click.record(
-        id: 'click-bad',
+        id: const ClickId('click-bad'),
         clickerId: clicker.id,
         at: DateTime(2026, 7, 28, 18),
         clicker: clicker,
@@ -78,7 +78,7 @@ void main() {
       () {
         final clicker = beerHalfLiterClicker();
         final recorded = Click.record(
-          id: 'click-frozen',
+          id: const ClickId('click-frozen'),
           clickerId: clicker.id,
           at: DateTime(2026, 7, 28, 12),
           clicker: clicker,
@@ -93,7 +93,7 @@ void main() {
 
         expect(updatedClicker.axes.first.enteredValue, 0.33);
         expect(
-          contribution(recorded, LedgerAxisKind.volume)!.signedBaseDelta,
+          contribution(recorded, LedgerAxisKind.volume)!.delta.signedBase,
           500.0,
         );
       },
@@ -101,15 +101,15 @@ void main() {
 
     test('ADR 003: enteredInId на снимке — для отображения через fromBase', () {
       final click = Click.record(
-        id: 'click-ui',
-        clickerId: 'clicker-beer',
+        id: const ClickId('click-ui'),
+        clickerId: const ClickerId('clicker-beer'),
         at: DateTime(2026, 7, 28, 12),
         clicker: beerHalfLiterClicker(),
       ).getOrElse((_) => throw StateError('expected Right'));
 
       final volume = contribution(click, LedgerAxisKind.volume)!;
       expect(volume.enteredInId, VolumeUnit.liter.id);
-      expect(fromBase(volume.signedBaseDelta, VolumeUnit.liter), 0.5);
+      expect(fromBase(volume.delta.signedBase, VolumeUnit.liter), 0.5);
     });
   });
 }

@@ -1,7 +1,7 @@
 /// Направление вклада оси в баланс: прибавляет или вычитает.
 ///
 /// Знак задаётся на конфигурации оси ([LedgerAxis.sign]) и применяется один раз
-/// при записи тапа в [signedBaseDelta] снимка [AxisContribution].
+/// при записи тапа в [AxisContribution.delta] снимка [AxisContribution].
 enum AxisSign {
   /// Увеличивает баланс оси (объём, ккал, удовольствие).
   plus,
@@ -9,7 +9,7 @@ enum AxisSign {
   /// Уменьшает баланс оси (деньги в v1).
   minus;
 
-  /// Множитель для расчёта [AxisContribution.signedBaseDelta]: `1` или `-1`.
+  /// Множитель для расчёта [AxisContribution.delta]: `1` или `-1`.
   int get multiplier => switch (this) {
     AxisSign.plus => 1,
     AxisSign.minus => -1,

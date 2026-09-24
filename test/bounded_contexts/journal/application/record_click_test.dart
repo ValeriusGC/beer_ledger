@@ -12,10 +12,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Порции пресета «Пиво 0.5»: 500 мл, 100000 cal, −15000 коп, 2 joy.
 void _expectPortions(PeriodBalances balances, int count) {
-  expect(balances.totalFor(LedgerAxisKind.volume), 500.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.energy), 100000.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.money), -15000.0 * count);
-  expect(balances.totalFor(LedgerAxisKind.joy), 2.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.volume).signedBase, 500.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.energy).signedBase, 100000.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.money).signedBase, -15000.0 * count);
+  expect(balances.totalFor(LedgerAxisKind.joy).signedBase, 2.0 * count);
 }
 
 /// In-memory БД и замороженные часы.
@@ -117,7 +117,7 @@ void main() {
           .firstWhere(
             (contribution) => contribution.kind == LedgerAxisKind.energy,
           )
-          .signedBaseDelta;
+          .delta.signedBase;
       expect(oldEnergy, 100000);
 
       final current = container.read(currentClickerProvider).requireValue;
@@ -142,13 +142,13 @@ void main() {
             .firstWhere(
               (contribution) => contribution.kind == LedgerAxisKind.energy,
             )
-            .signedBaseDelta,
+            .delta.signedBase,
         oldEnergy,
       );
       final balance = await container
           .listen(todayBalanceProvider.future, (_, _) {})
           .read();
-      expect(balance.totalFor(LedgerAxisKind.energy), 100000);
+      expect(balance.totalFor(LedgerAxisKind.energy).signedBase, 100000);
 
       final updated = container.read(currentClickerProvider).requireValue;
       expect(
@@ -168,13 +168,13 @@ void main() {
             .firstWhere(
               (contribution) => contribution.kind == LedgerAxisKind.energy,
             )
-            .signedBaseDelta,
+            .delta.signedBase,
         180 * 1000,
       );
       final summed = await container
           .listen(todayBalanceProvider.future, (_, _) {})
           .read();
-      expect(summed.totalFor(LedgerAxisKind.energy), 100000 + 180000);
+      expect(summed.totalFor(LedgerAxisKind.energy).signedBase, 100000 + 180000);
     });
 
     test('два тапа получают разное время, новый сверху', () async {

@@ -22,22 +22,25 @@ TodayBalanceLines formatTodayBalanceLines(
   required String languageCode,
 }) {
   return (
-    volume: _volumeLine(balances.totalFor(LedgerAxisKind.volume), languageCode),
+    volume: _volumeLine(
+      balances.totalFor(LedgerAxisKind.volume).signedBase,
+      languageCode,
+    ),
     energy: _axisLine(
-      balances.totalFor(LedgerAxisKind.energy),
+      balances.totalFor(LedgerAxisKind.energy).signedBase,
       EnergyUnit.kilocalorie,
       languageCode: languageCode,
       maximumFractionDigits: 0,
       showPlus: true,
     ),
     money: _axisLine(
-      balances.totalFor(LedgerAxisKind.money),
+      balances.totalFor(LedgerAxisKind.money).signedBase,
       MoneyUnit.rouble,
       languageCode: languageCode,
       maximumFractionDigits: 2,
     ),
     joy: _axisLine(
-      balances.totalFor(LedgerAxisKind.joy),
+      balances.totalFor(LedgerAxisKind.joy).signedBase,
       CountUnit.point,
       languageCode: languageCode,
       maximumFractionDigits: 1,

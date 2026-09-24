@@ -14,7 +14,7 @@ Click _click({
   List<AxisContribution> contributions = const [],
 }) {
   return Click(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     contributions: contributions,
@@ -72,8 +72,7 @@ void main() {
           at: at,
           contributions: [
             AxisContribution(
-              kind: LedgerAxisKind.volume,
-              signedBaseDelta: 500,
+              delta: SignedBaseDelta.volume(500),
               enteredInId: VolumeUnit.liter.id,
             ),
           ],

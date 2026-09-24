@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 Click _recordClick({required String id, required DateTime at}) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     clicker: beerHalfLiter(),

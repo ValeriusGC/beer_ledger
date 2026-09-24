@@ -62,7 +62,7 @@ DayVolume _dayVolume(List<Click> clicks, DateTime day) {
   return DayVolume(
     day: from,
     liters: fromBase(
-      balances.totalFor(LedgerAxisKind.volume),
+      balances.totalFor(LedgerAxisKind.volume).signedBase,
       VolumeUnit.liter,
     ),
   );

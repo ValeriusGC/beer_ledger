@@ -12,7 +12,7 @@ Click _recordClick({
   double factor = 1,
 }) {
   return Click.record(
-    id: id,
+    id: ClickId(id),
     clickerId: beerHalfLiter().id,
     at: at,
     clicker: beerHalfLiter(),
@@ -62,7 +62,7 @@ void main() {
       final result = await repository.addClick(click);
 
       expect(result.isRight(), isTrue);
-      final restored = await _readClickFromDb(db, click.id);
+      final restored = await _readClickFromDb(db, click.id.value);
       expect(restored, isNotNull);
       expect(
         _withContributionsSortedByKind(restored!),
@@ -118,12 +118,12 @@ void main() {
       await repository.addClick(earlyTap);
 
       final clicksOnD = await repository.watchClicksForDay(dayD).first;
-      expect(clicksOnD.map((click) => click.id), ['click-late']);
+      expect(clicksOnD.map((click) => click.id.value), ['click-late']);
 
       final clicksOnDPlus1 = await repository
           .watchClicksForDay(DateTime(2026, 7, 29))
           .first;
-      expect(clicksOnDPlus1.map((click) => click.id), ['click-early']);
+      expect(clicksOnDPlus1.map((click) => click.id.value), ['click-early']);
     });
 
     test('после addClick stream получает обновление', () async {
@@ -202,7 +202,7 @@ void main() {
           )
           .first;
 
-      expect(clicks.map((click) => click.id), ['today', 'oldest']);
+      expect(clicks.map((click) => click.id.value), ['today', 'oldest']);
     });
 
     test('from не раньше to → пустой поток', () async {
@@ -249,11 +249,11 @@ void main() {
 
       expect((await repository.undoLastClick()).isRight(), isTrue);
 
-      expect(await _readClickFromDb(db, click.id), isNull);
+      expect(await _readClickFromDb(db, click.id.value), isNull);
       expect(
         await (db.select(
           db.clickContributions,
-        )..where((t) => t.clickId.equals(click.id))).get(),
+        )..where((t) => t.clickId.equals(click.id.value))).get(),
         isEmpty,
       );
     });
@@ -273,8 +273,8 @@ void main() {
 
       expect((await repository.undoLastClick()).isRight(), isTrue);
 
-      expect(await _readClickFromDb(db, late.id), isNull);
-      expect(await _readClickFromDb(db, early.id), isNotNull);
+      expect(await _readClickFromDb(db, late.id.value), isNull);
+      expect(await _readClickFromDb(db, early.id.value), isNotNull);
     });
 
     test('одинаковое at → удаляется id DESC', () async {
@@ -287,8 +287,8 @@ void main() {
 
       expect((await repository.undoLastClick()).isRight(), isTrue);
 
-      expect(await _readClickFromDb(db, higherId.id), isNull);
-      expect(await _readClickFromDb(db, lowerId.id), isNotNull);
+      expect(await _readClickFromDb(db, higherId.id.value), isNull);
+      expect(await _readClickFromDb(db, lowerId.id.value), isNotNull);
     });
 
     test('ошибка БД → Failure.storage', () async {

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Click {
 
- String get id; String get clickerId; DateTime get at; double get factor; List<AxisContribution> get contributions;
+ ClickId get id; ClickerId get clickerId; DateTime get at; double get factor; List<AxisContribution> get contributions;
 /// Create a copy of Click
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $ClickCopyWith<$Res>  {
   factory $ClickCopyWith(Click value, $Res Function(Click) _then) = _$ClickCopyWithImpl;
 @useResult
 $Res call({
- String id, String clickerId, DateTime at, double factor, List<AxisContribution> contributions
+ ClickId id, ClickerId clickerId, DateTime at, double factor, List<AxisContribution> contributions
 });
 
 
-
+$ClickIdCopyWith<$Res> get id;$ClickerIdCopyWith<$Res> get clickerId;
 
 }
 /// @nodoc
@@ -65,14 +65,32 @@ class _$ClickCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? clickerId = null,Object? at = null,Object? factor = null,Object? contributions = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,clickerId: null == clickerId ? _self.clickerId : clickerId // ignore: cast_nullable_to_non_nullable
-as String,at: null == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
+as ClickId,clickerId: null == clickerId ? _self.clickerId : clickerId // ignore: cast_nullable_to_non_nullable
+as ClickerId,at: null == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
 as DateTime,factor: null == factor ? _self.factor : factor // ignore: cast_nullable_to_non_nullable
 as double,contributions: null == contributions ? _self.contributions : contributions // ignore: cast_nullable_to_non_nullable
 as List<AxisContribution>,
   ));
 }
-
+/// Create a copy of Click
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickIdCopyWith<$Res> get id {
+  
+  return $ClickIdCopyWith<$Res>(_self.id, (value) {
+    return _then(_self.copyWith(id: value));
+  });
+}/// Create a copy of Click
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickerIdCopyWith<$Res> get clickerId {
+  
+  return $ClickerIdCopyWith<$Res>(_self.clickerId, (value) {
+    return _then(_self.copyWith(clickerId: value));
+  });
+}
 }
 
 
@@ -154,7 +172,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ClickId id,  ClickerId clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Click() when $default != null:
 return $default(_that.id,_that.clickerId,_that.at,_that.factor,_that.contributions);case _:
@@ -175,7 +193,7 @@ return $default(_that.id,_that.clickerId,_that.at,_that.factor,_that.contributio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ClickId id,  ClickerId clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)  $default,) {final _that = this;
 switch (_that) {
 case _Click():
 return $default(_that.id,_that.clickerId,_that.at,_that.factor,_that.contributions);case _:
@@ -195,7 +213,7 @@ return $default(_that.id,_that.clickerId,_that.at,_that.factor,_that.contributio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ClickId id,  ClickerId clickerId,  DateTime at,  double factor,  List<AxisContribution> contributions)?  $default,) {final _that = this;
 switch (_that) {
 case _Click() when $default != null:
 return $default(_that.id,_that.clickerId,_that.at,_that.factor,_that.contributions);case _:
@@ -213,8 +231,8 @@ class _Click extends Click {
   const _Click({required this.id, required this.clickerId, required this.at, this.factor = 1.0, required final  List<AxisContribution> contributions}): _contributions = contributions,super._();
   
 
-@override final  String id;
-@override final  String clickerId;
+@override final  ClickId id;
+@override final  ClickerId clickerId;
 @override final  DateTime at;
 @override@JsonKey() final  double factor;
  final  List<AxisContribution> _contributions;
@@ -255,11 +273,11 @@ abstract mixin class _$ClickCopyWith<$Res> implements $ClickCopyWith<$Res> {
   factory _$ClickCopyWith(_Click value, $Res Function(_Click) _then) = __$ClickCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String clickerId, DateTime at, double factor, List<AxisContribution> contributions
+ ClickId id, ClickerId clickerId, DateTime at, double factor, List<AxisContribution> contributions
 });
 
 
-
+@override $ClickIdCopyWith<$Res> get id;@override $ClickerIdCopyWith<$Res> get clickerId;
 
 }
 /// @nodoc
@@ -275,15 +293,33 @@ class __$ClickCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? clickerId = null,Object? at = null,Object? factor = null,Object? contributions = null,}) {
   return _then(_Click(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,clickerId: null == clickerId ? _self.clickerId : clickerId // ignore: cast_nullable_to_non_nullable
-as String,at: null == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
+as ClickId,clickerId: null == clickerId ? _self.clickerId : clickerId // ignore: cast_nullable_to_non_nullable
+as ClickerId,at: null == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
 as DateTime,factor: null == factor ? _self.factor : factor // ignore: cast_nullable_to_non_nullable
 as double,contributions: null == contributions ? _self._contributions : contributions // ignore: cast_nullable_to_non_nullable
 as List<AxisContribution>,
   ));
 }
 
-
+/// Create a copy of Click
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickIdCopyWith<$Res> get id {
+  
+  return $ClickIdCopyWith<$Res>(_self.id, (value) {
+    return _then(_self.copyWith(id: value));
+  });
+}/// Create a copy of Click
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClickerIdCopyWith<$Res> get clickerId {
+  
+  return $ClickerIdCopyWith<$Res>(_self.clickerId, (value) {
+    return _then(_self.copyWith(clickerId: value));
+  });
+}
 }
 
 // dart format on

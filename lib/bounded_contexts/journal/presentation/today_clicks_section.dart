@@ -111,7 +111,7 @@ class _TodayClickRow extends StatelessWidget {
       languageCode: locale.languageCode,
     );
     return ListTile(
-      key: Key('today-click-${click.id}'),
+      key: Key('today-click-${click.id.value}'),
       title: Text(time),
       trailing: volume == null ? null : Text(volume),
     );
