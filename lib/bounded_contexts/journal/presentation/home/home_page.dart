@@ -1,9 +1,10 @@
-import 'package:beer_ledger/bounded_contexts/portion/domain/clicker/beer_half_liter.dart';
 import 'package:beer_ledger/app/flavor.dart';
-import 'package:beer_ledger/bounded_contexts/portion/application/current_clicker.cg.dart';
 import 'package:beer_ledger/bounded_contexts/journal/application/record_click.cg.dart';
+import 'package:beer_ledger/bounded_contexts/journal/application/undo_last_click.cg.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_controller.cg.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_projection.cg.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_ui_model_builder.dart';
 import 'package:beer_ledger/bounded_contexts/journal/presentation/today_balance_card.dart';
-import 'package:beer_ledger/bounded_contexts/journal/presentation/today_clicks_format.dart';
 import 'package:beer_ledger/bounded_contexts/journal/presentation/today_clicks_section.dart';
 import 'package:beer_ledger/bounded_contexts/journal/presentation/week_volume_chart.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
@@ -17,10 +18,8 @@ const _homeWideWidth = 600.0;
 
 /// Главный экран приложения: баланс, запись тапа, журнал и объём за неделю.
 ///
-/// Shell на [CustomScrollView]. Провайдеры читают дочерние [ConsumerWidget],
-/// кроме кнопки записи — она смотрит [recordClickProvider] здесь.
-/// Ширина — [MediaQuery.sizeOf]: уже [_homeWideWidth] график под журналом,
-/// иначе он стоит рядом с карточкой.
+/// Оркестратор UI Projection: смотрит [homeProjectionProvider], собирает
+/// [HomeUiModelBuilder] и отдаёт dumb-виджеты. Snackbar и haptic — здесь.
 class HomePage extends ConsumerWidget {
   /// Создаёт главный экран с карточкой, кнопкой записи, журналом и графиком.
   const HomePage({super.key});
@@ -28,12 +27,13 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final recordState = ref.watch(recordClickProvider);
-    final clickerState = ref.watch(currentClickerProvider);
-    // Пока порция ещё грузится, кнопку гасим так же, как при повторном тапе.
-    // Иначе нажатие уходит в record() и пропадает молча: раньше пресет был
-    // синхронным, и тап всегда писался.
-    final tapDisabled = recordState.isLoading || clickerState.isLoading;
+    final locale = Localizations.localeOf(context);
+    final projection = ref.watch(homeProjectionProvider);
+    final ui = HomeUiModelBuilder.build(
+      projection: projection,
+      l10n: l10n,
+      locale: locale,
+    );
 
     ref.listen(recordClickProvider, (previous, next) {
       if (next.hasError && previous?.hasError != true) {
@@ -43,6 +43,14 @@ class HomePage extends ConsumerWidget {
       }
       if (previous?.isLoading == true && !next.isLoading && !next.hasError) {
         HapticFeedback.lightImpact();
+      }
+    });
+
+    ref.listen(undoLastClickProvider, (previous, next) {
+      if (next.hasError && previous?.hasError != true) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.undoLastTapError)));
       }
     });
 
@@ -67,39 +75,35 @@ class HomePage extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           if (wide)
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Row(
-                key: Key('home-balance-chart-row'),
+                key: const Key('home-balance-chart-row'),
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: TodayBalanceCard()),
-                  Expanded(child: WeekVolumeChart()),
+                  Expanded(child: TodayBalanceCard(balance: ui.balance)),
+                  const Expanded(child: WeekVolumeChart()),
                 ],
               ),
             )
           else
-            const SliverToBoxAdapter(child: TodayBalanceCard()),
+            SliverToBoxAdapter(child: TodayBalanceCard(balance: ui.balance)),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: FilledButton(
-                onPressed: tapDisabled
-                    ? null
-                    : () => ref.read(recordClickProvider.notifier).record(),
-                child: Text(
-                  l10n.recordBeerTap(
-                    formatRecordBeerVolume(
-                      clickerState.asData?.value ?? beerHalfLiter(),
-                      languageCode: Localizations.localeOf(
-                        context,
-                      ).languageCode,
-                    ),
-                  ),
-                ),
+                onPressed: ui.tapEnabled
+                    ? () => ref.read(homeControllerProvider.notifier).record()
+                    : null,
+                child: Text(ui.tapLabel),
               ),
             ),
           ),
-          const TodayClicksSection(),
+          TodayClicksSection(
+            journal: ui.journal,
+            undoEnabled: ui.undoEnabled,
+            undoLabel: ui.undoLabel,
+            onUndo: () => ref.read(homeControllerProvider.notifier).undo(),
+          ),
           if (!wide) const SliverToBoxAdapter(child: WeekVolumeChart()),
         ],
       ),

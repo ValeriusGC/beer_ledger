@@ -1,36 +1,16 @@
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_ui_model.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/today_balance_card.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
-import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
-import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-PeriodBalances _balances({
-  double volume = 0,
-  double energy = 0,
-  double money = 0,
-  double joy = 0,
-}) {
-  return PeriodBalances(
-    totalsInBase: {
-      LedgerAxisKind.volume: SignedBaseDelta.volume(volume),
-      LedgerAxisKind.energy: SignedBaseDelta.energy(energy),
-      LedgerAxisKind.money: SignedBaseDelta.money(money),
-      LedgerAxisKind.joy: SignedBaseDelta.joy(joy),
-    },
-  );
-}
-
-Future<void> _pump(WidgetTester tester, AsyncValue<PeriodBalances> balance) {
+Future<void> _pump(WidgetTester tester, HomeBalanceUiModel balance) {
   return tester.pumpWidget(
-    ProviderScope(
-      overrides: [todayBalanceProvider.overrideWithValue(balance)],
-      child: const MaterialApp(
-        locale: Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: TodayBalanceCard(),
-      ),
+    MaterialApp(
+      locale: const Locale('en'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: TodayBalanceCard(balance: balance),
     ),
   );
 }
@@ -43,7 +23,12 @@ void main() {
   testWidgets('1500 мл, 300000 cal, −45000 коп и joy 6', (tester) async {
     await _pump(
       tester,
-      AsyncData(_balances(volume: 1500, energy: 300000, money: -45000, joy: 6)),
+      const HomeBalanceUiLines((
+        volume: '1.5 L (1500 ml)',
+        energy: '+300 kcal',
+        money: '-450 ₽',
+        joy: '+6 pt',
+      )),
     );
 
     expect(_value(tester, 'today-balance-volume'), '1.5 L (1500 ml)');
@@ -53,7 +38,15 @@ void main() {
   });
 
   testWidgets('пустой день — нули, не ошибка и не загрузка', (tester) async {
-    await _pump(tester, AsyncData(_balances()));
+    await _pump(
+      tester,
+      const HomeBalanceUiLines((
+        volume: '0 L (0 ml)',
+        energy: '0 kcal',
+        money: '0 ₽',
+        joy: '0 pt',
+      )),
+    );
 
     expect(_value(tester, 'today-balance-volume'), '0 L (0 ml)');
     expect(_value(tester, 'today-balance-energy'), '0 kcal');
@@ -64,7 +57,7 @@ void main() {
   });
 
   testWidgets('loading — индикатор, значений нет', (tester) async {
-    await _pump(tester, const AsyncLoading());
+    await _pump(tester, const HomeBalanceUiLoading());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(find.byKey(const Key('today-balance-volume')), findsNothing);
@@ -76,7 +69,7 @@ void main() {
   testWidgets('error — текст l10n, без StateError и Failure', (tester) async {
     await _pump(
       tester,
-      AsyncError<PeriodBalances>(StateError('boom'), StackTrace.empty),
+      const HomeBalanceUiError("Couldn't load today's totals"),
     );
 
     expect(find.text("Couldn't load today's totals"), findsOneWidget);
