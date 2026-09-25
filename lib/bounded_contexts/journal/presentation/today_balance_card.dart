@@ -1,66 +1,59 @@
-import 'package:beer_ledger/bounded_contexts/journal/application/today_balance.cg.dart';
-import 'package:beer_ledger/bounded_contexts/journal/presentation/today_balance_format.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_ui_model.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Карточка четырёх итогов за сегодня.
 ///
-/// Сама читает [todayBalanceProvider]. Суммы не считает и в репозиторий не
-/// ходит: базовые единицы в подписи переводит [formatTodayBalanceLines].
-/// Пустые итоги рисуются нулями.
-class TodayBalanceCard extends ConsumerWidget {
-  /// Создаёт карточку, которая подписывается на баланс за сегодня.
-  const TodayBalanceCard({super.key});
+/// Dumb-виджет: рисует [HomeBalanceUiModel], не ходит в провайдеры и не
+/// форматирует суммы сам.
+class TodayBalanceCard extends StatelessWidget {
+  /// Создаёт карточку с готовыми строками баланса.
+  const TodayBalanceCard({super.key, required this.balance});
+
+  /// Состояние карточки от [HomeUiModelBuilder].
+  final HomeBalanceUiModel balance;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return ref
-        .watch(todayBalanceProvider)
-        .when(
-          loading: () => const CircularProgressIndicator(),
-          error: (Object _, StackTrace _) => Text(l10n.todayBalanceLoadError),
-          data: (balances) {
-            final lines = formatTodayBalanceLines(
-              balances,
-              languageCode: Localizations.localeOf(context).languageCode,
-            );
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _BalanceAxis(
-                      label: l10n.todayBalanceVolumeLabel,
-                      value: lines.volume,
-                      valueKey: const Key('today-balance-volume'),
-                    ),
-                    const SizedBox(height: 12),
-                    _BalanceAxis(
-                      label: l10n.todayBalanceEnergyLabel,
-                      value: lines.energy,
-                      valueKey: const Key('today-balance-energy'),
-                    ),
-                    const SizedBox(height: 12),
-                    _BalanceAxis(
-                      label: l10n.todayBalanceMoneyLabel,
-                      value: lines.money,
-                      valueKey: const Key('today-balance-money'),
-                    ),
-                    const SizedBox(height: 12),
-                    _BalanceAxis(
-                      label: l10n.todayBalanceJoyLabel,
-                      value: lines.joy,
-                      valueKey: const Key('today-balance-joy'),
-                    ),
-                  ],
-                ),
+
+    return switch (balance) {
+      HomeBalanceUiLoading() => const CircularProgressIndicator(),
+      HomeBalanceUiError(:final message) => Text(message),
+      HomeBalanceUiLines(:final lines) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _BalanceAxis(
+                label: l10n.todayBalanceVolumeLabel,
+                value: lines.volume,
+                valueKey: const Key('today-balance-volume'),
               ),
-            );
-          },
-        );
+              const SizedBox(height: 12),
+              _BalanceAxis(
+                label: l10n.todayBalanceEnergyLabel,
+                value: lines.energy,
+                valueKey: const Key('today-balance-energy'),
+              ),
+              const SizedBox(height: 12),
+              _BalanceAxis(
+                label: l10n.todayBalanceMoneyLabel,
+                value: lines.money,
+                valueKey: const Key('today-balance-money'),
+              ),
+              const SizedBox(height: 12),
+              _BalanceAxis(
+                label: l10n.todayBalanceJoyLabel,
+                value: lines.joy,
+                valueKey: const Key('today-balance-joy'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    };
   }
 }
 

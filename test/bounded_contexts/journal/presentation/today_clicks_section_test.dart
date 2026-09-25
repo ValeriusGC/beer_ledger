@@ -1,53 +1,30 @@
-import 'dart:async';
-
+import 'package:beer_ledger/bounded_contexts/journal/presentation/home/home_ui_model.dart';
+import 'package:beer_ledger/bounded_contexts/journal/presentation/today_clicks_section.dart';
 import 'package:beer_ledger/l10n/app_localizations.dart';
-import 'package:beer_ledger/bounded_contexts/portion/portion.dart';
-import 'package:beer_ledger/bounded_contexts/journal/journal.dart';
-import 'package:beer_ledger_core/beer_ledger_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-Click _click({
-  required String id,
-  required DateTime at,
-  List<AxisContribution> contributions = const [],
-}) {
-  return Click(
-    id: ClickId.known(id),
-    clickerId: beerHalfLiter().id,
-    at: at,
-    contributions: contributions,
-  );
-}
-
-class _ReadyUndoLastClick extends UndoLastClick {
-  @override
-  FutureOr<void> build() {}
-}
-
-class _LoadingUndoLastClick extends UndoLastClick {
-  @override
-  FutureOr<void> build() => Completer<void>().future;
-}
 
 Future<void> _pump(
   WidgetTester tester,
-  AsyncValue<List<Click>> clicks, {
-  UndoLastClick? undoLastClick,
+  HomeJournalUiModel journal, {
+  bool undoEnabled = true,
 }) {
   return tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        clicksForTodayProvider.overrideWithValue(clicks),
-        if (undoLastClick != null)
-          undoLastClickProvider.overrideWith(() => undoLastClick),
-      ],
-      child: const MaterialApp(
-        locale: Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: CustomScrollView(slivers: [TodayClicksSection()])),
+    MaterialApp(
+      locale: const Locale('en'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            TodayClicksSection(
+              journal: journal,
+              undoEnabled: undoEnabled,
+              undoLabel: 'Undo last tap',
+              onUndo: () {},
+            ),
+          ],
+        ),
       ),
     ),
   );
@@ -55,7 +32,7 @@ Future<void> _pump(
 
 void main() {
   testWidgets('пустой сегодня — empty-state, не ошибка', (tester) async {
-    await _pump(tester, const AsyncData(<Click>[]));
+    await _pump(tester, const HomeJournalUiEmpty('No taps today'));
 
     expect(find.text('No taps today'), findsOneWidget);
     expect(find.text("Couldn't load today's taps"), findsNothing);
@@ -63,20 +40,10 @@ void main() {
   });
 
   testWidgets('один тап — время с секундами и 0.5 L', (tester) async {
-    final at = DateTime(2026, 9, 22, 14, 30);
     await _pump(
       tester,
-      AsyncData([
-        _click(
-          id: 'click-1',
-          at: at,
-          contributions: [
-            AxisContribution(
-              delta: SignedBaseDelta.volume(500),
-              enteredInId: VolumeUnit.liter.id,
-            ),
-          ],
-        ),
+      const HomeJournalUiRows([
+        (id: 'click-1', time: '14:30:00', volume: '0.5 L'),
       ]),
     );
 
@@ -86,7 +53,7 @@ void main() {
   });
 
   testWidgets('loading — прогресс в секции', (tester) async {
-    await _pump(tester, const AsyncLoading());
+    await _pump(tester, const HomeJournalUiLoading());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(find.text('No taps today'), findsNothing);
@@ -94,10 +61,7 @@ void main() {
   });
 
   testWidgets('error — текст l10n, без сырого exception', (tester) async {
-    await _pump(
-      tester,
-      AsyncError<List<Click>>(StateError('boom'), StackTrace.empty),
-    );
+    await _pump(tester, const HomeJournalUiError("Couldn't load today's taps"));
 
     expect(find.text("Couldn't load today's taps"), findsOneWidget);
     expect(find.textContaining('StateError'), findsNothing);
@@ -108,8 +72,8 @@ void main() {
   testWidgets('пустой сегодня — undo находится и enabled', (tester) async {
     await _pump(
       tester,
-      const AsyncData(<Click>[]),
-      undoLastClick: _ReadyUndoLastClick(),
+      const HomeJournalUiEmpty('No taps today'),
+      undoEnabled: true,
     );
 
     final button = tester.widget<TextButton>(
@@ -121,8 +85,8 @@ void main() {
   testWidgets('undo isLoading — кнопка disabled', (tester) async {
     await _pump(
       tester,
-      const AsyncData(<Click>[]),
-      undoLastClick: _LoadingUndoLastClick(),
+      const HomeJournalUiEmpty('No taps today'),
+      undoEnabled: false,
     );
 
     expect(
